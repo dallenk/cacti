@@ -2877,7 +2877,7 @@ function rrd_substitute_host_query_data($txt_graph_item, $graph, $graph_item) {
 	/* replace host variables in graph elements */
 	$host_id = 0;
 
-	if (!preg_match('/(\|query_|\|host_|\|input_|\|poller_|\|site_)/', $txt_graph_item)) {
+	if (!preg_match('/(\|query_|\|host_|\|input_|\|poller_|\|site_|\|stream_)/', $txt_graph_item)) {
 		return $txt_graph_item;
 	}
 
@@ -2915,6 +2915,12 @@ function rrd_substitute_host_query_data($txt_graph_item, $graph, $graph_item) {
 
 	if (strpos($txt_graph_item, '|site_') !== false && isset($graph_item['local_data_id'])) {
 		return substitute_site_data($txt_graph_item, $graph, $graph_item['local_data_id']);
+	}
+
+	if (strpos($txt_graph_item, '|stream_') !== false && isset($graph_item['local_data_id'])) {
+		if (function_exists('stream_substitute_query_data')) {
+			return stream_substitute_query_data($txt_graph_item, $graph, $graph_item['local_data_id']);
+		}
 	} else {
 		return $txt_graph_item;
 	}
