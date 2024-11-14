@@ -521,7 +521,8 @@ $input_types = array(
 	DATA_INPUT_TYPE_SCRIPT_QUERY        => __('Script Query'),    // Action 1:
 	DATA_INPUT_TYPE_PHP_SCRIPT_SERVER   => __('Script Server'),
 	DATA_INPUT_TYPE_QUERY_SCRIPT_SERVER => __('Script Server Query'),
-	DATA_INPUT_TYPE_STREAM              => __('Stream Data')
+	DATA_INPUT_TYPE_STREAM              => __('Stream Data'),
+	DATA_INPUT_TYPE_STREAM_QUERY        => __('Stream Data Query')
 );
 
 $input_types_script = array(
@@ -1466,7 +1467,8 @@ $hash_system_data_inputs = array(
 	'bf566c869ac6443b0c75d1c32b5a350e', // Get SNMP Data (Indexed)
 	'80e9e4c4191a5da189ae26d0e237f015', // Get Script Data (Indexed)
 	'332111d8b54ac8ce939af87a7eac0c06', // Get Script Server Data (Indexed)
-	'7ed649bfa9cd627d7482b7700e88db53'  // Stream Data
+	'7ed649bfa9cd627d7482b7700e88db53', // Get Stream Data
+	'8489967af7ec4addacc6a67ca4e36c16'  // Get Stream Data (Indexed)
 );
 
 $host_struc = array(
