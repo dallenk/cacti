@@ -1066,7 +1066,7 @@ function get_message_max_type(?array $output_messages = null) {
 	$level = MESSAGE_LEVEL_NONE;
 
 	if ($output_messages === null && isset($_SESSION[SESS_MESSAGES])) {
-		$ouptut_messages = $_SESSION[SESS_MESSAGES];
+		$output_messages = $_SESSION[SESS_MESSAGES];
 	}
 
 	if (is_array($output_messages)) {
@@ -3218,7 +3218,7 @@ function get_color(int $color_id):string|false {
 	return db_fetch_cell_prepared('SELECT hex FROM colors WHERE id = ?', array($color_id));
 }
 
-// TODO: This marker is to identifer where to resume typing and PHPDoc syntax updating
+// TODO: This marker is to identify where to resume typing and PHPDoc syntax updating
 
 /**
  * get_graph_title_cache - returns the title of the graph using the title cache
@@ -5247,9 +5247,9 @@ function send_mail(array|string $to, string|array|null $from = null, string $sub
  * @param  null|array|string      $cc                  none, single or multiple contacts
  * @param  null|array|string      $bcc                 none, single or multiple contacts
  * @param  null|array|string      $replyto             none, single or multiple contacts
- * @param  null|string            $subject             Messgae subject
+ * @param  null|string            $subject             Message subject
  * @param  null|string            $body                Message body, in HTML format
- * @param  null|string            $body_text           Messgae body, in TEXT format
+ * @param  null|string            $body_text           Message body, in TEXT format
  * @param  null|array|string      $attachments         Attachments to send
  * @param  null|array             $headers             Custom headers
  * @param  boolean                $html                Assume HTML format
@@ -7455,7 +7455,7 @@ function version_to_decimal(string $version, int $length = 9, bool $hex = true):
 function version_to_bits(string $version, $hex = false): int {
 	/***************************************************
 	 * Bits is how many bits to shift that section of a
-	 * version to the left wihtin the integer.
+	 * version to the left within the integer.
 	 *
 	 * vMajor.Minor.Reversion.Patch.Timestamp
 	 *
@@ -7470,7 +7470,7 @@ function version_to_bits(string $version, $hex = false): int {
 
 	// Do we have a version that isn't 'unknown'
 	if ($version !== 'Unknown') {
-		// Format the verison and explode it
+		// Format the version and explode it
 		// and find the total number of parts
 		$txtVersion = format_cacti_version($version);
 		$parts      = explode('.', $txtVersion);
@@ -7816,7 +7816,7 @@ function get_theme_paths(string $format, string $path, ?string $theme = null, ?s
  * @param  string      $path    Path to include
  * @param  boolean     $async   Load asynchronously
  * @param  string|null $theme   Theme to use
- * @param  string|null $file    File to inlcude
+ * @param  string|null $file    File to include
  *
  * @return void
  */
@@ -7832,7 +7832,7 @@ function get_md5_include_js(string $path, bool $async = false, ?string $theme = 
  * @param  string      $path    Path to include
  * @param  boolean     $async   Load asynchronously
  * @param  string|null $theme   Theme to use
- * @param  string|null $file    File to inlcude
+ * @param  string|null $file    File to include
  *
  * @return void
  */
@@ -7848,7 +7848,7 @@ function get_md5_include_css(string $path, bool $async = false, ?string $theme =
  * @param  string      $path    Path to include
  * @param  boolean     $async   Load asynchronously
  * @param  string|null $theme   Theme to use
- * @param  string|null $file    File to inlcude
+ * @param  string|null $file    File to include
  * @param  string|null $rel     Rel type output when not null (eg, icon, shortcut icon)
  * @param  string|null $sizes   Sizes output when not null (eg, 96x96)
  *
@@ -8375,7 +8375,7 @@ function cacti_session_destroy() {
 }
 
 /**
- * cacti_cookie_set - Allows for settings an arbitry cookie name and value
+ * cacti_cookie_set - Allows for settings an arbitrary cookie name and value
  * used for CSRF protection.
  *
  * @param  mixed $session
@@ -8586,7 +8586,7 @@ function cacti_browser_zone_enabled() {
 /**
  * cacti_time_zone_set - Givin an offset in minutes, attempt
  * to set a PHP date.timezone.  There are some oddballs that
- * we have to accomodate.
+ * we have to accommodate.
  *
  * @param  mixed $gmt_offset
  *
