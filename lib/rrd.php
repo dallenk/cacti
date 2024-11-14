@@ -1255,7 +1255,7 @@ function rrd_function_process_graph_options($graph_start, $graph_end, &$graph, &
 	if (isset($graph_data_array['graphv'])) {
 		$rrdversion = get_rrdtool_version();
 		if (isset($rrdversion) && cacti_version_compare($rrdversion, '1.8', '>=')) {
-			$graph_opts .= '--add-jsontime ' . RRD_NL;
+//			$graph_opts .= '--add-jsontime ' . RRD_NL;
 		}
 	}
 
