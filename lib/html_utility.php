@@ -600,23 +600,14 @@ function get_request_var_post($name, $default = '') {
 	return get_nfilter_request_var($name, $default);
 }
 
-/* validate_store_request_vars - validate, sanitize, and store
-   request variables into the custom $_CACTI_REQUEST and desired
-   session variables for Cacti filtering.
-
-
-   @arg $filters - an array keyed with the filter methods.
-   @arg $session_prefix - the prefix for the session variable
-
-
-   @returns - the $_REQUEST variable validated and sanitized. */
-
 /**
  * validate, sanitize, and store request variables into the
  * custom $_CACTI_REQUEST and desired session variables for
  * Cacti filtering.
  *
  * @param  array  $filters      an array keyed with the filter methods.
+ * @param  string $session_prefix A string to use to prefix the session
+ *                variable.
  *
  *    Valid filter include those from PHP filter_var() function syntax.
  *    The format of the array is:
@@ -884,6 +875,7 @@ function update_order_string($inplace = false) {
 					$order .= ($order != '' ? ', ' . $del:$del) . implode($del . '.' . $del, explode('.', $column)) . $del . ' ' . $direction;
 				}
 			}
+
 			$_SESSION['sort_string'][$page] .= $order;
 		} else {
 			unset($_SESSION['sort_data'][$page]);
@@ -920,7 +912,9 @@ function remove_column_from_order_string($column) {
 }
 
 function get_order_string_page() {
-	$page = str_replace('.php', '', get_current_page());
+	static $page_count = 0;
+
+	$page = $page_count . '_' . str_replace('.php', '', get_current_page());
 
 	if (isset_request_var('action')) {
 		$page .= '_' . get_nfilter_request_var('action');
@@ -929,6 +923,8 @@ function get_order_string_page() {
 	if (isset_request_var('tab')) {
 		$page .= '_' . get_nfilter_request_var('tab');
 	}
+
+	$page_count++;
 
 	return $page;
 }
