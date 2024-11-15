@@ -215,7 +215,7 @@
 			zoom.box.left				= zoom.graph.left;
 			zoom.box.right				= zoom.box.left + zoom.box.width;
 
-			if(zoom.initiator.attr('data-raw').length > 0) {
+			if (typeof(zoom.initiator.attr('data-raw')) !== 'undefined') {
 				let raw_data = JSON.parse(lzjs.decompressFromBase64(zoom.initiator.attr('data-raw')));
 				if(raw_data.data !== undefined && raw_data.data.length > 0) zoom.raw.data = raw_data.data;
 				if(raw_data.legend !== undefined && raw_data.legend.length > 0) zoom.raw.legend = raw_data.legend;
