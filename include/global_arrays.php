@@ -2965,6 +2965,7 @@ $snmpagent_event_severity = array(
 
 $days_from_time_settings = array(
 	'mods' => array(
+		'y' => 31536000,
 		'd' => 86400,
 		'h' => 3600,
 		'm' => '60',
@@ -2972,14 +2973,16 @@ $days_from_time_settings = array(
 	),
 	'text' => array(
 		DAYS_FORMAT_SHORT => array(
+			'y'      => 'y',
 			'd'      => 'd',
-				'h'     => 'h',
-				'm'     => 'm',
+			'h'      => 'h',
+			'm'      => 'm',
 			's'      => 's',
 			'suffix' => ':',
 			'prefix' => '',
 		),
 		DAYS_FORMAT_MEDIUM => array(
+			'y'      => __('years'),
 			'd'      => __('days'),
 			'h'      => __('hrs'),
 			'm'      => __('mins'),
@@ -2988,6 +2991,7 @@ $days_from_time_settings = array(
 			'prefix' => ' ',
 		),
 		DAYS_FORMAT_MEDIUM_LOG => array(
+			'y'      => 'years',
 			'd'      => 'days',
 			'h'      => 'hrs',
 			'm'      => 'mins',
@@ -2996,6 +3000,7 @@ $days_from_time_settings = array(
 			'prefix' => ' ',
 		),
 		DAYS_FORMAT_LONG => array(
+			'y'      => __('years'),
 			'd'      => __('days'),
 			'h'      => __('hours'),
 			'm'      => __('minutes'),
@@ -3004,6 +3009,7 @@ $days_from_time_settings = array(
 			'prefix' => ' ',
 		),
 		DAYS_FORMAT_LONG_LOG => array(
+			'y'      => 'years',
 			'd'      => 'days',
 			'h'      => 'hours',
 			'm'      => 'minutes',

@@ -126,6 +126,7 @@ Cacti CHANGELOG
 -feature: Upgrade d3.js to version 7.8.2
 -feature: Upgrade ua-parser.js to version 1.0.35
 -feature: Add parsedown to vendor library for plugin CHANGELOG and README viewing support
+-feature: Add year display to get_daysfromtime function
 
 1.2.29
 -issue#5843: Issue with temporary tables with use of microtime

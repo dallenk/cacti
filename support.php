@@ -778,12 +778,24 @@ function show_cacti_processes() {
 		foreach ($processes as $p) {
 			form_alternate_row('line' . $p['pid'], false);
 
+			if ($p['timeout'] != 'N/A') {
+				$timeout_time = $p['timeout'];
+				$timeout_date = get_daysfromtime($timeout_time, true);
+
+				if (strpos($timeout_date, 'y:') !== false) {
+					$timeout_date = __('> 1 Year');
+				}
+			} else {
+				$timeout_date = $p['timeout'];
+			}
+
 			form_selectable_cell($p['tasktype'], $p['pid']);
 			form_selectable_cell(filter_value(strtoupper($p['taskname']), ''), $p['pid']);
 			form_selectable_cell($p['taskid'], $p['pid'], '', 'right');
 			form_selectable_cell($p['runtime'], $p['pid'], '', 'right');
 			form_selectable_cell($p['pid'], $p['pid'], '', 'right');
-			form_selectable_cell($p['timeout'], $p['pid'], '', 'right');
+			//form_selectable_cell($p['timeout'], $p['pid'], '', 'right');
+			form_selectable_cell($timeout_date, $p['pid'], '', 'right');
 			form_selectable_cell($p['started'], $p['pid'], '', 'right');
 			form_selectable_cell($p['last_update'], $p['pid'], '', 'right');
 
