@@ -153,6 +153,7 @@ define('AVAIL_PING', 3);
 define('AVAIL_SNMP_OR_PING', 4);
 define('AVAIL_SNMP_GET_SYSDESC', 5);
 define('AVAIL_SNMP_GET_NEXT', 6);
+define('AVAIL_STREAM', 7);
 
 define('PING_ICMP', 1);
 define('PING_UDP', 2);

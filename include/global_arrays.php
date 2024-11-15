@@ -693,7 +693,8 @@ $availability_options = array(
 	AVAIL_SNMP             => __('SNMP Uptime'),
 	AVAIL_SNMP_GET_SYSDESC => __('SNMP Desc'),
 	AVAIL_SNMP_GET_NEXT    => __('SNMP getNext'),
-	AVAIL_PING             => __('Ping')
+	AVAIL_PING             => __('Ping'),
+	AVAIL_STREAM           => __('Stream Device')
 );
 
 $ping_methods = array(
