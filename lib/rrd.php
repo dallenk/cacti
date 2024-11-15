@@ -395,7 +395,7 @@ function __rrd_execute($command_line, $log_to_stdout, $output_flag, $rrdtool_pip
 						if (debounce_run_notification('rrdtool_command_crash', 28880)) {
 							$log_message = sprintf('WARNING: RRDtool Cashed executing the following command %s', $command_line);
 							$email_message = __('WARNING: RRDtool Crashed execution the following command line %s', $command_line);
-							cacti_log($log_message, false, 'POLLER');
+							cacti_log($log_message, false, 'RRDTOOL');
 							admin_email(__('Poller in Heartbeat Mode'), $email_message);
 						}
 
@@ -412,18 +412,22 @@ function __rrd_execute($command_line, $log_to_stdout, $output_flag, $rrdtool_pip
 				} elseif ($output_flag == RRDTOOL_OUTPUT_STDERR || $output_flag == RRDTOOL_OUTPUT_RETURN_STDERR) {
 					rrdtool_reset_language();
 
-					if (substr($output, 1, 3) == 'PNG') {
-						return 'OK';
-					} elseif (substr($output, 0, 5) == '<?xml') {
-						return 'SVG/XML Output OK';
-					} elseif ($output_flag == RRDTOOL_OUTPUT_RETURN_STDERR) {
-						rrdtool_reset_language();
+					if ($output != '') {
+						if (substr($output, 1, 3) == 'PNG') {
+							return 'OK';
+						} elseif (substr($output, 0, 5) == '<?xml') {
+							return 'SVG/XML Output OK';
+						} elseif ($output_flag == RRDTOOL_OUTPUT_RETURN_STDERR) {
+							rrdtool_reset_language();
 
-						return $output;
+							return $output;
+						} else {
+							print $output;
+
+							break;
+						}
 					} else {
-						print $output;
-
-						break;
+						return "Error";
 					}
 				} else {
 					rrdtool_reset_language();
@@ -435,12 +439,12 @@ function __rrd_execute($command_line, $log_to_stdout, $output_flag, $rrdtool_pip
 			if ($attempts > 0) {
 				rrdtool_reset_language();
 
-				cacti_log("Attempts were $attempts");
+				cacti_log("WARNING: RRDtool failed after $attempts attempts for the following command $command_line", false, 'RRDTOOL');
 
 				return "";
 			}
 		} else {
-			cacti_log("ERROR: RRDtool executable not found, not executable or error in path '" . read_config_option('path_rrdtool') . "'.  No output written to RRDfile.");
+			cacti_log("ERROR: RRDtool executable not found, not executable or error in path '" . read_config_option('path_rrdtool') . "'.  No output written to RRDfile.", false, 'RRDTOOL');
 		}
 
 		rrdtool_reset_language();
@@ -452,7 +456,7 @@ function __rrd_execute($command_line, $log_to_stdout, $output_flag, $rrdtool_pip
 
 		while (true) {
 			if (fwrite($rrdtool_pipe, escape_command(" $command_line") . "\r\n") === false) {
-				cacti_log("ERROR: Detected RRDtool Crash on '$command_line'.  Last command was '$last_command'");
+				cacti_log("ERROR: Detected RRDtool Crash on '$command_line'.  Last command was '$last_command'", false, 'RRDTOOL');
 
 				/* close the invalid pipe */
 				rrd_close($rrdtool_pipe);
@@ -461,7 +465,7 @@ function __rrd_execute($command_line, $log_to_stdout, $output_flag, $rrdtool_pip
 				$rrdtool_pipe = rrd_init();
 
 				if ($i > 4) {
-					cacti_log("FATAL: RRDtool Restart Attempts Exceeded. Giving up on '$command_line'.");
+					cacti_log("FATAL: RRDtool Restart Attempts Exceeded. Giving up on '$command_line'.", false, 'RRDTOOL');
 
 					break;
 				} else {
