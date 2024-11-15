@@ -20,8 +20,10 @@
 
 $.ui = $.ui || {};
 
-var version = $.ui.version = "1.14.1";
+/* for backward compatibility */
+$.uiBackCompat = true;
 
+var version = $.ui.version = "1.14.1";
 
 /*!
  * jQuery UI Widget 1.14.1
