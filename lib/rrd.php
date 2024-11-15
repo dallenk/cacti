@@ -1255,7 +1255,7 @@ function rrd_function_process_graph_options($graph_start, $graph_end, &$graph, &
 	if (isset($graph_data_array['graphv'])) {
 		$rrdversion = get_rrdtool_version();
 		if (isset($rrdversion) && cacti_version_compare($rrdversion, '1.8', '>=')) {
-//			$graph_opts .= '--add-jsontime ' . RRD_NL;
+			$graph_opts .= '--add-jsontime ' . RRD_NL;
 		}
 	}
 
@@ -2610,9 +2610,15 @@ function rrdtool_function_graph($local_graph_id, $rra_id, $graph_data_array, $rr
 				if (preg_match('/^(AREA|AREA:STACK|LINE[123]|STACK)$/', $graph_item_types[$graph_item['graph_type_id']])) {
 					/* give all export items a name */
 					if (trim($graph_variables['text_format'][$graph_item_id]) == '') {
-						$legend_name = $legends[$graph_item['local_data_id']][$graph_item['data_source_name']][$consolidation_functions[$graph_cf]];
+						if (isset($legends[$graph_item['local_data_id']][$graph_item['data_source_name']][$consolidation_functions[$graph_cf]])) {
+							$legend_name = $legends[$graph_item['local_data_id']][$graph_item['data_source_name']][$consolidation_functions[$graph_cf]];
+						}
 					} else {
-						$legend_name = $legends[$graph_item['local_data_id']][$graph_item['data_source_name']][$consolidation_functions[$graph_cf]];
+						if (isset($legends[$graph_item['local_data_id']][$graph_item['data_source_name']][$consolidation_functions[$graph_cf]])) {
+							$legend_name = $legends[$graph_item['local_data_id']][$graph_item['data_source_name']][$consolidation_functions[$graph_cf]];
+						} else {
+							$legend_name = $graph_variables['text_format'][$graph_item_id];
+						}
 					}
 
 					if ($legend_name == '') {
