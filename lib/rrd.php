@@ -393,8 +393,10 @@ function __rrd_execute($command_line, $log_to_stdout, $output_flag, $rrdtool_pip
 				if ($output_flag == RRDTOOL_OUTPUT_STDOUT || $output_flag == RRDTOOL_OUTPUT_GRAPH_DATA) {
 					if ($output == '' || $output === null) {
 						if (debounce_run_notification('rrdtool_command_crash', 28880)) {
-							$log_message = sprintf('WARNING: RRDtool Cashed executing the following command %s', $command_line);
-							$email_message = __('WARNING: RRDtool Crashed execution the following command line %s', $command_line);
+							$backtrace     = cacti_debug_backtrace('RRDTOOL Error');
+							$log_message   = sprintf('WARNING: RRDtool Cashed executing the following command %s.  %s', $command_line, $backtrace);
+							$email_message = __('WARNING: RRDtool Crashed execution the following command line %s.  %s', $command_line, $backtrace);
+
 							cacti_log($log_message, false, 'RRDTOOL');
 							admin_email(__('Poller in Heartbeat Mode'), $email_message);
 						}
@@ -439,7 +441,9 @@ function __rrd_execute($command_line, $log_to_stdout, $output_flag, $rrdtool_pip
 			if ($attempts > 0) {
 				rrdtool_reset_language();
 
-				cacti_log("WARNING: RRDtool failed after $attempts attempts for the following command $command_line", false, 'RRDTOOL');
+				$backtrace = cacti_debug_backtrace('RRDTOOL Error');
+
+				cacti_log("WARNING: RRDtool failed after $attempts attempts for the following command $command_line.  $backtrace", false, 'RRDTOOL');
 
 				return "";
 			}
