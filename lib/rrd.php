@@ -3041,6 +3041,14 @@ function rrdtool_function_info($local_data_id, $rrdtool_pipe = null) {
 	/* Get the path to rrdtool file */
 	$data_source_path = get_data_source_path($local_data_id, true);
 
+	if (read_config_option('storage_location')) {
+		if (!rrdtool_execute("file_exists $data_source_path", true, RRDTOOL_OUTPUT_BOOLEAN, $rrdtool_pipe, 'POLLER')) {
+			return false;
+		}
+	} elseif (!file_exists($data_source_path)) {
+		return false;
+	}
+
 	/* Execute rrdtool info command */
 	$cmd_line = ' info ' . $data_source_path;
 	$output   = rrdtool_execute($cmd_line, RRDTOOL_OUTPUT_NULL, RRDTOOL_OUTPUT_STDOUT, $rrdtool_pipe);
