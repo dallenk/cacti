@@ -1512,7 +1512,7 @@ function format_archive_plugin_row($plugin, $table) {
 	static $first_plugin = true;
 
 	/* action icons */
-	$row  = "<td style='width:1%'>";
+	$row  = "<td class='nowrap' style='width:1%'>";
 
 	if (plugin_valid_version_range($plugin['archive_compat'])) {
 		if (plugin_valid_dependencies($plugin['archive_requires'])) {
