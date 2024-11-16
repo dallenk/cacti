@@ -1694,6 +1694,7 @@ legend {
 	background: -webkit-linear-gradient(top, rgba(138,179,105,1) 0%, rgba(63,117,15,1) 100%);
 	background: -o-linear-gradient(top, rgba(138,179,105,1) 0%, rgba(63,117,15,1) 100%);
 	background: -ms-linear-gradient(top, rgba(138,179,105,1) 0%, rgba(63,117,15,1) 100%);
+	color: snow;
 	height: 24px;
 }
 
@@ -1767,6 +1768,7 @@ legend {
 
 .tableRowGraph td {
 	padding: 3px 0px;
+	line-height: 20px;
 	vertical-align: top;
 }
 
@@ -2551,7 +2553,7 @@ tr#realtime td:first-child {
 	vertical-align: top;
 	align-self: left;
 	z-index: 4;
-	padding: 3px;
+	padding: 10px 3px;
 	height: 200px;
 	width: 20px;
 }
@@ -2561,6 +2563,7 @@ tr#realtime td:first-child {
 }
 
 .graphWrapper {
+	padding-top:10px;
 	display: inline-block;;
 }
 
@@ -2811,5 +2814,8 @@ td.center > table {
 }
 
 .tableRowGraph {
-     border: 2px solid rgba(0,0,0,0);
+	border: 2px solid rgba(0,0,0,0);
+	padding: 3px 0px;
+	line-height: 20px;
+	vertical-align: top;
 }
