@@ -41,8 +41,6 @@
     --border-color: hsl(var(--hue), 19%, 21%);
     --border-color-semilight: hsla(var(--hue), 19%, 100%, 0.04);
     --border-color-light: hsla(var(--hue), 19%, 100%, 0.08);
-
-
     --border-color-lowlight: hsl(var(--hue), 19%, 17%);
     --border-color-superlowlight: hsl(var(--special2-hue), 8%, 17%);
     --border-color-highlight: hsl(var(--special2-hue), 69%, 52%);
@@ -89,7 +87,6 @@
     --border-color: hsla(var(--special2-hue), 84%, 20%, 0.25);
     --border-color-semilight: hsla(var(--special2-hue), 84%, 20%, 0.08);
     --border-color-light: hsla(var(--special2-hue), 84%, 20%, 0.04);
-
     --border-color-lowlight: hsl(var(--hue), 19%, 17%);
     --border-color-superlowlight: hsl(var(--special2-hue), 4%, 50%);
     --border-color-highlight: hsl(202, 69%, 52%);

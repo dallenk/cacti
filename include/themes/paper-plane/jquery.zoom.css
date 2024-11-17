@@ -180,7 +180,8 @@
 }
 
 
-.zoom-menu {
+.zoom-menu,
+.zoom-livedata {
 	border:1px solid #222;
 	position:absolute;
 	background:#F7F7F7;
@@ -263,4 +264,48 @@
 	top: 0;
 	left: 0;
 	opacity: 0;
+}
+
+.zoom-livedata {
+	min-width: 15rem;
+	padding: 0.5rem 1rem;
+}
+
+.zoom-livedata-header {
+	vertical-align: central;
+	height: 1.25rem;
+	margin-bottom: 0.5rem;
+	border-bottom: 1px solid #ccc;
+}
+
+.zoom-livedata-item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.zoom-livedata-color {
+	width: 16px;
+	height: 16px;
+	flex-grow: 0;
+	background-color: transparent;
+	margin-right: 0.25rem;
+	border: 2px solid #fff;
+	border-radius: 4px;
+}
+
+.zoom-livedata-value {
+	font-family: 'Segoe UI monospace', monospace;
+	text-align: right;
+	white-space-collapse: preserve;
+}
+
+.zoom-livedata-title {
+	flex: 1;
+	text-align: left;
+	margin-right: 1rem;
+}
+
+.zoom-livedata-unit {
+	min-width: 0.5rem;
 }

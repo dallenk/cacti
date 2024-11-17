@@ -262,3 +262,45 @@ div.zoom-menu-hover, div.inner_li>span.zoom-menu-hover{
 	opacity: 0;
 }
 
+.zoom-livedata {
+	min-width: 20rem;
+	padding: 0.5rem 1rem;
+}
+
+.zoom-livedata-header {
+	vertical-align: central;
+	height: 2rem;
+	margin-bottom: 0.5rem;
+	border-bottom: 1px solid var(--border-color-light);
+}
+
+.zoom-livedata-item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.zoom-livedata-color {
+	width: 16px;
+	height: 16px;
+	flex-grow: 0;
+	background-color: transparent;
+	margin-right: 0.25rem;
+	border: 2px solid var(--background-content);
+	border-radius: 4px;
+}
+
+.zoom-livedata-value {
+	font-family: var(--font-mono), monospace;
+	text-align: right;
+	white-space-collapse: preserve;
+}
+
+.zoom-livedata-title {
+	flex: 1;
+	text-align: left;
+}
+
+.zoom-livedata-unit {
+	min-width: 0.5rem;
+}
