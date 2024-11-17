@@ -5206,7 +5206,7 @@ function automation_snmp_option_export($snmp_option_ids) {
 }
 
 function automation_validate_upload() {
-	/* check file tranfer if used */
+	/* check file transfer if used */
 	if (isset($_FILES['import_file'])) {
 		/* check for errors first */
 		if ($_FILES['import_file']['error'] != 0) {
@@ -5342,7 +5342,7 @@ function automation_network_import($json_data) {
 		$error = false;
 		$save  = array();
 
-		foreach ($json_data['network'] as $netowrk => $data) {
+		foreach ($json_data['network'] as $network => $data) {
 			if (isset($data['snmp'])) {
 				$debug_data += automation_snmp_option_import($data['snmp']);
 				unset($data['snmp']);

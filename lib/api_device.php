@@ -1530,7 +1530,7 @@ function api_device_update_host_template(int $device_id, int $device_template_id
 }
 
 /**
- * api_device_change_field_match - Checks the global $device_change_fileds array
+ * api_device_change_field_match - Checks the global $device_change_fields array
  *   against the field name and returns true or false if it matches the rule
  *
  * This function can be used by plugins to allow the modification of additional
@@ -1929,7 +1929,7 @@ function api_clone_get_unique_filename($file_name) {
 
 /**
  * api_clone_device_template_check_for_errors - This function will validate the
- *   intput and return warnings and errors before allowing users to proceed.  This
+ *   input and return warnings and errors before allowing users to proceed.  This
  *   option is skipped when using the quiet option.
  *
  * @param int    - The device template id to be cloned
