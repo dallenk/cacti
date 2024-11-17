@@ -888,6 +888,18 @@ function applySkin() {
 		});
 	}
 
+	// Setup blinking
+	setInterval(blinkMe, 1200);
+
+	function blinkMe() {
+		$('.blink').each(function() {
+			var width = $(this).textWidth();
+
+			$(this).css({ 'min-width': width });
+			$(this).fadeOut(900).fadeIn(900);
+		});
+	}
+
 	setSelectMenus();
 
 	setGraphTabs();
@@ -944,11 +956,7 @@ function applySkin() {
 	});
 
 	$('i, a, th, img, input, label, select, button, .drillDown, .checkboxSlider')
-		.tooltip({
-			close: function () {
-				$("[role=log].ui-helper-hidden-accessible").remove();
-			}
-		})
+		.tooltip()
 		.on('focus', function () {
 			if ($(this).tooltip('instance')) {
 				$(this).tooltip('close');
@@ -961,9 +969,6 @@ function applySkin() {
 		});
 
 	$(document).tooltip({
-		close: function () {
-			$("[role=log].ui-helper-hidden-accessible").remove();
-		},
 		items: 'div.cactiTooltipHint, span.cactiTooltipHint, .checkboxSlider',
 		content: function () {
 			var element = $(this);

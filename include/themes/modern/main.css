@@ -117,6 +117,42 @@ fieldset {
 	margin: 0px;
 }
 
+.cols1 {
+	width: 100%;
+	display:table-cell;
+}
+
+.cols2 {
+	width: 50%;
+	display:table-cell;
+}
+
+.cols3 {
+	width: 33%;
+	display:table-cell;
+}
+
+.cols4 {
+	width: 25%;
+	display:table-cell;
+}
+
+.cols5 {
+	width: 20%;
+	display:table-cell;
+}
+
+.cols6 {
+	width: 16.6%;
+	display:table-cell;
+}
+
+.graphPage {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
 hr.menu {
 	border: 0;
 	height: 1px;
@@ -348,19 +384,6 @@ label {
 	cursor: pointer;
 	padding: 2px;
 	border: none;
-}
-
-.graphDrillDown {
-	vertical-align: top;
-	align-self: left;
-	z-index: 4;
-	padding: 3px;
-	height: 100%;
-	width: 20px;
-}
-
-.drillDown {
-	cursor: pointer;
 }
 
 .monoSpace {
@@ -1671,6 +1694,7 @@ legend {
 	background: -webkit-linear-gradient(top, rgba(138,179,105,1) 0%, rgba(63,117,15,1) 100%);
 	background: -o-linear-gradient(top, rgba(138,179,105,1) 0%, rgba(63,117,15,1) 100%);
 	background: -ms-linear-gradient(top, rgba(138,179,105,1) 0%, rgba(63,117,15,1) 100%);
+	color: snow;
 	height: 24px;
 }
 
@@ -1744,6 +1768,7 @@ legend {
 
 .tableRowGraph td {
 	padding: 3px 0px;
+	line-height: 20px;
 	vertical-align: top;
 }
 
@@ -2381,6 +2406,10 @@ ul#nav {
 	border: transparent;
 }
 
+.ui-selectmenu-search input {
+	width: 100%;
+}
+
 div.preformatted {
 	font-family: monospace;
 	white-space: pre;
@@ -2519,8 +2548,23 @@ tr#realtime td:first-child {
 	overflow-x: hidden;
 }
 
+.graphDrillDown {
+	display: inline-block;
+	vertical-align: top;
+	align-self: left;
+	z-index: 4;
+	padding: 10px 3px;
+	height: 200px;
+	width: 20px;
+}
+
+.drillDown {
+	cursor: pointer;
+}
+
 .graphWrapper {
-	position: relative;
+	padding-top:10px;
+	display: inline-block;;
 }
 
 .graphWrapperOuter[data-disabled="true"] {
@@ -2770,5 +2814,8 @@ td.center > table {
 }
 
 .tableRowGraph {
-     border: 2px solid rgba(0,0,0,0);
+	border: 2px solid rgba(0,0,0,0);
+	padding: 3px 0px;
+	line-height: 20px;
+	vertical-align: top;
 }

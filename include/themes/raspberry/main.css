@@ -76,6 +76,42 @@ fieldset {
 	margin: 0px;
 }
 
+.cols1 {
+	width: 100%;
+	display:table-cell;
+}
+
+.cols2 {
+	width: 50%;
+	display:table-cell;
+}
+
+.cols3 {
+	width: 33%;
+	display:table-cell;
+}
+
+.cols4 {
+	width: 25%;
+	display:table-cell;
+}
+
+.cols5 {
+	width: 20%;
+	display:table-cell;
+}
+
+.cols6 {
+	width: 16.6%;
+	display:table-cell;
+}
+
+.graphPage {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
 hr.menu {
 	border: 0;
 	height: 1px;
@@ -927,8 +963,21 @@ legend {
 	vertical-align: top;
 }
 
+.graphDrillDown {
+	padding: 10px 3px;
+	display: inline-block;
+	vertical-align: top;
+	align-self: left;
+	z-index: 4;
+	height: 100%;
+	height: 200px;
+	width: 22px;
+	min-width: 22px;
+}
+
 .graphWrapper {
-	position: relative;
+	padding: 10px 3px;
+	display: inline-block;
 }
 
 .cactiGraphContentArea {
@@ -1465,6 +1514,12 @@ th.sortable {
 	max-width: 20px;
 	width: 20px;
 	background: #a275A2;
+}
+
+.tableRowGraph {
+	padding: 3px;
+	line-height: 22px;
+	vertical-align: top;
 }
 
 .tableRowGraph td {
@@ -2021,6 +2076,10 @@ ul#nav {
 	opacity: 0.95;
 	border-radius: 5px !important;
 	border: transparent;
+}
+
+.ui-selectmenu-search input {
+	width: 100%;
 }
 
 div.preformatted {

@@ -778,12 +778,24 @@ function show_cacti_processes() {
 		foreach ($processes as $p) {
 			form_alternate_row('line' . $p['pid'], false);
 
+			if ($p['timeout'] != 'N/A') {
+				$timeout_time = $p['timeout'];
+				$timeout_date = get_daysfromtime($timeout_time, true);
+
+				if (strpos($timeout_date, 'y:') !== false) {
+					$timeout_date = __('> 1 Year');
+				}
+			} else {
+				$timeout_date = $p['timeout'];
+			}
+
 			form_selectable_cell($p['tasktype'], $p['pid']);
 			form_selectable_cell(filter_value(strtoupper($p['taskname']), ''), $p['pid']);
 			form_selectable_cell($p['taskid'], $p['pid'], '', 'right');
 			form_selectable_cell($p['runtime'], $p['pid'], '', 'right');
 			form_selectable_cell($p['pid'], $p['pid'], '', 'right');
-			form_selectable_cell($p['timeout'], $p['pid'], '', 'right');
+			//form_selectable_cell($p['timeout'], $p['pid'], '', 'right');
+			form_selectable_cell($timeout_date, $p['pid'], '', 'right');
 			form_selectable_cell($p['started'], $p['pid'], '', 'right');
 			form_selectable_cell($p['last_update'], $p['pid'], '', 'right');
 
@@ -1006,37 +1018,44 @@ function show_database_settings() {
 function show_database_permissions() {
 	$status = db_get_permissions(true);
 
-	print "<table id='tables' class='cactiTable'>";
-	print '<thead>';
-	print "<tr class='tableHeader'>";
-	print "  <th class='tableSubHeaderColumn'>" . __('Permission Name') . '</th>';
-	print "  <th class='tableSubHeaderColumn'>" . __('Value')           . '</th>';
-	print "  <th class='tableSubHeaderColumn'>" . __('Permission Name') . '</th>';
-	print "  <th class='tableSubHeaderColumn'>" . __('Value')           . '</th>';
-	print '</tr>';
-	print '</thead>';
+	$display_text = array(
+		__('Permission Name'), __('Database'), __('Value'),
+		__('Permission Name'), __('Database'), __('Value')
+	);
+
+	html_header($display_text);
 
 	$r = 0;
+	$j = 1;
 
-	foreach ($status as $k => $v) {
-		if (($r % 2) == 0) {
-			form_alternate_row();
+	foreach ($status as $database => $perms) {
+		$first = true;
+		$r = 0;
+
+		foreach($perms as $key => $value) {
+			if (($r % 2) == 0 || $first) {
+				form_alternate_row("line$j");
+			}
+
+			print '<td>' . $key      . '</td>';
+			print '<td>' . $database . '</td>';
+			print '<td>' . ($value ? __('Yes') : __('No')) . '</td>';
+
+			if (($r % 2) == 1) {
+				form_end_row();
+			}
+
+			$r++;
+			$first = false;
 		}
-
-		print '<td>' . $k . '</td>';
-		print '<td>' . ($v ? __('Yes') : __('No')) . '</td>';
 
 		if (($r % 2) == 1) {
+			print '<td>&nbsp;</td>';
+			print '<td>&nbsp;</td>';
+			print '<td>&nbsp;</td>';
 			form_end_row();
+			$j++;
 		}
-
-		$r++;
-	}
-
-	if (($r % 2) == 1) {
-		print '<td>&nbsp;</td>';
-		print '<td>&nbsp;</td>';
-		form_end_row();
 	}
 }
 

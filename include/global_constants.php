@@ -86,6 +86,7 @@ define('DATA_INPUT_TYPE_SCRIPT_QUERY', 4);
 define('DATA_INPUT_TYPE_PHP_SCRIPT_SERVER', 5);
 define('DATA_INPUT_TYPE_QUERY_SCRIPT_SERVER', 6);
 define('DATA_INPUT_TYPE_STREAM', 7);
+define('DATA_INPUT_TYPE_STREAM_QUERY', 8);
 
 define('GRAPH_ITEM_TYPE_COMMENT',            1);
 define('GRAPH_ITEM_TYPE_HRULE',              2);
@@ -152,6 +153,7 @@ define('AVAIL_PING', 3);
 define('AVAIL_SNMP_OR_PING', 4);
 define('AVAIL_SNMP_GET_SYSDESC', 5);
 define('AVAIL_SNMP_GET_NEXT', 6);
+define('AVAIL_STREAM', 7);
 
 define('PING_ICMP', 1);
 define('PING_UDP', 2);

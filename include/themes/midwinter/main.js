@@ -806,6 +806,7 @@ function setupDefaultElements() {
 		element.find('.iconWrapper').show(300, function() {
 			graphMenuElement = element.attr('id').replace('dd', '');
 			$(this).find('.spikekillMenu').menu('enable');
+			$(this).css('display', 'block');
 		});
 	}
 
