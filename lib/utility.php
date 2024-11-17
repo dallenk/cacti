@@ -1839,6 +1839,7 @@ function utility_php_verify_extensions(&$extensions, $source) {
 	if (empty($extensions)) {
 		$extensions = array(
 			'ctype'     => array('cli' => false, 'web' => false),
+			'curl'      => array('cli' => false, 'web' => false),
 			'date'      => array('cli' => false, 'web' => false),
 			'filter'    => array('cli' => false, 'web' => false),
 			'gd'        => array('cli' => false, 'web' => false),
