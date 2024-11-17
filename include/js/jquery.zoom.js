@@ -67,12 +67,38 @@
 										? location.protocol + '//' + location.host : location.origin)
 			},
 			raw: {																										// raw holds all raw data points and legend items, requires RRDtool 1.8.0+
-				data : [],
-				legend: []
+				data 				: [],
+				legend				: {},
+				step 				: 0,
+				start 				: 0,
+				end 				: 0,
+				current_timeframe	: 0,
+				formatted_date		: '',
 			},
 			refs: 		{
 				m: 	{ 1 : {}, 2 : {} },																					// 'references' allows addressing all zoom container elements without an extra document query
+				livedata: { container: false, header: false, content: false, items: [] }
 			}
+		};
+
+		const si_prefixes = {
+			 '24': 'Y',		// yotta
+			 '21': 'Z',		// zeta
+			 '18': 'E',		// eta
+			 '15': 'P',		// peta
+			 '12': 'T',		// tera
+			  '9': 'G',		// giga
+			  '6': 'M',		// mega
+			  '3': 'k',		// kilo
+			  '0': ' ',
+			 '-3': 'm',		// milli
+			 '-6': 'µ',		// micro
+			 '-9': 'n', 	// nano
+			'-12': 'p',		// pico
+			'-15': 'f',		// femto
+			'-18': 'a',		// atto
+			'-21': 'z',		// zepto
+			'-24': 'y'		// yocto
 		};
 
 		// support jQuery's concatenation
@@ -142,7 +168,6 @@
 						activeElement = $('#zoom-container').attr('data-active-element');
 					}
 					if (!activeElement || activeElement !== zoomGetImageId(image)){
-						//zoomElements_remove();
 						zoomFunction_init(image);
 					}
 					zoomLiveData_hide();
@@ -217,8 +242,24 @@
 
 			if (typeof(zoom.initiator.attr('data-raw')) !== 'undefined') {
 				let raw_data = JSON.parse(lzjs.decompressFromBase64(zoom.initiator.attr('data-raw')));
-				if(raw_data.data !== undefined && raw_data.data.length > 0) zoom.raw.data = raw_data.data;
-				if(raw_data.legend !== undefined && raw_data.legend.length > 0) zoom.raw.legend = raw_data.legend;
+				if(raw_data.data !== undefined && raw_data.data.length > 0) {
+					zoom.raw.data = raw_data.data;
+				}
+				if(raw_data.meta !== undefined) {
+					if (raw_data.meta.legend !== undefined) {
+						for (let key in raw_data.meta.legend) {
+							if (raw_data.meta.legend[key] !== '') {
+								zoom.raw.legend[key] = raw_data.meta.legend[key];
+							}
+						}
+					}
+					if (raw_data.meta.step !== undefined) zoom.raw.step = raw_data.meta.step;
+					if (raw_data.meta.start !== undefined) zoom.raw.start = raw_data.meta.start;
+					if (raw_data.meta.end !== undefined) zoom.raw.end = raw_data.meta.end;
+				}
+				/* reset time parameters */
+				zoom.raw.current_timeframe = 0;
+				zoom.raw.formatted_date = '';
 			}
 
 			// add all additional HTML elements to the DOM if necessary and register
@@ -365,14 +406,30 @@
 			}
 
 			// add a hidden live data container
-			zoom.refs.livedata = $('#zoom-livedata');
-			if (zoom.refs.livedata.length === 0) {
-				zoom.refs.livedata = $('<div id="zoom-livedata" class="zoom-livedata"></div>').appendTo('body');
+			zoom.refs.livedata.container = $('#zoom-livedata');
+			if (zoom.refs.livedata.container.length === 0) {
+				zoom.refs.livedata.container = $('<div id="zoom-livedata" class="zoom-livedata"></div>').appendTo('body');
 				zoom.refs.livedata.header = $('<div id="zoom-livedata-header" class="zoom-livedata-header"></div>').appendTo('#zoom-livedata');
 				zoom.refs.livedata.content = $('<div id="zoom-livedata-content" class="zoom-livedata-content"></div>').appendTo('#zoom-livedata');
 			}else {
 				zoom.refs.livedata.header = $('#zoom-livedata-header');
 				zoom.refs.livedata.content = $('#zoom-livedata-content');
+				zoom.refs.livedata.content.empty();
+			}
+
+			for (let key in zoom.raw.legend) {
+				let ref = 'zoom-livedata-item-' + key;
+				zoom.refs.livedata.items[key] = $('<div id="' + ref + '" class="zoom-livedata-item">' +
+					'<div id="' + ref + '-color" class="zoom-livedata-color"></div>' +
+					'<div id="' + ref + '-title" class="zoom-livedata-title">' + zoom.raw.legend[key].legend + '</div>' +
+					'<div id="' + ref + '-value" class="zoom-livedata-value"></div>' +
+					'<div id="' + ref + '-unit" class="zoom-livedata-unit"></div>' +
+					'</div>').appendTo('#zoom-livedata-content');
+				zoom.refs.livedata.items[key].color = $('#'+ref+'-color');
+				zoom.refs.livedata.items[key].color.css("background-color", '#'+zoom.raw.legend[key].color);
+				zoom.refs.livedata.items[key].title = $('#'+ref+'-title');
+				zoom.refs.livedata.items[key].value = $('#'+ref+'-value');
+				zoom.refs.livedata.items[key].unit 	= $('#'+ref+'-unit');
 			}
 
 			// ensure that zoom markers are hidden
@@ -439,8 +496,7 @@
 				zoom.box.width = zoom.graph.width;
 				zoom.refs.box.css({ width: zoom.box.width + 'px' });
 				zoom.refs.area.resizable({ containment: '#zoom-box', handles: 'e, w' });
-				zoom.refs.box.off('mousedown').on('mousedown', '', {zoom : zoom}, function(e) {
-					let zoom = e.data.zoom;
+				zoom.refs.box.off().on('mousedown', '', {zoom : zoom}, function(e) {
 					switch(e.which) {
 						/* clicking the left mouse button will initiate a zoom-in */
 						case 1:
@@ -449,18 +505,21 @@
 							// ensure menu is closed
 							zoomContextMenu_hide();
 							// hide Live Data
-							zoomLiveData_hide();
+							// zoomLiveData_hide();
 							// reset the zoom area
 							zoom.attr.start = e.pageX;
 							zoom.refs.box.css({ cursor:'e-resize' });
 							zoom.refs.area.css({ width:'0px', left: zoom.attr.start-zoom.image.left+'px', display:'block'  });
 						break;
 					}
-				});
+				}).on(
+					'mousemove', function(e) { zoomAction_draw(e); zoomAction_position_crosshair(e) }
+				).on(
+					'mouseleave', function(e) {zoomAction_draw(e); zoomAction_position_crosshair(e) }
+				);
 
 				/* register the mouse up event */
 				$('#zoom-box, #zoom-area').off('mouseup').on('mouseup', '', {zoom:zoom},function(e) {
-					let zoom = e.data.zoom;
 					switch(e.which) {
 						/* leaving the left mouse button will execute a zoom in */
 						case 1:
@@ -479,15 +538,7 @@
 							}
 						break;
 					}
-				}).on(
-					/* Stretch the zoom area in that direction, the user moved the mouse pointer.
-				   	   That is required to get it working faultlessly with Opera, IE and Chrome
-				   	*/
-					'mousemove', function(e) {
-						zoomAction_position_crosshair(e);
-						zoomAction_draw(e);
-					}
-				);
+				});
 
 				/* capture mouse up/down events for zoom */
 				$(document).off('mousedown').on('mousedown', function() {
@@ -654,7 +705,7 @@
 											/* let the tooltip follow its marker */
 											zoom.refs.m[marker].tooltip.css({ left: zoom.marker[marker].left -zoom.marker[marker].width });
 										}
-
+										zoomAction_position_crosshair(e);
 									},
 								stop:
 									function(event,ui) {
@@ -935,7 +986,7 @@
 		function zoomLiveData_hide() {
 			zoom.refs.crosshair_x.hide();
 			zoom.refs.crosshair_y.hide();
-			zoom.refs.livedata.hide();
+			zoom.refs.livedata.container.hide();
 		}
 
 		/**
@@ -1152,7 +1203,7 @@
 		}
 
 		function zoomLiveData_show(e) {
-			if (zoom.raw.data.length > 0 ) {
+			if (zoom.raw.data.length > 0) {
 				if (e.type === 'mousemove' || e.type === 'mouseenter') {
 					let container_y_pos = e.pageY;
 					let container_y_offset = 10;
@@ -1164,21 +1215,48 @@
 					let window_size_y_1 = $(document).scrollTop();
 					let window_size_y_2 = $(window).height() + $(document).scrollTop();
 
-					let container_height = zoom.refs.livedata.outerHeight();
-					let container_width = zoom.refs.livedata.outerWidth();
+					let container_height = zoom.refs.livedata.container.outerHeight();
+					let container_width = zoom.refs.livedata.container.outerWidth();
 
-					const unixTime = parseInt(parseInt(zoom.graph.start) + (e.pageX - zoom.image.left - zoom.box.left + 1) * zoom.graph.secondsPerPixel);
-					const date = new Date(unixTime * 1000);
-					const formatted_date = new Intl.DateTimeFormat(navigator.languages, {
-						year: "numeric",
-						month: "numeric",
-						day: "numeric",
-						hour: "numeric",
-						minute: "numeric",
-						second: "numeric",
-						hour12: false,
-					}).format(date);
-					zoom.refs.livedata.header.html(formatted_date);
+					let unixTime = parseInt(parseInt(zoom.graph.start) + (e.pageX - zoom.image.left - zoom.box.left + 1) * zoom.graph.secondsPerPixel);
+					let unixTimeframe = -1;
+
+					if (zoom.raw.step > 0) {
+						unixTimeframe = unixTime - unixTime % zoom.raw.step;
+
+						// avoid superfluous calculation steps immediately
+						if (zoom.raw.current_timeframe !== unixTimeframe) {
+
+							const index = (unixTimeframe - zoom.raw.start) / zoom.raw.step + 1;
+
+							for (let key in zoom.raw.legend) {
+								let dataIndex = key;
+								dataIndex++;
+								let value = zoom.raw.data[index][dataIndex];
+								if (value !== null) {
+									value = zoomFormatNumToSI(value);
+								}
+								zoom.refs.livedata.items[key].value.html(value === null ? 'n/a  ' : value);
+							}
+							zoom.raw.current_timeframe = unixTimeframe;
+						}
+						unixTime = unixTimeframe;
+					}
+
+					// avoid superfluous calculation steps immediately
+					if (zoom.raw.formatted_date === '' || zoom.raw.current_timeframe !== unixTimeframe) {
+						const date = new Date(unixTime * 1000);
+						const formatted_date = new Intl.DateTimeFormat(navigator.languages, {
+							year: "numeric",
+							month: "numeric",
+							day: "numeric",
+							hour: "numeric",
+							minute: "numeric",
+							second: "numeric",
+							hour12: false,
+						}).format(date);
+						zoom.refs.livedata.header.html(formatted_date);
+					}
 
 					if ((container_x_pos + container_x_offset + container_width) > window_size_x_2) {
 						container_x_offset = -1 * (container_x_offset + container_width);
@@ -1187,17 +1265,34 @@
 						container_y_offset = -1 * (container_y_offset + container_height);
 					}
 
-					zoom.refs.livedata.css({
+					zoom.refs.livedata.container.css({
 						left: container_x_pos + container_x_offset,
 						top: container_y_pos + container_y_offset,
 						zIndex: '101'
 					}).show();
 				} else {
 					if (e.type === 'mouseleave' && e.target === e.currentTarget) {
-						zoom.refs.livedata.hide();
+						zoom.refs.livedata.container.hide();
 					}
 				}
 			}
+		}
+
+		function zoomFormatNumToSI(num) {
+			if (num === 0) return '0';
+
+			const signPrefix = num < 0 ? '-' : '';
+			let sig = Math.abs(num);
+			let exponent = 0;
+			while (sig >= 1000 && exponent < 24) {
+				sig /= 1000;
+				exponent += 3;
+			}
+			while (sig < 1 && exponent > -24) {
+				sig *= 1000;
+				exponent -= 3;
+			}
+			return signPrefix + new Big(sig).toFixed(2) + ' ' + si_prefixes[exponent];
 		}
 
 		function zoomContextMenu_show(e) {

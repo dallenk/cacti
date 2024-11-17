@@ -4280,7 +4280,7 @@ function initializeGraphs(disable_cache) {
 
 				let raw_data_compressed = {};
 				if(data.data !== undefined) raw_data_compressed.data = data.data;
-				if(data.meta !== undefined) raw_data_compressed.legend = data.meta.legend;
+				if(data.meta !== undefined) raw_data_compressed.meta = data.meta;
 				raw_data_compressed = lzjs.compressToBase64(JSON.stringify(raw_data_compressed));
 
 				$(wrapper_id).empty().html(

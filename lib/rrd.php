@@ -2541,6 +2541,9 @@ function rrdtool_function_graph($local_graph_id, $rra_id, $graph_data_array, $rr
 							$txt_graph_items .= RRD_NL . 'SHIFT:' . $data_source_name . ':' . $graph_item['value'];
 						}
 
+						$text_format = trim(preg_replace( '/[^a-z0-9 _()]/i', '', $text_format));
+						$xport_meta['legend'][$text_format] = $graph_item_color_code;
+
 						break;
 					case GRAPH_ITEM_TYPE_STACK:
 						if ($graph_variables['text_format'][$graph_item_id] != '') {
@@ -2559,6 +2562,9 @@ function rrdtool_function_graph($local_graph_id, $rra_id, $graph_data_array, $rr
 						if ($graph_item['shift'] == CHECKED && $graph_item['value'] > 0) {      # create a SHIFT statement
 							$txt_graph_items .= RRD_NL . 'SHIFT:' . $data_source_name . ':' . $graph_item['value'];
 						}
+
+						$text_format = trim(preg_replace( '/[^a-z0-9 _()]/i', '', $text_format));
+						$xport_meta['legend'][$text_format] = $graph_item_color_code;
 
 						break;
 					case GRAPH_ITEM_TYPE_LINE1:
@@ -2582,6 +2588,9 @@ function rrdtool_function_graph($local_graph_id, $rra_id, $graph_data_array, $rr
 							$txt_graph_items .= RRD_NL . 'SHIFT:' . $data_source_name . ':' . $graph_item['value'];
 						}
 
+						$text_format = trim(preg_replace( '/[^a-z0-9 _()]/i', '', $text_format));
+						$xport_meta['legend'][$text_format] = $graph_item_color_code;
+
 						break;
 					case GRAPH_ITEM_TYPE_LINESTACK:
 						if ($graph_variables['text_format'][$graph_item_id] != '') {
@@ -2601,6 +2610,9 @@ function rrdtool_function_graph($local_graph_id, $rra_id, $graph_data_array, $rr
 						if ($graph_item['shift'] == CHECKED && $graph_item['value'] > 0) {      # create a SHIFT statement
 							$txt_graph_items .= RRD_NL . 'SHIFT:' . $data_source_name . ':' . $graph_item['value'];
 						}
+
+						$text_format = trim(preg_replace( '/[^a-z0-9 _()]/i', '', $text_format));
+						$xport_meta['legend'][$text_format] = $graph_item_color_code;
 
 						break;
 					case GRAPH_ITEM_TYPE_TIC:

@@ -244,6 +244,21 @@ if ($output !== false && $output != '' && strpos($output, 'image = ') !== false)
 		$parts = explode(' = ', $line);
 		$oarray[$parts[0]] = trim($parts[1]);
 	}
+
+	if (isset($oarray['meta'])) {
+		if(isset($oarray['meta']['legend']) & isset($xport_meta['legend'])) {
+			foreach ($oarray['meta']['legend'] as $key => $value) {
+				$legend = trim(preg_replace( '/[^a-z0-9 _()]/i', '', $value ));
+				if($legend) {
+					$color = (isset($xport_meta['legend'][$legend])) ? $xport_meta['legend'][$legend] : '';
+					$oarray['meta']['legend'][$key] = array('legend' => $legend, 'color' => $color);
+				}else{
+					unset($oarray['meta']['legend'][$key]);
+				}
+			}
+		}
+	}
+
 } else {
 	/* image type now png */
 	$oarray['type'] = 'png';
