@@ -197,6 +197,43 @@ input[type="checkbox"]:focus-within + label:before {
     box-shadow: var(--background-content) 0 0 0 2px, var(--border-color-highlight) 0 0 0 3px;
 }
 
+.cols1 {
+    width: 100%;
+    display:table-cell;
+}
+
+.cols2 {
+    width: 50%;
+    display:table-cell;
+}
+
+.cols3 {
+    width: 33%;
+    display:table-cell;
+}
+
+.cols4 {
+    width: 25%;
+    display:table-cell;
+}
+
+.cols5 {
+    width: 20%;
+    display:table-cell;
+}
+
+.cols6 {
+    width: 16.6%;
+    display:table-cell;
+}
+
+.graphPage {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+}
+
+
 /* New Checkbox Stuff */
 .checkboxSwitch {
     position: relative;
@@ -1260,6 +1297,7 @@ legend::before {
 }
 
 .graphWrapper {
+    width: fit-content;
     position: relative;
     border: 1px solid var(--border-color);
     border-radius: 2px;
