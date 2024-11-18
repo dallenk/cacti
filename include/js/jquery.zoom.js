@@ -78,6 +78,19 @@
 			refs: 		{
 				m: 	{ 1 : {}, 2 : {} },																					// 'references' allows addressing all zoom container elements without an extra document query
 				livedata: { container: false, header: false, content: false, items: [] }
+			},
+			obj: {
+				date : new Intl.DateTimeFormat(navigator.languages, {
+					year: "numeric",
+					month: "numeric",
+					day: "numeric",
+				}),
+				time : new Intl.DateTimeFormat(navigator.languages, {
+					hour: "numeric",
+					minute: "numeric",
+					second: "numeric",
+					hour12: false,
+				})
 			}
 		};
 
@@ -593,7 +606,7 @@
 							/* place the marker's tooltip, update its value and make it visible if necessary (Setting: 'Always On') */
 							zoom.marker[marker].unixtime = parseInt(parseInt(zoom.graph.start) + (pos_relative_left - zoom.box.left)*zoom.graph.secondsPerPixel);
 							$('#zoom-marker-tooltip-value-' + marker).html(
-								unixTime2Date(zoom.marker[marker].unixtime).replace(' ', '<br>')
+								zoomFormattedDateTime(zoom.marker[marker].unixtime).replace(' ', '<br>')
 							);
 							zoom.marker[marker].width = Math.ceil( zoom.refs.m[marker].tooltip.width() );
 							zoom.marker[marker].height = Math.ceil( zoom.refs.m[marker].tooltip.height() );
@@ -673,7 +686,7 @@
 										/* update the timestamp shown in tooltip */
 										zoom.marker[marker].unixtime = Math.ceil( parseFloat(parseInt(zoom.graph.start) + (zoom.marker[marker].left - zoom.graph.left)*zoom.graph.secondsPerPixel));
 										$('#zoom-marker-tooltip-value-' + marker).html(
-											unixTime2Date(zoom.marker[marker].unixtime).replace(' ', '<br>')
+											zoomFormattedDateTime(zoom.marker[marker].unixtime).replace(' ', '<br>')
 										);
 
 										zoom.marker[marker].width = zoom.refs.m[marker].tooltip.width();
@@ -1245,17 +1258,7 @@
 
 					// avoid superfluous calculation steps immediately
 					if (zoom.raw.formatted_date === '' || zoom.raw.current_timeframe !== unixTimeframe) {
-						const date = new Date(unixTime * 1000);
-						const formatted_date = new Intl.DateTimeFormat(navigator.languages, {
-							year: "numeric",
-							month: "numeric",
-							day: "numeric",
-							hour: "numeric",
-							minute: "numeric",
-							second: "numeric",
-							hour12: false,
-						}).format(date);
-						zoom.refs.livedata.header.html(formatted_date);
+						zoom.refs.livedata.header.html( zoomFormattedDateTime(unixTime) );
 					}
 
 					if ((container_x_pos + container_x_offset + container_width) > window_size_x_2) {
@@ -1276,6 +1279,11 @@
 					}
 				}
 			}
+		}
+
+		function zoomFormattedDateTime(unixTime) {
+			const date = new Date(unixTime * 1000);
+			return zoom.obj.date.format(date) + ' ' +  zoom.obj.time.format(date);
 		}
 
 		function zoomFormatNumToSI(num) {
