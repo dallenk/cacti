@@ -1567,7 +1567,7 @@ function db_table_create($table, $data, $log = true, $db_conn = false) {
 
 		if (db_execute($sql, $log, $db_conn)) {
 			if (isset($data['charset'])) {
-				db_execute("ALLTER TABLE `$table` CHARSET = " . $data['charset']);
+				db_execute("ALTER TABLE `$table` CHARSET = " . $data['charset']);
 			}
 
 			if (isset($data['collate'])) {
