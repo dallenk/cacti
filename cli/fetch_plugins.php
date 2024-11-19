@@ -23,72 +23,102 @@
  +-------------------------------------------------------------------------+
 */
 
+ini_set('output_buffering', 'Off');
+
 require(__DIR__ . '/../include/cli_check.php');
-require_once(CACTI_PATH_LIBRARY . '/poller.php');
-require_once(CACTI_PATH_LIBRARY . '/data_query.php');
-require_once(CACTI_PATH_LIBRARY . '/dsstats.php');
-require_once(CACTI_PATH_LIBRARY . '/dsdebug.php');
-require_once(CACTI_PATH_LIBRARY . '/boost.php');
-require_once(CACTI_PATH_LIBRARY . '/rrd.php');
+require_once(CACTI_PATH_LIBRARY . '/plugins.php');
+
+ini_set('max_execution_time', '0');
+ini_set('memory_limit', '-1');
+
+chdir('..');
+
+if ($config['poller_id'] > 1) {
+	print "FATAL: This utility is designed for the main Data Collector only" . PHP_EOL;
+	exit(1);
+}
 
 /* process calling arguments */
 $parms = $_SERVER['argv'];
 array_shift($parms);
 
+$debug = false;
+$force = false;
+
 if (cacti_sizeof($parms)) {
-	foreach ($parms as $parameter) {
-		if (strpos($parameter, '=')) {
-			list($arg, $value) = explode('=', $parameter, 2);
-		} else {
-			$arg   = $parameter;
-			$value = '';
-		}
+	$shortopts = 'VvHh';
 
-		switch ($arg) {
-			case '--version':
-			case '-V':
-			case '-v':
+	$longopts = array(
+		// Options without a value
+		'debug',
+		'force',
+		'version',
+		'help',
+	);
+
+	$options = getopt($shortopts, $longopts);
+
+	foreach($options as $arg => $value) {
+		switch($arg) {
+			case 'debug':
+				$debug = true;
+
+				break;
+			case 'force':
+				$force = true;
+
+				break;
+			case 'version':
+			case 'V':
+			case 'v':
 				display_version();
-
 				exit(0);
-			case '--help':
-			case '-H':
-			case '-h':
+			case 'help':
+			case 'H':
+			case 'h':
 				display_help();
-
 				exit(0);
-
 			default:
-				print 'ERROR: Invalid Parameter ' . $parameter . "\n\n";
+				print "ERROR: Invalid Argument: ($arg)" . PHP_EOL . PHP_EOL;
 				display_help();
-
 				exit(1);
 		}
 	}
 }
 
-/* record the start time */
-$start = microtime(true);
+$fstart = microtime(true);
 
-/* open a pipe to rrdtool for writing */
-$rrdtool_pipe = rrd_init();
+$php_binary = read_config_option('path_php_binary');
 
-$rrds_processed = 0;
-
-while (db_fetch_cell('SELECT count(*) FROM poller_output') > 0) {
-	$rrds_processed = $rrds_processed + process_poller_output($rrdtool_pipe, false);
+if (!$force) {
+	if (!register_process_start('pfetch', 'master', 0, 900)) {
+		print "WARNING: Another plugin fetch process is running" . PHP_EOL;
+		exit(0);
+	}
+} else {
+	debug('Fetch Process is being forced');
 }
 
-print "There were $rrds_processed RRD updates made this pass\n";
+debug('About to fetch Cacti Plugins from GitHub');
 
-rrd_close($rrdtool_pipe);
+plugin_fetch_latest_plugins();
+
+if (!$force) {
+	unregister_process('pfetch', 'master', 0);
+}
+
+$fend = microtime(true);
+
+debug(sprintf('Fetch Process has Completed in %0.2f seconds', $fend - $fstart));
+
+exit(0);
 
 /**
  * display_version - displays version information 
  */
 function display_version() {
 	$version = get_cacti_cli_version();
-	print "Cacti Process Poller Output Utility, Version $version, " . COPYRIGHT_YEARS . "\n";
+	print "Cacti Fetch Latest Plugins Utility, Version $version, " . COPYRIGHT_YEARS . "\n";
 }
 
 /**
@@ -97,6 +127,17 @@ function display_version() {
 function display_help() {
 	display_version();
 
-	print "\nusage: poller_output_empty.php\n\n";
-	print "A utility to process the poller output table.  This tool is deprecated but should work.\n\n";
+	print PHP_EOL;
+	print 'usage: fetch_plugins.php [ --debug ]' . PHP_EOL . PHP_EOL;
+	print 'A utility gathers the latest official plugins from the Cacti Group GitHub' . PHP_EOL;
+	print 'site and prepares them from loading and install' . PHP_EOL;
 }
+
+function debug($message) {
+	global $debug;
+
+	if ($debug) {
+		print('DEBUG: ' . $message . "\n");
+	}
+}
+

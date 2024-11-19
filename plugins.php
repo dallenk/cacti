@@ -206,9 +206,23 @@ switch($action) {
 
 		break;
 	case 'latest':
-		plugin_fetch_latest_plugins();
+		$running = is_process_running('pfetch', 'master', 0);
+
+		if ($running === false) {
+			$php_binary = read_config_option('path_php_binary');
+
+			exec_background($php_binary, CACTI_PATH_CLI . '/fetch_plugins.php');
+
+			usleep(300000);
+
+			raise_message('fetch_background', __('The fetch latest plugins process has been launched into background.'), MESSAGE_LEVEL_INFO);
+		} elseif ($running === true) {
+			raise_message('fetch_background', __('The fetch latest plugins process has already been started.'), MESSAGE_LEVEL_INFO);
+		}
 
 		header('Location: plugins.php');
+
+		exit;
 
 		break;
 	case 'install':

@@ -38,9 +38,9 @@ switch (get_request_var('action')) {
 		$running = is_process_running('pushout', 'rmaster', 0);
 
 		if ($running === false) {
-    		$php_binary = read_config_option('path_php_binary');
+			$php_binary = read_config_option('path_php_binary');
 
-    		exec_background($php_binary, CACTI_PATH_CLI . '/rebuild_poller_cache.php');
+			exec_background($php_binary, CACTI_PATH_CLI . '/rebuild_poller_cache.php');
 
 			usleep(300000);
 
