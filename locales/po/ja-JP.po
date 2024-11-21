@@ -1,5 +1,5 @@
 msgid ""
-msgstr "Project-Id-Version: cacti\nReport-Msgid-Bugs-To: developers@cacti.net\nPOT-Creation-Date: 2024-04-20 18:16-0400\nPO-Revision-Date: 2024-11-21 22:35+0000\nLast-Translator: Nakayama Kito <nakayamakito@icloud.com>\nLanguage-Team: Japanese <http://translate.cacti.net/projects/cacti/core-v1-2-x/ja/>\nLanguage: ja-JP\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 4.8.1\n"
+msgstr "Project-Id-Version: cacti\nReport-Msgid-Bugs-To: developers@cacti.net\nPOT-Creation-Date: 2024-04-20 18:16-0400\nPO-Revision-Date: 2024-11-21 23:01+0000\nLast-Translator: Nakayama Kito <nakayamakito@icloud.com>\nLanguage-Team: Japanese <http://translate.cacti.net/projects/cacti/core-v1-2-x/ja/>\nLanguage: ja-JP\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=1; plural=0;\nX-Generator: Weblate 4.8.1\n"
 
 #: about.php:29 include/global_arrays.php:2630 lib/html.php:2543
 msgid "About Cacti"
@@ -1330,9 +1330,9 @@ msgid "Are You Sure?"
 msgstr "本当にしますか?"
 
 #: automation_graph_rules.php:420
-#, fuzzy, php-format
+#, php-format
 msgid "Are you sure you want to delete the Rule '%s'?"
-msgstr "ルールを削除してもよろしいですか？"
+msgstr "ルールを削除してもよろしいですか '%s'？"
 
 #: automation_graph_rules.php:535
 #, php-format
@@ -1631,9 +1631,9 @@ msgid "Define the number of threads to use for discovering this Network Range."
 msgstr "このネットワーク範囲を検出するために使用するスレッド数を定義します。"
 
 #: automation_networks.php:498
-#, fuzzy, php-format
+#, php-format
 msgid "%d Thread"
-msgstr "スレッド"
+msgstr "%d スレッド"
 
 #: automation_networks.php:499 automation_networks.php:500
 #: automation_networks.php:501 automation_networks.php:502
@@ -1645,9 +1645,9 @@ msgstr "スレッド"
 #: include/global_arrays.php:828 include/global_arrays.php:829
 #: include/global_arrays.php:830 include/global_arrays.php:831
 #: include/global_arrays.php:832 include/global_arrays.php:833
-#, fuzzy, php-format
+#, php-format
 msgid "%d Threads"
-msgstr "スレッド"
+msgstr "%d スレッド"
 
 #: automation_networks.php:515
 msgid "Run Limit"
@@ -2170,9 +2170,9 @@ msgid "SNMP Option:"
 msgstr "SNMPオプション"
 
 #: automation_snmp.php:363
-#, fuzzy, php-format
+#, php-format
 msgid "SNMP Version: <b>%s</b>"
-msgstr "SNMP バージョン"
+msgstr "SNMP バージョン: <b>%s</b>"
 
 #: automation_snmp.php:364
 #, php-format
@@ -2448,9 +2448,9 @@ msgid "Created Trees"
 msgstr "作成された木"
 
 #: automation_tree_rules.php:486
-#, fuzzy, php-format
+#, php-format
 msgid "Are you sure you want to DELETE the Rule '%s'?"
-msgstr "ルールを削除してもよろしいですか？"
+msgstr "ルールを削除してもよろしいですか '%s'？"
 
 #: automation_tree_rules.php:544
 msgid "Eligible Objects"
@@ -3196,9 +3196,9 @@ msgid "Apply Suggested Fixes"
 msgstr "推奨名を再適用"
 
 #: data_debug.php:905
-#, fuzzy, php-format
+#, php-format
 msgid "Repair Steps [ %s ]"
-msgstr "修理手順"
+msgstr "修理手順 [ %s ]"
 
 #: data_debug.php:907
 msgid "Repair Steps [ Run Fix from Command Line ]"
@@ -3283,14 +3283,14 @@ msgid "Click 'Continue' to delete the following Data Input Field."
 msgstr "[続行]をクリックして、次のデータ入力フィールドを削除します。"
 
 #: data_input.php:306
-#, fuzzy, php-format
+#, php-format
 msgid "Field Name: %s"
-msgstr "名前:"
+msgstr "名前: %s"
 
 #: data_input.php:307
-#, fuzzy, php-format
+#, php-format
 msgid "Friendly Name: %s"
-msgstr "フレンドリ名："
+msgstr "フレンドリ名：%s"
 
 #: data_input.php:313 host_templates.php:306 host_templates.php:369
 msgid "Remove Data Input Field"
@@ -3662,9 +3662,9 @@ msgid "Click 'Continue' to delete the following Data Source Profile RRA."
 msgstr "[続行]をクリックして、次のデータソースプロファイルRRAを削除します。"
 
 #: data_source_profiles.php:418
-#, fuzzy, php-format
+#, php-format
 msgid "Profile Name: %s"
-msgstr "プロファイル名:"
+msgstr "プロファイル名: %s"
 
 #: data_source_profiles.php:424
 msgid "Remove Data Source Profile RRA"
@@ -4095,9 +4095,9 @@ msgid "Data Sources [ Non Device Based ]"
 msgstr "データソース[デバイスなし]"
 
 #: data_sources.php:1370
-#, fuzzy, php-format
+#, php-format
 msgid "Data Sources [ %s ]"
-msgstr "データソース"
+msgstr "データソース[ %s ]"
 
 #: data_sources.php:1443
 msgid "Bad Indexes"
@@ -5025,9 +5025,9 @@ msgid "Data Sources [No Device]"
 msgstr "データソース[デバイスなし]"
 
 #: graphs_items.php:338
-#, fuzzy, php-format
+#, php-format
 msgid "Data Sources [%s]"
-msgstr "データソース"
+msgstr "データソース [%s]"
 
 #: graphs_items.php:353 include/global_arrays.php:1360
 #: include/global_form.php:1655
@@ -5119,9 +5119,9 @@ msgid "Error Parsing Data Query Resource XML file for Data Query '%s' with id '%
 msgstr "ID '%s'のデータクエリ '%s'のデータクエリリソースXMLファイルの解析中にエラーが発生しました"
 
 #: graphs_new.php:737
-#, fuzzy, php-format
+#, php-format
 msgid "Data Query [%s]"
-msgstr "質問データ"
+msgstr "質問データ [%s]"
 
 #: graphs_new.php:860
 msgid "From there you can get more information."
@@ -5174,9 +5174,8 @@ msgid "Cacti GitHub Site"
 msgstr "Cacti GitHubサイト"
 
 #: help.php:88
-#, fuzzy
 msgid "Open a ticket at "
-msgstr "新規課題を提出"
+msgstr "新規課題を提出 "
 
 #: help.php:88
 #, php-format
@@ -6404,9 +6403,9 @@ msgid "Every %d Day"
 msgstr "%d日ごと"
 
 #: include/global_arrays.php:758
-#, fuzzy, php-format
+#, php-format
 msgid "%0.1f Minutes"
-msgstr "%0.1f分"
+msgstr "%0.1f 分"
 
 #: include/global_arrays.php:791 include/global_arrays.php:1474
 #: include/global_settings.php:1596 rrdcleaner.php:525
@@ -7037,9 +7036,9 @@ msgid "Previous Year"
 msgstr "前年"
 
 #: include/global_arrays.php:1457
-#, fuzzy, php-format
+#, php-format
 msgid "%d Min"
-msgstr "%d分"
+msgstr "%d 分"
 
 #: include/global_arrays.php:1512
 msgid "Month Number, Day, Year"
@@ -7073,9 +7072,9 @@ msgstr "ブースト後"
 #: include/global_arrays.php:1539 include/global_arrays.php:1540
 #: include/global_arrays.php:1541 include/global_arrays.php:1603
 #: include/global_arrays.php:1604
-#, fuzzy, php-format
+#, php-format
 msgid "%d MBytes"
-msgstr "Mバイト"
+msgstr "%d Mバイト"
 
 #: include/global_arrays.php:1542
 msgid "1 GByte"
@@ -7083,17 +7082,17 @@ msgstr "1Gバイト"
 
 #: include/global_arrays.php:1543 include/global_arrays.php:1606
 #: lib/boost.php:61
-#, fuzzy, php-format
+#, php-format
 msgid "%s GBytes"
-msgstr "Gバイト"
+msgstr "%s Gバイト"
 
 #: include/global_arrays.php:1544 include/global_arrays.php:1545
 #: include/global_arrays.php:1607 include/global_arrays.php:1608
 #: include/global_arrays.php:1609 include/global_arrays.php:1610
 #: include/global_arrays.php:1611 include/global_arrays.php:1612
-#, fuzzy, php-format
+#, php-format
 msgid "%d GBytes"
-msgstr "Gバイト"
+msgstr "%d Gバイト"
 
 #: include/global_arrays.php:1565
 msgid "2,000 Data Source Items"
@@ -7145,14 +7144,14 @@ msgstr "6時間"
 
 #: include/global_arrays.php:1599 include/global_settings.php:1450
 #: include/global_settings.php:1451 include/global_settings.php:1452
-#, fuzzy, php-format
+#, php-format
 msgid "%s Hours"
-msgstr "%s時"
+msgstr "%s 時"
 
 #: include/global_arrays.php:1605
-#, fuzzy, php-format
+#, php-format
 msgid "%d GByte"
-msgstr "GByte"
+msgstr "%d GByte"
 
 #: include/global_arrays.php:1613 utilities.php:2710 utilities.php:2711
 #: utilities.php:2760
@@ -7182,9 +7181,9 @@ msgstr "1メガバイト"
 #: include/global_arrays.php:1643 include/global_arrays.php:1644
 #: include/global_arrays.php:1645 include/global_arrays.php:1646
 #: include/global_arrays.php:1647 include/global_arrays.php:1648
-#, fuzzy, php-format
+#, php-format
 msgid "%d Megabytes"
-msgstr "メガバイト"
+msgstr "%d メガバイト"
 
 #: include/global_arrays.php:1652
 msgid "Send Now"
@@ -8012,9 +8011,9 @@ msgid "The number of SNMP OIDs that can be obtained in a single SNMP Get request
 msgstr "1回のSNMP Get要求で取得できるOIDの数を指定しました。"
 
 #: include/global_form.php:152
-#, fuzzy, php-format
+#, php-format
 msgid "%d OID"
-msgstr "OID"
+msgstr "%d OID"
 
 #: include/global_form.php:153 include/global_form.php:154
 #: include/global_form.php:155 include/global_form.php:156
@@ -8057,9 +8056,9 @@ msgstr "%d繰り返し"
 #: include/global_form.php:190 include/global_form.php:191
 #: include/global_form.php:192 include/global_form.php:193
 #: include/global_form.php:194
-#, fuzzy, php-format
+#, php-format
 msgid "%d Repetitions"
-msgstr "反復回数"
+msgstr "%d 反復回数"
 
 #: include/global_form.php:202
 msgid "SNMP Retries"
@@ -9936,18 +9935,18 @@ msgid "The default number of Device Threads.  This is only applicable when using
 msgstr "デバイススレッドのデフォルト数。これはSpine Data Collectorを使用している場合にのみ該当します。"
 
 #: include/global_settings.php:628
-#, fuzzy, php-format
+#, php-format
 msgid "%s Thread"
-msgstr "スレッド"
+msgstr "%s スレッド"
 
 #: include/global_settings.php:629 include/global_settings.php:630
 #: include/global_settings.php:631 include/global_settings.php:632
 #: include/global_settings.php:633 include/global_settings.php:634
 #: include/global_settings.php:635 include/global_settings.php:636
 #: include/global_settings.php:637
-#, fuzzy, php-format
+#, php-format
 msgid "%s Threads"
-msgstr "スレッド"
+msgstr "%s スレッド"
 
 #: include/global_settings.php:641
 msgid "Re-index Method for Data Queries"
@@ -10660,9 +10659,9 @@ msgstr "Cactiのレポート生成スクリプトがタイムアウトエラー�
 #: include/global_settings.php:1348 include/global_settings.php:1361
 #: include/global_settings.php:1389 include/global_settings.php:1430
 #: include/global_settings.php:1444
-#, fuzzy, php-format
+#, php-format
 msgid "%s Minute"
-msgstr "%s分"
+msgstr "%s 分"
 
 #: include/global_settings.php:1356
 msgid "Data Source Statistics Timeout"
@@ -10746,9 +10745,9 @@ msgstr "1プロセス"
 #: include/global_settings.php:2259 include/global_settings.php:2260
 #: include/global_settings.php:2261 include/global_settings.php:2262
 #: include/global_settings.php:2263 include/global_settings.php:2264
-#, fuzzy, php-format
+#, php-format
 msgid "%d Processes"
-msgstr "プロセス"
+msgstr "%d プロセス"
 
 #: include/global_settings.php:1425
 msgid "Maintenance Background Generation Timeout"
@@ -11774,9 +11773,9 @@ msgstr "この値は、Graph RRAから削除するスパイクの最大数を表
 #: include/global_settings.php:2484 include/global_settings.php:2485
 #: include/global_settings.php:2486 include/global_settings.php:2487
 #: include/global_settings.php:2488 include/global_settings.php:2489
-#, fuzzy, php-format
+#, php-format
 msgid "%d Spikes"
-msgstr "スパイク"
+msgstr "%d スパイク"
 
 #: include/global_settings.php:2493
 msgid "RRDfile Backup Directory"
@@ -12308,9 +12307,9 @@ msgid "A blue font color indicates that the rule will be applied to the objects 
 msgstr "青いフォント色は、ルールが問題のオブジェクトに適用されることを示します。他のオブジェクトはルールの対象になりません。"
 
 #: lib/api_automation.php:876
-#, fuzzy, php-format
+#, php-format
 msgid "Matching Objects [ %s ]"
-msgstr "マッチした天体:"
+msgstr "マッチした天体: [ %s ]"
 
 #: lib/api_automation.php:885
 msgid "Device Status"
@@ -12616,9 +12615,9 @@ msgid "Your Cacti administrator has forced complex passwords for logins and your
 msgstr "Cacti管理者がログインに複雑なパスワードを強制しているため、現在のCactiパスワードが新しい要件に一致しません。したがって、今すぐパスワードを変更する必要があります。"
 
 #: lib/auth.php:4203
-#, fuzzy, php-format
+#, php-format
 msgid "Password must be at least %d characters!"
-msgstr "パスワードは少なくとも %d 文字にする必要があります。"
+msgstr "パスワードは少なくとも %d 文字にする必要があります!"
 
 #: lib/auth.php:4209
 msgid "Your password must contain at least 1 numerical character!"
@@ -12641,14 +12640,14 @@ msgid "Authentication was previously not set.  Attempted to set to Local Authent
 msgstr "以前は認証が設定されていませんでした。ローカル認証に設定しようとしましたが、管理者アカウントが見つかりませんでした。"
 
 #: lib/boost.php:63 utilities.php:2762
-#, fuzzy, php-format
+#, php-format
 msgid "%s MBytes"
-msgstr "Mバイト"
+msgstr "%s Mバイト"
 
 #: lib/boost.php:66
-#, fuzzy, php-format
+#, php-format
 msgid "%s KBytes"
-msgstr "Kバイト"
+msgstr "%s Kバイト"
 
 #: lib/boost.php:69
 #, php-format
@@ -12798,9 +12797,9 @@ msgid "Found Type = '%s' [%s]."
 msgstr "タイプ= '{ 0 }' [%s]が見つかりました。"
 
 #: lib/data_query.php:124
-#, fuzzy, php-format
+#, php-format
 msgid "Unknown Type = '%s'."
-msgstr "不明なタイプ"
+msgstr "不明なタイプ = '%s'."
 
 #: lib/data_query.php:159
 msgid "WARNING: Sort Field Association has Changed.  Re-mapping issues may occur!"
@@ -13430,9 +13429,9 @@ msgid "WARNING: PollerID:%s has an invalid hostname:%s.  Is it not reachable via
 msgstr "警告： PollerID ：{ 0}に無効なホスト名：{ 1}があります。DNS経由では到達できませんか？"
 
 #: lib/functions.php:6455 lib/functions.php:6457
-#, fuzzy, php-format
+#, php-format
 msgid "- Beta %s"
-msgstr "ベータ線"
+msgstr "ベータ線 %s"
 
 #: lib/functions.php:6455
 #, php-format
@@ -13516,9 +13515,9 @@ msgid "All %d %s"
 msgstr "すべての%d %s"
 
 #: lib/html.php:616
-#, fuzzy, php-format
+#, php-format
 msgid "Current Page: %s"
-msgstr "現在のページ"
+msgstr "現在のページ: %s"
 
 #: lib/html.php:632
 #, php-format
@@ -14417,9 +14416,9 @@ msgid "[new]"
 msgstr "[新規]"
 
 #: lib/html_reports.php:1482
-#, fuzzy, php-format
+#, php-format
 msgid "Details %s"
-msgstr "詳細： %s."
+msgstr "詳細： %s"
 
 #: lib/html_reports.php:1531
 #, php-format
@@ -14427,9 +14426,9 @@ msgid "Report Items %s"
 msgstr "レポート項目%s"
 
 #: lib/html_reports.php:1572
-#, fuzzy, php-format
+#, php-format
 msgid "Scheduled Events %s"
-msgstr "予定されたイベント"
+msgstr "予定されたイベント %s"
 
 #: lib/html_reports.php:1583
 #, php-format
@@ -14441,9 +14440,9 @@ msgid "Item Details"
 msgstr "アイテムの詳細"
 
 #: lib/html_reports.php:1624
-#, fuzzy, php-format
+#, php-format
 msgid "Graph: %s"
-msgstr "グラフ："
+msgstr "グラフ： %s"
 
 #: lib/html_reports.php:1627 lib/html_reports.php:1653
 #: lib/html_reports.php:1666 lib/html_reports.php:1667
@@ -14452,9 +14451,9 @@ msgid "Using CSS"
 msgstr "CSSの使用"
 
 #: lib/html_reports.php:1637
-#, fuzzy, php-format
+#, php-format
 msgid "Device: %s"
-msgstr "端末"
+msgstr "端末: %s"
 
 #: lib/html_reports.php:1640
 msgid ", Graph Template: All Templates"
@@ -14471,19 +14470,19 @@ msgid ", Using RegEx: \"%s\""
 msgstr "、正規表現の使用： \"%s\""
 
 #: lib/html_reports.php:1691
-#, fuzzy, php-format
+#, php-format
 msgid "Tree: %s"
-msgstr "木："
+msgstr "木: %s"
 
 #: lib/html_reports.php:1699
-#, fuzzy, php-format
+#, php-format
 msgid ", Device: %s"
-msgstr "端末"
+msgstr "端末: %s"
 
 #: lib/html_reports.php:1701
-#, fuzzy, php-format
+#, php-format
 msgid ", Branch: %s"
-msgstr "支店:"
+msgstr "支店: %s"
 
 #: lib/html_reports.php:1704
 msgid "(All Branches)"
@@ -14502,9 +14501,9 @@ msgid "Administrator Level"
 msgstr "管理者レベル"
 
 #: lib/html_reports.php:1829
-#, fuzzy, php-format
+#, php-format
 msgid "Reports [%s]"
-msgstr "レポート"
+msgstr "レポート [%s]"
 
 #: lib/html_reports.php:1829
 msgid "User Level"
@@ -14816,9 +14815,9 @@ msgid "Please report this to the Cacti Group."
 msgstr "これをサボテングループに報告してください。"
 
 #: lib/installer.php:1579
-#, fuzzy, php-format
+#, php-format
 msgid "Unknown Reason: %s"
-msgstr "不明な理由"
+msgstr "不明な理由: %s"
 
 #: lib/installer.php:1586
 #, php-format
@@ -15748,23 +15747,23 @@ msgid "Both"
 msgstr "両方"
 
 #: lib/installer.php:3577
-#, fuzzy, php-format
+#, php-format
 msgid "No - %s"
-msgstr "%s %s"
+msgstr "No - %s"
 
 #: lib/installer.php:3582
-#, fuzzy, php-format
+#, php-format
 msgid "%s - N/A"
-msgstr "n/a"
+msgstr "%s - N/A"
 
 #: lib/installer.php:3582 lib/installer.php:3584
 msgid "Web"
 msgstr "Web"
 
 #: lib/installer.php:3584 lib/installer.php:3587
-#, fuzzy, php-format
+#, php-format
 msgid "%s - No"
-msgstr "%s %s"
+msgstr "%s - No"
 
 #: lib/installer.php:3587
 msgid "Cli"
@@ -15826,9 +15825,9 @@ msgid "Protocol Error, Unable to bind, LDAP result: (%s) on Server (%s)"
 msgstr "プロトコルエラー、バインドできません、サーバー（{ 1 }）のLDAP結果： （{ 0 }）"
 
 #: lib/ldap.php:318
-#, fuzzy, php-format
+#, php-format
 msgid "Unable to Connect to Server (%s)"
-msgstr "サーバーに接続できない"
+msgstr "サーバーに接続できない(%s)"
 
 #: lib/ldap.php:322
 #, php-format
@@ -15969,7 +15968,7 @@ msgstr "プラグイン"
 #: lib/plugins.php:1276 lib/plugins.php:1282
 #, php-format
 msgid "Requires: Cacti >= %s"
-msgstr "必要条件：サボテン>={ 0}"
+msgstr "必要条件：サボテン>= %s"
 
 #: lib/plugins.php:1279
 msgid "Legacy Plugin"
@@ -15999,9 +15998,9 @@ msgid "Problems sending Report '%s' Problem with e-mail Subsystem Error is '%s'"
 msgstr "レポート'{ 0 }'の送信の問題電子メールサブシステムエラーの問題は'{ 1 }'です"
 
 #: lib/reports.php:603
-#, fuzzy, php-format
+#, php-format
 msgid "Report '%s' Sent Successfully"
-msgstr "レポートが正常に送信されました。"
+msgstr "レポート '%s' が正常に送信されました。"
 
 #: lib/reports.php:1071 lib/reports.php:1403
 msgid "(No Graph Template)"
@@ -16391,9 +16390,9 @@ msgid "When using MariaDB 10.2.4 and above, you can use atomic writes over the d
 msgstr "MariaDB 10.2.4以降を使用する場合、パフォーマンスを向上させるために、ダブルライトバッファーでアトミック書き込みを使用できます。"
 
 #: lib/utility.php:1246
-#, fuzzy, php-format
+#, php-format
 msgid "%s Tuning"
-msgstr "チューニング"
+msgstr "%s チューニング"
 
 #: lib/utility.php:1246
 msgid "Note: Many changes below require a database restart"
@@ -16983,9 +16982,9 @@ msgid "Are you sure you want to Uninstall?"
 msgstr "アンインストールしてよろしいですか？"
 
 #: plugins.php:714 plugins.php:725
-#, fuzzy, php-format
+#, php-format
 msgid "Not Compatible, %s"
-msgstr "互換性がありません"
+msgstr "互換性がありません %s"
 
 #: plugins.php:756
 msgid "Order Before Previous Plugin"
@@ -17933,9 +17932,9 @@ msgid "Save File Locally"
 msgstr "ファイルをローカルに保存する"
 
 #: templates_export.php:170
-#, fuzzy, php-format
+#, php-format
 msgid "Available Templates [%s]"
-msgstr "利用可能なテンプレート"
+msgstr "利用可能なテンプレート [%s]"
 
 #: templates_import.php:120
 msgid "The Template Import Succeeded."
@@ -17980,9 +17979,9 @@ msgid "Damaged"
 msgstr "データソース、グラフ"
 
 #: templates_import.php:321
-#, fuzzy, php-format
+#, php-format
 msgid "Met: %d"
-msgstr "Met"
+msgstr "Met: %d"
 
 #: templates_import.php:325
 #, php-format
@@ -18504,9 +18503,9 @@ msgid "Legacy Permissions"
 msgstr "ツリー権限"
 
 #: user_admin.php:1717 user_group_admin.php:1598
-#, fuzzy, php-format
+#, php-format
 msgid "User Settings %s"
-msgstr "ユーザー設定"
+msgstr "ユーザー設定 %s"
 
 #: user_admin.php:1832 user_group_admin.php:1714
 msgid "Permissions"
@@ -18533,9 +18532,9 @@ msgid "Tree Perms"
 msgstr "ツリーパーマ"
 
 #: user_admin.php:1887
-#, fuzzy, php-format
+#, php-format
 msgid "User Management %s"
-msgstr "ユーザー管理"
+msgstr "ユーザー管理 %s"
 
 #: user_admin.php:2127
 msgid "User Management"
@@ -18969,9 +18968,9 @@ msgid "ChangeLog"
 msgstr "ChangeLogLanguage"
 
 #: utilities.php:167
-#, fuzzy, php-format
+#, php-format
 msgid "Technical Support [%s]"
-msgstr "テクニカルサポート"
+msgstr "テクニカルサポート [%s]"
 
 #: utilities.php:239
 msgid "NET-SNMP Not Installed or its paths are not set.  Please install if you wish to monitor SNMP enabled devices."
@@ -19025,9 +19024,9 @@ msgid "Different version of Cacti and Spine!"
 msgstr "サボテンと背骨の異なるバージョン！"
 
 #: utilities.php:366
-#, fuzzy, php-format
+#, php-format
 msgid "Action[%s]"
-msgstr "アクション"
+msgstr "アクション[%s]"
 
 #: utilities.php:371
 msgid "No items to poll"
@@ -19556,9 +19555,9 @@ msgid "Avg Bytes/Record:"
 msgstr "平均バイト数/記録："
 
 #: utilities.php:2704
-#, fuzzy, php-format
+#, php-format
 msgid "%d Bytes"
-msgstr "バイト"
+msgstr "%d バイト"
 
 #: utilities.php:2704
 msgid "Max Record Length:"
@@ -19637,7 +19636,7 @@ msgid "Previous Runtime Timers:"
 msgstr "詳細なランタイムタイマー："
 
 #: utilities.php:2833 utilities.php:2835
-#, fuzzy, php-format
+#, php-format
 msgid "Process: %d"
 msgstr "プロセス: %d"
 
@@ -19724,9 +19723,9 @@ msgid "Log Entries"
 msgstr "エントリー履歴"
 
 #: utilities.php:3343
-#, fuzzy, php-format
+#, php-format
 msgid "Severity Level: %s"
-msgstr "深刻度レベル"
+msgstr "深刻度レベル: %s"
 
 #: vdef.php:265
 msgid "Click 'Continue' to delete the following VDEF."
