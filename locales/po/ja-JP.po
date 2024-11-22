@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: cacti\n"
 "Report-Msgid-Bugs-To: developers@cacti.net\n"
 "POT-Creation-Date: 2023-12-01 14:22-0600\n"
-"PO-Revision-Date: 2024-11-22 02:12+0000\n"
+"PO-Revision-Date: 2024-11-22 14:58+0000\n"
 "Last-Translator: Nakayama Kito <nakayamakito@icloud.com>\n"
 "Language-Team: Japanese <http://translate.cacti.net/projects/cacti/core/ja/>"
 "\n"
@@ -60,9 +60,9 @@ msgid "Thanks"
 msgstr "謝辞"
 
 #: about.php:88
-#, fuzzy, php-format
+#, php-format
 msgid "A very special thanks to %sTobi Oetiker%s, the creator of %sRRDtool%s and the very popular %sMRTG%s."
-msgstr "％sTobi Oetiker％s、％sRRDtool％sの作成者、そして非常に人気のある％sMRTG％sのおかげです。"
+msgstr "%sRRDtool%sと非常に人気のある%sMRTG%sを生み出した%s Tobi Oetiker %sに感謝します。"
 
 #: about.php:91
 msgid "The users of Cacti"
@@ -144,9 +144,9 @@ msgid "Disassociate with Aggregate"
 msgstr "集約との関連付け解除"
 
 #: aggregate_graphs.php:114 graphs.php:256 host.php:226
-#, fuzzy, php-format
+#, php-format
 msgid "Place on a Tree (%s)"
-msgstr "木の上に置く（％s）"
+msgstr "木に置く（%s）"
 
 #: aggregate_graphs.php:579
 #, fuzzy
@@ -184,9 +184,9 @@ msgid "There are currently no Aggregate Templates defined for the selected Legac
 msgstr "現在、選択されたレガシー集約に対して定義された集約テンプレートはありません。"
 
 #: aggregate_graphs.php:845
-#, fuzzy, php-format
+#, php-format
 msgid "In order to migrate the Aggregate Graphs below to a Template based Aggregate, first create an Aggregate Template for the Graph Template '%s'."
-msgstr "以下の集計グラフをテンプレートベースの集計に移行するには、まずグラフテンプレート &#39;％1！&#39;用の集計テンプレートを作成します。"
+msgstr "以下の集計グラフをテンプレートベースの集計に移行するには、まずグラフテンプレート'%s'の集計テンプレートを作成します。"
 
 #: aggregate_graphs.php:864
 #, fuzzy
@@ -709,9 +709,8 @@ msgid "No Graphs Found"
 msgstr "グラフが見つかりません"
 
 #: aggregate_graphs.php:1984
-#, fuzzy
 msgid " [ Custom Graphs List Applied - Clear to Reset ]"
-msgstr "[カスタムグラフリストの適用 - リストからのフィルタ]"
+msgstr " [カスタムグラフリストの適用 - リストからのフィルタ]"
 
 #: aggregate_graphs.php:1984 aggregate_graphs.php:2104
 #: include/global_arrays.php:2857
@@ -831,9 +830,9 @@ msgid "Delete Aggregate Graph Templates"
 msgstr "グラフテンプレートを削除"
 
 #: aggregate_templates.php:365
-#, fuzzy, php-format
+#, php-format
 msgid "Aggregate Template [edit: %s]"
-msgstr "集約テンプレート[編集：％s]"
+msgstr "集計テンプレート[編集：%s]"
 
 #: aggregate_templates.php:367
 #, fuzzy
@@ -924,9 +923,8 @@ msgid "Verify"
 msgstr "すべて確認"
 
 #: auth_changepassword.php:135
-#, fuzzy
 msgid "You cannot use a previously entered password!"
-msgstr "以前に入力したパスワードを使用することはできません。"
+msgstr "以前に入力したパスワードを使用することはできません!"
 
 #: auth_changepassword.php:143
 #, fuzzy
@@ -1747,9 +1745,9 @@ msgid "Title Format:"
 msgstr "題名の書式:"
 
 #: automation_graph_rules.php:648
-#, fuzzy, php-format
+#, php-format
 msgid "Rule Selection [edit: %s]"
-msgstr "ルール選択[編集：％s]"
+msgstr "ルール選択[編集：%s]"
 
 #: automation_graph_rules.php:651 automation_graph_rules.php:666
 #: automation_tree_rules.php:687 automation_tree_rules.php:692
@@ -1899,14 +1897,14 @@ msgid "Import Network Discovery Rule"
 msgstr "新しいネットワーク探索範囲"
 
 #: automation_networks.php:379
-#, fuzzy, php-format
+#, php-format
 msgid "Can Not Restart Discovery for Discovery in Progress for Network '%s'"
-msgstr "ネットワーク &#39;％1！&#39;の進行中の探索に対して探索を再開できません"
+msgstr "ネットワーク'%s'で進行中の検出の検出を再開できません"
 
 #: automation_networks.php:383
-#, fuzzy, php-format
+#, php-format
 msgid "Can Not Perform Discovery for Disabled Network '%s'"
-msgstr "無効なネットワーク &#39;％1！&#39;の検出を実行できません"
+msgstr "無効なネットワーク'%s'の検出を実行できません"
 
 #: automation_networks.php:452
 #, fuzzy, php-format
@@ -1924,9 +1922,9 @@ msgid "ERROR: You must specify the Months, Weeks of Months, and Days of Week.  D
 msgstr "エラー：月、週の週、および曜日を指定する必要があります。ネットワーク％sを無効にしています。"
 
 #: automation_networks.php:482
-#, fuzzy, php-format
+#, php-format
 msgid "ERROR: Network '%s' is Invalid."
-msgstr "エラー：ネットワーク &#39;％s&#39;は無効です。"
+msgstr "エラー:ネットワーク'%s'が無効です。"
 
 #: automation_networks.php:641 host.php:432
 #, fuzzy
@@ -2673,9 +2671,9 @@ msgid "every X Weeks."
 msgstr "X週間ごと。"
 
 #: automation_networks.php:1237
-#, fuzzy, php-format
+#, php-format
 msgid "Network Discovery Range [edit: %s]"
-msgstr "ネットワーク探索範囲[編集：％s]"
+msgstr "ネットワーク検出範囲[編集：%s]"
 
 #: automation_networks.php:1240
 #, fuzzy
@@ -2925,9 +2923,9 @@ msgid "SNMP Version: <b>%s</b>"
 msgstr "SNMP バージョン: <b>%s</b>"
 
 #: automation_snmp.php:537
-#, fuzzy, php-format
+#, php-format
 msgid "SNMP Community/Username: <b>%s</b>"
-msgstr "SNMPコミュニティ/ユーザー名： <b>％s</b>"
+msgstr "SNMPコミュニティ/ユーザー名<b>：%s</b>"
 
 #: automation_snmp.php:542 automation_templates.php:674
 #: automation_templates.php:796 cdef.php:317 color_templates.php:495
@@ -2953,9 +2951,9 @@ msgid "Remove SNMP Item"
 msgstr "SNMPアイテムを削除する"
 
 #: automation_snmp.php:609
-#, fuzzy, php-format
+#, php-format
 msgid "SNMP Options [edit: %s]"
-msgstr "SNMPオプション[編集：％s]"
+msgstr "SNMPオプション[編集：%s]"
 
 #: automation_snmp.php:611
 #, fuzzy
@@ -2977,9 +2975,9 @@ msgid "Sequence of Item."
 msgstr "項目のシーケンス"
 
 #: automation_snmp.php:674
-#, fuzzy, php-format
+#, php-format
 msgid "SNMP Option Set [edit: %s]"
-msgstr "SNMPオプションセット[編集：％s]"
+msgstr "SNMPオプションセット[編集：%s]"
 
 #: automation_snmp.php:676
 #, fuzzy
@@ -3059,9 +3057,9 @@ msgstr "アクション"
 
 #: automation_snmp.php:739 lib/api_automation.php:1441
 #: lib/api_automation.php:1534 lib/api_automation.php:1629
-#, fuzzy, php-format
+#, php-format
 msgid "Item#%d"
-msgstr "商品番号％d"
+msgstr "アイテム#%d"
 
 #: automation_snmp.php:741
 msgid "none"
@@ -3612,9 +3610,9 @@ msgid "Don't Show"
 msgstr "非表示"
 
 #: automation_tree_rules.php:699
-#, fuzzy, php-format
+#, php-format
 msgid "Tree Rule Selection [edit: %s]"
-msgstr "ツリールールの選択[編集：％s]"
+msgstr "ツリールール選択[編集：%s]"
 
 #: automation_tree_rules.php:707
 #, fuzzy
@@ -3760,9 +3758,9 @@ msgid "Click 'Continue' to delete the following CDEF Item."
 msgstr "次のCDEFアイテムを削除するには、[続行]をクリックします。"
 
 #: cdef.php:310
-#, fuzzy, php-format
+#, php-format
 msgid "CDEF Name: %s"
-msgstr "CDEF名：％s"
+msgstr "CDEF名：%s"
 
 #: cdef.php:318
 #, fuzzy
@@ -3775,9 +3773,9 @@ msgid "CDEF Preview"
 msgstr "CDEFプレビュー"
 
 #: cdef.php:423
-#, fuzzy, php-format
+#, php-format
 msgid "CDEF Items [edit: %s]"
-msgstr "CDEFアイテム[編集：％s]"
+msgstr "CDEFアイテム[編集：%s]"
 
 #: cdef.php:436
 #, fuzzy
@@ -3800,9 +3798,9 @@ msgid "Enter a value for this CDEF item."
 msgstr "このCDEF項目の値を入力してください。"
 
 #: cdef.php:556
-#, fuzzy, php-format
+#, php-format
 msgid "CDEF [edit: %s]"
-msgstr "CDEF [編集：％s]"
+msgstr "CDEF [編集:%s]"
 
 #: cdef.php:558
 #, fuzzy
@@ -3818,9 +3816,9 @@ msgid "Item Value"
 msgstr "アイテム値"
 
 #: cdef.php:601 vdef.php:597
-#, fuzzy, php-format
+#, php-format
 msgid "Item #%d"
-msgstr "商品番号％d"
+msgstr "アイテム#%d"
 
 #: cdef.php:677
 #, fuzzy
@@ -3968,9 +3966,9 @@ msgid "<strong>hex</strong> - The Hex Value"
 msgstr "<strong>hex</strong> - <strong>16進値</strong>"
 
 #: color.php:397
-#, fuzzy, php-format
+#, php-format
 msgid "Colors [edit: %s]"
-msgstr "色[編集：％s]"
+msgstr "色[編集：%s]"
 
 #: color.php:399
 #, fuzzy
@@ -4063,9 +4061,9 @@ msgstr "カラーアイテム"
 #: color_templates.php:138 lib/api_aggregate.php:1880
 #: lib/api_aggregate.php:1883 lib/api_aggregate.php:1887 lib/html.php:1379
 #: lib/html_reports.php:1747
-#, fuzzy, php-format
+#, php-format
 msgid "Item # %d"
-msgstr "商品番号％d"
+msgstr "アイテム#%d"
 
 #: color_templates.php:177 graph_templates.php:1793 lib/api_aggregate.php:1949
 #: lib/html.php:1492
@@ -4154,14 +4152,14 @@ msgid "Remove Color Item"
 msgstr "カラーアイテムを削除"
 
 #: color_templates.php:563
-#, fuzzy, php-format
+#, php-format
 msgid "Color Template Items [edit Report Item: %s]"
-msgstr "カラーテンプレートアイテム[レポートアイテムを編集：％s]"
+msgstr "カラーテンプレート項目[レポート項目を編集：%s]"
 
 #: color_templates.php:566
-#, fuzzy, php-format
+#, php-format
 msgid "Color Template Items [new Report Item: %s]"
-msgstr "カラーテンプレートアイテム[新しいレポートアイテム：％s]"
+msgstr "カラーテンプレート項目[新しいレポート項目：%s]"
 
 #: color_templates.php:601
 #, fuzzy
@@ -4169,9 +4167,9 @@ msgid "Color Template Items [new]"
 msgstr "カラーテンプレートアイテム[new]"
 
 #: color_templates.php:617
-#, fuzzy, php-format
+#, php-format
 msgid "Color Template Items [edit: %s]"
-msgstr "カラーテンプレートアイテム[編集：％s]"
+msgstr "カラーテンプレートアイテム[編集：%s]"
 
 #: color_templates.php:654
 #, fuzzy
@@ -4179,9 +4177,9 @@ msgid "Delete Color Item"
 msgstr "カラーアイテムを削除"
 
 #: color_templates.php:683
-#, fuzzy, php-format
+#, php-format
 msgid "Color Template [edit: %s]"
-msgstr "カラーテンプレート[編集：％s]"
+msgstr "カラーテンプレート[編集：%s]"
 
 #: color_templates.php:685
 #, fuzzy
@@ -4189,14 +4187,14 @@ msgid "Color Template [new]"
 msgstr "カラーテンプレート[new]"
 
 #: color_templates.php:762
-#, fuzzy, php-format
+#, php-format
 msgid "Color Template '%s' had %d Aggregate Templates pushed out and %d Non-Templated Aggregates pushed out"
-msgstr "カラーテンプレート '％s'には％d個の集約テンプレートがプッシュされ、％d個の非テンプレート集約がプッシュされました"
+msgstr "カラーテンプレート'%s'には%d個の集計テンプレートがプッシュアウトされ、%d個の非テンプレート集計がプッシュアウトされました"
 
 #: color_templates.php:764
-#, fuzzy, php-format
+#, php-format
 msgid "Color Template '%s' had no Aggregate Templates or Graphs using this Color Template."
-msgstr "カラーテンプレート '％s'には、このカラーテンプレートを使用した集計テンプレートまたはグラフがありませんでした。"
+msgstr "カラーテンプレート'%s'には、このカラーテンプレートを使用する集計テンプレートまたはグラフがありませんでした。"
 
 #: color_templates.php:818 color_templates.php:832 color_templates.php:903
 #: include/global_arrays.php:2815
@@ -4481,14 +4479,14 @@ msgid "Refresh Now"
 msgstr "更新"
 
 #: data_debug.php:833
-#, fuzzy, php-format
+#, php-format
 msgid "Data Source Troubleshooter [ Auto Refreshing till RRDfile Update ] %s"
-msgstr "データソーストラブルシューター[％s]"
+msgstr "データソースのトラブルシューティング[RRDファイル更新まで自動更新]%s"
 
 #: data_debug.php:835
-#, fuzzy, php-format
+#, php-format
 msgid "Data Source Troubleshooter [ Analysis Complete! %s ]"
-msgstr "データソーストラブルシューター[％s]"
+msgstr "データソースのトラブルシューティング[解析完了！%s]"
 
 #: data_debug.php:835
 #, fuzzy
@@ -4524,9 +4522,9 @@ msgid "Issue"
 msgstr "問題"
 
 #: data_debug.php:910
-#, fuzzy, php-format
+#, php-format
 msgid "For attribute '%s', issue found '%s'"
-msgstr "属性 '％s'の場合、問題により '％s'が見つかりました"
+msgstr "属性'%s'の課題が見つかりました'%s'"
 
 #: data_debug.php:925
 #, fuzzy
@@ -4672,9 +4670,9 @@ msgid "This script appears to have no input values, therefore there is nothing t
 msgstr "このスクリプトには入力値がないように見えるため、追加するものはありません。"
 
 #: data_input.php:429
-#, fuzzy, php-format
+#, php-format
 msgid "Output Fields [edit: %s]"
-msgstr "出力フィールド[編集：％s]"
+msgstr "出力フィールド[編集：%s]"
 
 #: data_input.php:430 include/global_form.php:660
 #, fuzzy
@@ -4682,18 +4680,18 @@ msgid "Output Field"
 msgstr "出力フィールド"
 
 #: data_input.php:432
-#, fuzzy, php-format
+#, php-format
 msgid "Input Fields [edit: %s]"
-msgstr "入力フィールド[編集：％s]"
+msgstr "入力フィールド[編集：%s]"
 
 #: data_input.php:433
 msgid "Input Field"
 msgstr "入力フィールド"
 
 #: data_input.php:494
-#, fuzzy, php-format
+#, php-format
 msgid "Data Input Method [edit: %s]"
-msgstr "データ入力方法[編集：％s]"
+msgstr "データ入力方法[編集：%s]"
 
 #: data_input.php:498
 #, fuzzy
@@ -4882,9 +4880,9 @@ msgid "Click 'Continue' to delete the following Data Query Graph Association."
 msgstr "[続行]をクリックして、次のデータクエリグラフの関連付けを削除します。"
 
 #: data_queries.php:545
-#, fuzzy, php-format
+#, php-format
 msgid "Graph Name: %s"
-msgstr "グラフ名：％s"
+msgstr "グラフ名：%s"
 
 #: data_queries.php:551
 #, fuzzy
@@ -4892,9 +4890,9 @@ msgid "Remove Data Query Graph Template"
 msgstr "グラフテンプレートに変換"
 
 #: data_queries.php:636
-#, fuzzy, php-format
+#, php-format
 msgid "Associated Graph/Data Templates [edit: %s]"
-msgstr "関連付けられたグラフ/データテンプレート[編集：％s]"
+msgstr "関連するグラフ/データテンプレート[編集：%s]"
 
 #: data_queries.php:638
 #, fuzzy
@@ -4961,9 +4959,9 @@ msgid "The Data Query ID [%s] that you are trying to Edit does not exist.  Pleas
 msgstr ""
 
 #: data_queries.php:1102
-#, fuzzy, php-format
+#, php-format
 msgid "Data Queries [edit: %s]"
-msgstr "データクエリ[編集：％s]"
+msgstr "データクエリ[編集：%s]"
 
 #: data_queries.php:1104
 #, fuzzy
@@ -5135,14 +5133,14 @@ msgid "(Some Elements Read Only)"
 msgstr "（一部の要素は読み取り専用）"
 
 #: data_source_profiles.php:524
-#, fuzzy, php-format
+#, php-format
 msgid "RRA [edit: %s %s]"
-msgstr "RRA [編集：％s％s]"
+msgstr "RRA [編集：%s %s]"
 
 #: data_source_profiles.php:614
-#, fuzzy, php-format
+#, php-format
 msgid "Data Source Profile [edit: %s]"
-msgstr "データソースプロファイル[編集：％s]"
+msgstr "データソースプロファイル[編集：%s]"
 
 #: data_source_profiles.php:616
 #, fuzzy
@@ -5513,14 +5511,14 @@ msgid "Reapply Suggested Names for Data Sources"
 msgstr "推奨される名前をデータソースに再適用する"
 
 #: data_sources.php:644 data_templates.php:841
-#, fuzzy, php-format
+#, php-format
 msgid "Custom Data [data input: %s]"
-msgstr "カスタムデータ[データ入力：％s]"
+msgstr "カスタムデータ[データ入力：%s]"
 
 #: data_sources.php:677
-#, fuzzy, php-format
+#, php-format
 msgid "(From Device: %s)"
-msgstr "（端末から：％s）"
+msgstr "（デバイスから：%s）"
 
 #: data_sources.php:680
 #, fuzzy
@@ -5538,9 +5536,9 @@ msgid "No Input Fields for the Selected Data Input Source"
 msgstr "選択したデータ入力ソースに入力フィールドがありません"
 
 #: data_sources.php:802
-#, fuzzy, php-format
+#, php-format
 msgid "Data Template Selection [edit: %s]"
-msgstr "データテンプレートの選択[編集：％s]"
+msgstr "データテンプレートの選択[編集：%s]"
 
 #: data_sources.php:808
 #, fuzzy
@@ -5568,9 +5566,9 @@ msgid "Turn On Data Source Info Mode."
 msgstr "データソース情報モードをオンにします。"
 
 #: data_sources.php:857
-#, fuzzy, php-format
+#, php-format
 msgid "Edit Graph: '%s'."
-msgstr "グラフテンプレートを編集します。"
+msgstr "グラフの編集: '%s'。"
 
 #: data_sources.php:862 graphs.php:2210
 #, fuzzy
@@ -5837,9 +5835,9 @@ msgid "New Data Source Profile:"
 msgstr "新しいデータソースプロファイル"
 
 #: data_templates.php:636
-#, fuzzy, php-format
+#, php-format
 msgid "Data Templates [edit: %s]"
-msgstr "データテンプレート[編集：％s]"
+msgstr "データテンプレート[編集：%s]"
 
 #: data_templates.php:657
 #, fuzzy
@@ -5981,9 +5979,9 @@ msgid "Delete GPRINT Presets"
 msgstr "GPRINTプリセットを削除"
 
 #: gprint_presets.php:163
-#, fuzzy, php-format
+#, php-format
 msgid "GPRINT Presets [edit: %s]"
-msgstr "GPRINTプリセット[編集：％s]"
+msgstr "GPRINTプリセット[編集：%s]"
 
 #: gprint_presets.php:165
 #, fuzzy
@@ -6165,9 +6163,9 @@ msgid "Min:"
 msgstr "最小:"
 
 #: graph_templates.php:772
-#, fuzzy, php-format
+#, php-format
 msgid "Graph Template Items [edit graph: %s]"
-msgstr "グラフテンプレート項目[グラフ編集：％s]"
+msgstr "グラフテンプレートアイテム[グラフの編集：%s]"
 
 #: graph_templates.php:809
 #, fuzzy
@@ -6295,9 +6293,9 @@ msgid "Click 'Continue' to perform a Quick Synchronization of your Graphs for th
 msgstr "グラフを次のグラフテンプレートと同期させるには、[続行]をクリックします。この機能は、複数のバージョンのグラフテンプレートに存在するグラフがあり、それらをすべて外観上共通にする場合に重要です。"
 
 #: graph_templates.php:1199
-#, fuzzy, php-format
+#, php-format
 msgid "Graph Template Items [edit: %s]"
-msgstr "グラフテンプレート項目[編集：％s]"
+msgstr "グラフテンプレートアイテム[編集：%s]"
 
 #: graph_templates.php:1206 include/global_arrays.php:2341
 #, fuzzy
@@ -6310,9 +6308,9 @@ msgid "No Inputs"
 msgstr "入力なし"
 
 #: graph_templates.php:1274
-#, fuzzy, php-format
+#, php-format
 msgid "Graph Template [edit: %s]"
-msgstr "グラフテンプレート[編集：％s]"
+msgstr "グラフテンプレート[編集：%s]"
 
 #: graph_templates.php:1276
 #, fuzzy
@@ -6386,9 +6384,9 @@ msgid "No Graph Templates Found"
 msgstr "グラフテンプレートが見つかりません"
 
 #: graph_templates.php:1706
-#, fuzzy, php-format
+#, php-format
 msgid "Graph Item Inputs [edit graph: %s]"
-msgstr "グラフ項目の入力[グラフの編集：％s]"
+msgstr "グラフ項目入力[グラフの編集：%s]"
 
 #: graph_templates.php:1753
 #, fuzzy
@@ -6629,9 +6627,9 @@ msgid "Data Template"
 msgstr "このデータテンプレートに名前を与えてください。"
 
 #: graphs.php:851
-#, fuzzy, php-format
+#, php-format
 msgid "Graph Items [graph: %s]"
-msgstr "グラフ項目[グラフ：％s]"
+msgstr "グラフアイテム[グラフ：%s]"
 
 #: graphs.php:895
 #, fuzzy
@@ -6875,14 +6873,14 @@ msgid "Graph Items [new]"
 msgstr "グラフ項目[new]"
 
 #: graphs.php:2040
-#, fuzzy, php-format
+#, php-format
 msgid "Graph Items [edit: %s]"
-msgstr "グラフ項目[編集：％s]"
+msgstr "グラフアイテム[編集：%s]"
 
 #: graphs.php:2142
-#, fuzzy, php-format
+#, php-format
 msgid "Graph [edit: %s]"
-msgstr "グラフ[編集：％s]"
+msgstr "グラフ[編集：%s]"
 
 #: graphs.php:2148
 #, fuzzy
@@ -6905,9 +6903,9 @@ msgid "Edit Graph Template."
 msgstr "グラフテンプレートを編集します。"
 
 #: graphs.php:2205
-#, fuzzy, php-format
+#, php-format
 msgid "Edit Data Source: '%s'."
-msgstr "データソース[％s]"
+msgstr "データソースを編集: '%s'。"
 
 #: graphs.php:2214
 #, fuzzy
@@ -7080,9 +7078,11 @@ msgid "Error Parsing Data Query Resource XML file for Data Query '%s' with id of
 msgstr "ID '%s'のデータクエリ '%s'のデータクエリリソースXMLファイルの解析中にエラーが発生しました"
 
 #: graphs_new.php:695
-#, fuzzy, php-format
+#, php-format
 msgid "Error Parsing Data Query Resource XML file for Data Query '%s' with id '%s'.  Field Name '%s' missing a 'direction' attribute"
-msgstr "ID '%s'のデータクエリ '%s'のデータクエリリソースXMLファイルの解析中にエラーが発生しました"
+msgstr ""
+"ID '%s'のデータクエリ'%s'のデータクエリリソースXMLファイルの解析中にエラーが発生しました。フィールド名'%s'に'direction'属性が"
+"ありません"
 
 #: graphs_new.php:699
 #, fuzzy, php-format
@@ -7147,6 +7147,8 @@ msgstr ""
 #, php-format
 msgid "The Document page '%s' count not be reached.  The Cacti Documentation site is not reachable.  The http error was '%s'.  Consider downloading an official release to obtain the latest documentation and hosting the documentation locally."
 msgstr ""
+"ドキュメントページ'%s'カウントに到達できません。Cactiドキュメンテーションサイトにアクセスできません。HTTPエラーは'%s'でした。最新のドキュ"
+"メントを入手するには、公式リリースをダウンロードし、現地でドキュメントをホスティングすることを検討してください。"
 
 #: help.php:82
 msgid "Cacti GitHub Site"
@@ -7164,7 +7166,7 @@ msgstr ""
 #: help.php:96
 #, php-format
 msgid "The Document page '%s' count not be reached locally."
-msgstr ""
+msgstr "ドキュメントページ'%s'カウントにローカルで到達できません。"
 
 #: host.php:44
 #, fuzzy
@@ -7221,9 +7223,9 @@ msgid "Device Reindex Completed in %0.2f seconds.  There were %d items updated."
 msgstr "デバイスのインデックス再作成は％0.2f秒で完了しました。 ％d個のアイテムが更新されました。"
 
 #: host.php:356
-#, fuzzy, php-format
+#, php-format
 msgid "Unable to add some Devices to Report '%s'"
-msgstr "サーバーに接続できません"
+msgstr "レポート'%s'にいくつかのデバイスを追加できません"
 
 #: host.php:480
 #, fuzzy
@@ -7385,9 +7387,9 @@ msgid "Device [new]"
 msgstr "端末[新規]"
 
 #: host.php:706
-#, fuzzy, php-format
+#, php-format
 msgid "Device [edit: %s]"
-msgstr "端末[編集：％s]"
+msgstr "デバイス[編集：%s]"
 
 #: host.php:709
 #, fuzzy
@@ -7757,9 +7759,9 @@ msgid "Click 'Continue' to delete the following Graph Template will be disassoci
 msgstr "次のグラフテンプレートを削除するには、[続行]をクリックしてデバイステンプレートから関連付けを解除します。"
 
 #: host_templates.php:274
-#, fuzzy, php-format
+#, php-format
 msgid "Graph Template Name: %s"
-msgstr "グラフテンプレート名：％s"
+msgstr "グラフテンプレート名：%s"
 
 #: host_templates.php:280
 #, fuzzy
@@ -7772,9 +7774,9 @@ msgid "Click 'Continue' to delete the following Data Queries will be disassociat
 msgstr "[続行]をクリックして、以下のデータクエリを削除します。"
 
 #: host_templates.php:341
-#, fuzzy, php-format
+#, php-format
 msgid "Data Query Name: %s"
-msgstr "データクエリ名：％s"
+msgstr "データクエリ名：%s"
 
 #: host_templates.php:347
 #, fuzzy
@@ -7782,9 +7784,9 @@ msgid "Remove Data Query"
 msgstr "クエリを削除"
 
 #: host_templates.php:407
-#, fuzzy, php-format
+#, php-format
 msgid "Device Templates [edit: %s]"
-msgstr "デバイステンプレート[編集：％s]"
+msgstr "デバイステンプレート[編集：%s]"
 
 #: host_templates.php:409
 #, fuzzy
@@ -16080,31 +16082,31 @@ msgid "Device:(Hide Disabled)"
 msgstr "デバイスは無効です"
 
 #: lib/auth.php:2322 lib/auth.php:2324 lib/auth.php:2330 lib/auth.php:2332
-#, fuzzy, php-format
+#, php-format
 msgid "Graph:(%s%s)"
-msgstr "グラフ"
+msgstr "グラフ： （%s%s秒）"
 
 #: lib/auth.php:2345 lib/auth.php:2351 lib/auth.php:2418 lib/auth.php:2420
 #: lib/auth.php:2424 lib/auth.php:2426
-#, fuzzy, php-format
+#, php-format
 msgid "Device:(%s%s)"
-msgstr "デバイス"
+msgstr "デバイス：(%s %s)"
 
 #: lib/auth.php:2359 lib/auth.php:2365 lib/auth.php:2434 lib/auth.php:2436
 #: lib/auth.php:2440 lib/auth.php:2442
-#, fuzzy, php-format
+#, php-format
 msgid "Template:(%s%s)"
-msgstr "テンプレート"
+msgstr "テンプレート: (%s%s)"
 
 #: lib/auth.php:2372
-#, fuzzy, php-format
+#, php-format
 msgid "Graph+Device+Template:(%s%s)"
-msgstr "デバイステンプレート："
+msgstr "グラフ+デバイス+テンプレート： （%s%s）"
 
 #: lib/auth.php:2409 lib/auth.php:2411
-#, fuzzy, php-format
+#, php-format
 msgid "Device+Template:(%s%s)"
-msgstr "デバイステンプレート："
+msgstr "デバイス+テンプレート： （%s%s）"
 
 #: lib/auth.php:2455 lib/auth.php:2462 lib/auth.php:2471
 #, fuzzy
@@ -16160,14 +16162,14 @@ msgid "%s authenticated by Web Server, but both Template and Guest Users are not
 msgstr "％sはWebサーバによって認証されましたが、テンプレートユーザとゲストユーザの両方がCactiで定義されていません。"
 
 #: lib/auth.php:3884
-#, fuzzy, php-format
+#, php-format
 msgid "Access Denied!  LDAP Search Error: %s"
-msgstr "LDAP検索エラー：％s"
+msgstr "アクセスが拒否されました！ LDAP検索エラー：%s"
 
 #: lib/auth.php:3905 lib/auth.php:4069
-#, fuzzy, php-format
+#, php-format
 msgid "Access Denied!  LDAP Error: %s"
-msgstr "LDAPエラー：％s"
+msgstr "アクセスが拒否されました！ LDAPエラー：%s"
 
 #: lib/auth.php:3917 lib/auth.php:4081 lib/auth.php:4372
 #, fuzzy
@@ -16175,9 +16177,9 @@ msgid "Access Denied!  No password provided by user."
 msgstr "アクセスが拒否されました！ユーザーからパスワードが提供されていません。"
 
 #: lib/auth.php:3968
-#, fuzzy, php-format
+#, php-format
 msgid "LDAP Search Error: %s"
-msgstr "LDAP検索エラー：％s"
+msgstr "LDAP検索エラー：%s"
 
 #: lib/auth.php:4061 lib/auth.php:5014
 #, fuzzy, php-format
@@ -16315,14 +16317,14 @@ msgid " - Admin view"
 msgstr "- 管理者ビュー"
 
 #: lib/clog_webapi.php:268
-#, fuzzy, php-format
+#, php-format
 msgid "Log [Total Lines: %d %s - Filter active]"
-msgstr "ログ[合計行数：％d％s  - フィルタ有効]"
+msgstr "ログ[合計行数：%d %s -フィルター有効]"
 
 #: lib/clog_webapi.php:270
-#, fuzzy, php-format
+#, php-format
 msgid "Log [Total Lines: %d %s - Unfiltered]"
-msgstr "ログ[合計行数：％d％s  - フィルタなし]"
+msgstr "ログ[合計行数：%d %s -フィルタリングされていません]"
 
 #: lib/clog_webapi.php:275 utilities.php:421 utilities.php:782
 #: utilities.php:1009 utilities.php:1108 utilities.php:1975 utilities.php:2192
@@ -16432,9 +16434,9 @@ msgid "Running Data Query [%s]."
 msgstr "データクエリ[％s]を実行しています。"
 
 #: lib/data_query.php:119
-#, fuzzy, php-format
+#, php-format
 msgid "Found Type = '%s' [%s]."
-msgstr "Found Type = &#39;％s&#39; [％s]。"
+msgstr "タイプ= '%s' [%s]が見つかりました。"
 
 #: lib/data_query.php:141
 #, php-format
@@ -16457,19 +16459,19 @@ msgid "Found %s Local Data ID's to Verify"
 msgstr "変換する％sテーブルが見つかりました"
 
 #: lib/data_query.php:309
-#, fuzzy, php-format
+#, php-format
 msgid "Index Change Detected! CurrentIndex: %s, PreviousIndex: %s"
-msgstr "インデックスの変更が検出されました。 CurrentIndex：％s、PreviousIndex：％s"
+msgstr "インデックスの変更が検出されました！ CurrentIndex ：%s、PreviousIndex ：%s"
 
 #: lib/data_query.php:329
-#, fuzzy, php-format
+#, php-format
 msgid "Transient Index Removal Detected! PreviousIndex: %s.  No action taken."
-msgstr "インデックスの削除が検出されました。 PreviousIndex：％s"
+msgstr "一時的なインデックス削除が検出されました！ PreviousIndex ：%s。アクションは実行されませんでした。"
 
 #: lib/data_query.php:332
-#, fuzzy, php-format
+#, php-format
 msgid "Index Removal Detected! PreviousIndex: %s"
-msgstr "インデックスの削除が検出されました。 PreviousIndex：％s"
+msgstr "インデックスの削除が検出されました！ PreviousIndex ：%s"
 
 #: lib/data_query.php:366
 #, fuzzy, php-format
@@ -16532,9 +16534,9 @@ msgid "Checking for Sort Field change.  No changes detected."
 msgstr "ソートフィールドの変更を確認しています。変更は検出されませんでした。"
 
 #: lib/data_query.php:515
-#, fuzzy, php-format
+#, php-format
 msgid "Detected New Sort Field: '%s' Old Sort Field '%s'"
-msgstr "新しいソートフィールドが検出されました： &#39;％s&#39;古いソートフィールド &#39;％s&#39;"
+msgstr "新しい並べ替えフィールドが検出されました: '%s'古い並べ替えフィールド'%s'"
 
 #: lib/data_query.php:532
 #, fuzzy
@@ -16547,14 +16549,14 @@ msgid "New Sort Field validated.  Sort Field be updated."
 msgstr "新しいソートフィールドが検証されました。ソートフィールドを更新します。"
 
 #: lib/data_query.php:632
-#, fuzzy, php-format
+#, php-format
 msgid "Could not find data query XML file at '%s'"
-msgstr "&#39;％s&#39;にデータクエリXMLファイルが見つかりませんでした"
+msgstr "'%s'にデータクエリXMLファイルが見つかりませんでした"
 
 #: lib/data_query.php:637
-#, fuzzy, php-format
+#, php-format
 msgid "Found data query XML file at '%s'"
-msgstr "&#39;％s&#39;にデータクエリXMLファイルが見つかりました"
+msgstr "'%s'にデータクエリXMLファイルが見つかりました"
 
 #: lib/data_query.php:660 lib/data_query.php:852 lib/data_query.php:2457
 #, fuzzy
@@ -16587,9 +16589,9 @@ msgid "&lt;arg_num_indexes&gt; exists in XML file but no data returned., 'Index 
 msgstr "XMLファイルに&lt;arg_num_indexes&gt;がありません、 &#39;Index Count Changed&#39;はサポートされていません"
 
 #: lib/data_query.php:696
-#, fuzzy, php-format
+#, php-format
 msgid "Executing script for num of indexes '%s'"
-msgstr "索引数 &#39;％s&#39;のスクリプトを実行しています"
+msgstr "インデックス'%s'の数のスクリプトを実行しています"
 
 #: lib/data_query.php:699
 #, fuzzy, php-format
@@ -16612,9 +16614,9 @@ msgid "ERROR: Data Query returned no indexes."
 msgstr "エラー：データクエリはインデックスを返しませんでした。"
 
 #: lib/data_query.php:721
-#, fuzzy, php-format
+#, php-format
 msgid "Executing script for list of indexes '%s', Index Count: %s"
-msgstr "インデックスリスト &#39;％s&#39;のスクリプトを実行中、インデックス数：％s"
+msgstr "インデックス'%s'のリストのスクリプトを実行しています、インデックス数: %s"
 
 #: lib/data_query.php:723
 #, fuzzy
@@ -16627,9 +16629,9 @@ msgid "Found index: %s"
 msgstr "見つかったインデックス：％s"
 
 #: lib/data_query.php:741 lib/data_query.php:1239
-#, fuzzy, php-format
+#, php-format
 msgid "Click to show Data Query output for field '%s'"
-msgstr "クリックして、フィールド &#39;％s&#39;のデータクエリ出力を表示します"
+msgstr "フィールド'%s'のデータクエリ出力を表示するにはクリックしてください"
 
 #: lib/data_query.php:747
 #, fuzzy, php-format
@@ -16637,24 +16639,24 @@ msgid "Sort field returned no data for field name %s, skipping"
 msgstr "ソートフィールドからデータが返されませんでした。再索引付けを続行できません。"
 
 #: lib/data_query.php:749
-#, fuzzy, php-format
+#, php-format
 msgid "Executing script query '%s'"
-msgstr "スクリプトクエリ &#39;％s&#39;を実行しています"
+msgstr "スクリプトクエリ'%s'を実行しています"
 
 #: lib/data_query.php:760 lib/data_query.php:767
-#, fuzzy, php-format
+#, php-format
 msgid "Found item [%s='%s'] index: %s"
-msgstr "見つかったアイテム[％s = &#39;％s&#39;]インデックス：％s"
+msgstr "アイテム[%s='%s']インデックスが見つかりました: %s"
 
 #: lib/data_query.php:805 lib/data_query.php:820
-#, fuzzy, php-format
+#, php-format
 msgid "Total: %f, Delta: %f, %s"
-msgstr "合計：％f、デルタ：％f、％s"
+msgstr "合計：%f、デルタ：%f、%s"
 
 #: lib/data_query.php:845
-#, fuzzy, php-format
+#, php-format
 msgid "Invalid host_id: %s"
-msgstr "無効なhost_id：％s"
+msgstr "無効なhost_id ：%s"
 
 #: lib/data_query.php:872
 #, fuzzy
@@ -16687,9 +16689,9 @@ msgid "Bulk Walk Size is fixed at %d."
 msgstr "バルクウォークサイズは%dに固定されています。"
 
 #: lib/data_query.php:941
-#, fuzzy, php-format
+#, php-format
 msgid "Executing SNMP get for num of indexes @ '%s' Index Count: %s"
-msgstr "SNMPを実行すると、インデックス数@ &#39;％s&#39;のインデックス数を取得します。インデックス数：％s"
+msgstr "インデックス数@'%s'のSNMP GETを実行していますインデックス数：%s"
 
 #: lib/data_query.php:943
 #, fuzzy
@@ -16697,9 +16699,9 @@ msgid "&lt;oid_num_indexes&gt; missing in XML file, 'Index Count Changed' emulat
 msgstr "XMLファイルに&lt;oid_num_indexes&gt;がありません、 &#39;Index Count Changed&#39;はoid_indexエントリをカウントすることによってエミュレートされました"
 
 #: lib/data_query.php:946
-#, fuzzy, php-format
+#, php-format
 msgid "Executing SNMP walk for list of indexes @ '%s' Index Count: %s"
-msgstr "インデックスリストのSNMPウォークを実行しています@ &#39;％s&#39;インデックス数：％s"
+msgstr "'%s'インデックスカウントでインデックスリストのSNMPウォークを実行中: %s"
 
 #: lib/data_query.php:950
 #, fuzzy
@@ -16707,64 +16709,64 @@ msgid "No SNMP data returned"
 msgstr "SNMPデータが返されない"
 
 #: lib/data_query.php:956
-#, fuzzy, php-format
+#, php-format
 msgid "Index found at OID: '%s' value: '%s'"
-msgstr "OIDにインデックスが見つかりました： &#39;％s&#39;値： &#39;％s&#39;"
+msgstr "OIDでインデックスが見つかりました：'%s'値：'%s'"
 
 #: lib/data_query.php:972
-#, fuzzy, php-format
+#, php-format
 msgid "List of indexes filtered by value @ '%s' Index Count: %s"
-msgstr "インデックスのフィルタリングリスト@ &#39;％s&#39;インデックス数：％s"
+msgstr "'%s'インデックス数でフィルタリングされたインデックスのリスト: %s"
 
 #: lib/data_query.php:976
-#, fuzzy, php-format
+#, php-format
 msgid "Filtered Index by value found at OID: '%s' value: '%s'"
-msgstr "フィルタされたインデックスがOIDで見つかりました： &#39;％s&#39;値： &#39;％s&#39;"
+msgstr "OIDで見つかった値によるフィルタリングされたインデックス: '%s'値: '%s'"
 
 #: lib/data_query.php:993
-#, fuzzy, php-format
+#, php-format
 msgid "Filtering list of indexes @ '%s' Index Count: %s"
-msgstr "インデックスのフィルタリングリスト@ &#39;％s&#39;インデックス数：％s"
+msgstr "'%s'インデックス数でインデックスのリストをフィルタリングしています：%s"
 
 #: lib/data_query.php:997
-#, fuzzy, php-format
+#, php-format
 msgid "Filtered Index found at OID: '%s' value: '%s'"
-msgstr "フィルタされたインデックスがOIDで見つかりました： &#39;％s&#39;値： &#39;％s&#39;"
+msgstr "OIDでフィルタリングされたインデックスが見つかりました：'%s'値：'%s'"
 
 #: lib/data_query.php:1017
-#, fuzzy, php-format
+#, php-format
 msgid "Fixing wrong 'method' field for '%s' since 'rewrite_index' or 'oid_suffix' is defined"
-msgstr "&#39;rewrite_index&#39;または &#39;oid_suffix&#39;が定義されているため、 &#39;％s&#39;の誤った &#39;method&#39;フィールドを修正しました"
+msgstr "'rewrite_index'または'oid_suffix'が定義されているため、'%s'の間違った'method'フィールドを修正"
 
 #: lib/data_query.php:1024
-#, fuzzy, php-format
+#, php-format
 msgid "Inserting index data for field '%s' [value='%s']"
-msgstr "フィールド &#39;％s&#39;のインデックスデータを挿入しています[値= &#39;％s&#39;]"
+msgstr "フィールド'%s'のインデックスデータを挿入しています[value ='%s']"
 
 #: lib/data_query.php:1029
-#, fuzzy, php-format
+#, php-format
 msgid "Located input field '%s' [get]"
-msgstr "入力フィールド &#39;％s&#39;に配置[取得]"
+msgstr "入力フィールド'%s'が見つかりました[GET]"
 
 #: lib/data_query.php:1038
-#, fuzzy, php-format
+#, php-format
 msgid "Found OID rewrite rule: 's/%s/%s/'"
-msgstr "OID書き換えルールが見つかりました： &#39;s /％s /％s /&#39;"
+msgstr "OIDリライトルールが見つかりました: 's /%s/%s/'"
 
 #: lib/data_query.php:1049
-#, fuzzy, php-format
+#, php-format
 msgid "oid_rewrite at OID: '%s' new OID: '%s'"
-msgstr "OIDのoid_rewrite： &#39;％s&#39;新しいOID： &#39;％s&#39;"
+msgstr "oID ：'%s'でoid_rewrite新しいOID ：'%s'"
 
 #: lib/data_query.php:1070
-#, fuzzy, php-format
+#, php-format
 msgid "Executing SNMP get for data @ '%s' [value='%s']"
-msgstr "SNMPを実行してデータを取得します"
+msgstr "データ@'%s'[ value ='%s']のSNMP GETを実行しています"
 
 #: lib/data_query.php:1082
-#, fuzzy, php-format
+#, php-format
 msgid "Field '%s' %s"
-msgstr "フィールド &#39;％s&#39;％s"
+msgstr "フィールド'%s' %s"
 
 #: lib/data_query.php:1146
 #, fuzzy, php-format
@@ -16777,39 +16779,39 @@ msgid "Sort field returned no data for OID[%s], skipping."
 msgstr "ソートフィールドがデータではありません。 OIDのインデックスの再作成を続行できません[％s]"
 
 #: lib/data_query.php:1177
-#, fuzzy, php-format
+#, php-format
 msgid "Found result for data @ '%s' [value='%s']"
-msgstr "データ@ &#39;％s&#39;の検索結果[値= &#39;％s&#39;]"
+msgstr "データ@'%s'[ value ='%s']の結果が見つかりました"
 
 #: lib/data_query.php:1185
-#, fuzzy, php-format
+#, php-format
 msgid "Setting result for data @ '%s' [key='%s', value='%s']"
-msgstr "データ@ &#39;％s&#39;の設定結果[キー= &#39;％s&#39;、値= &#39;％s&#39;]"
+msgstr "データ@'%s'[ key ='%s', value ='%s']の結果を設定しています"
 
 #: lib/data_query.php:1189
-#, fuzzy, php-format
+#, php-format
 msgid "Skipped result for data @ '%s' [key='%s', value='%s']"
-msgstr "データ@ &#39;％s&#39;の結果をスキップしました[キー= &#39;％s&#39;、値= &#39;％s&#39;]"
+msgstr "データ@'%s'[ key ='%s', value ='%s']の結果をスキップしました"
 
 #: lib/data_query.php:1203
-#, fuzzy, php-format
+#, php-format
 msgid "Got SNMP get result for data @ '%s' [value='%s'] (index: %s)"
-msgstr "SNMPがデータ@ &#39;％s&#39;の結果を取得しました[value = &#39;％s&#39;]（インデックス：％s）"
+msgstr "データ@'%s'[ value ='%s']のSNMP取得結果を取得しました(インデックス: %s)"
 
 #: lib/data_query.php:1233
-#, fuzzy, php-format
+#, php-format
 msgid "Executing SNMP get for data @ '%s' [value='$value']"
-msgstr "SNMPを実行してデータを取得します@ &#39;％s&#39; [value = &#39;$ value&#39;]"
+msgstr "データ@'%s'[ value ='$ value ']のSNMP GETを実行しています"
 
 #: lib/data_query.php:1241
-#, fuzzy, php-format
+#, php-format
 msgid "Located input field '%s' [walk]"
-msgstr "入力フィールド &#39;％s&#39;に配置されています[walk]"
+msgstr "入力フィールド'%s'が見つかりました[ウォーク]"
 
 #: lib/data_query.php:1281
-#, fuzzy, php-format
+#, php-format
 msgid "Executing SNMP walk for data @ '%s'"
-msgstr "データ@ &#39;％s&#39;のSNMPウォークを実行しています"
+msgstr "データ@'%s'のSNMPウォークを実行しています"
 
 #: lib/data_query.php:1301 lib/data_query.php:1365 lib/data_query.php:1416
 #: lib/data_query.php:1469
@@ -16818,38 +16820,38 @@ msgid "No index[%s] in value_index_parse, skipping."
 msgstr ""
 
 #: lib/data_query.php:1348
-#, fuzzy, php-format
+#, php-format
 msgid "Found item [%s='%s'] index: %s [from %s]"
-msgstr "見つかったアイテム[％s = &#39;％s&#39;]インデックス：％s [from％s]"
+msgstr "アイテム[%s='%s']インデックスが見つかりました: %s [%sから]"
 
 #: lib/data_query.php:1392
-#, fuzzy, php-format
+#, php-format
 msgid "Found OCTET STRING '%s' decoded value: '%s'"
-msgstr "OCTET STRING &#39;％s&#39;のデコード値が見つかりました： &#39;％s&#39;"
+msgstr "オクテット文字列'%s'のデコード値が見つかりました: '%s'"
 
 #: lib/data_query.php:1398 lib/data_query.php:1449
-#, fuzzy, php-format
+#, php-format
 msgid "Found item [%s='%s'] index: %s [from regexp oid parse]"
-msgstr "見つかったアイテム[％s = &#39;％s&#39;]インデックス：％s [正規表現oidパースから]"
+msgstr "アイテム[%s ='%s']インデックスが見つかりました: %s [正規表現oid解析から]"
 
 #: lib/data_query.php:1478
-#, fuzzy, php-format
+#, php-format
 msgid "Found item [%s='%s'] index: %s [from regexp oid value parse]"
-msgstr "見つかったアイテム[％s = &#39;％s&#39;]のインデックス：％s"
+msgstr "アイテム[%s ='%s']インデックスが見つかりました: %s [正規表現oid値解析から]"
 
 #: lib/data_query.php:1716
 #, php-format
 msgid "Bogus rewrite_value item found, index='%s'"
-msgstr ""
+msgstr "偽のrewrite_value項目が見つかりました、インデックス= '%s'"
 
 #: lib/data_query.php:1730
 msgid "Could not parse translation map (rewrite_value)"
 msgstr ""
 
 #: lib/data_query.php:1756
-#, fuzzy, php-format
+#, php-format
 msgid "rewrite_value: '%s' => '%s'"
-msgstr "OIDのoid_rewrite： &#39;％s&#39;新しいOID： &#39;％s&#39;"
+msgstr "rewrite_value: '%s' => '%s'"
 
 #: lib/data_query.php:1862
 #, fuzzy
@@ -16867,9 +16869,9 @@ msgid "Unknown Index"
 msgstr "未知のインデックス"
 
 #: lib/data_query.php:2569
-#, fuzzy, php-format
+#, php-format
 msgid "You must select an XML output column for Data Source '%s' and toggle the checkbox to its right"
-msgstr "データソース '％1！'のXML出力列を選択し、チェックボックスをその右側に切り替える必要があります"
+msgstr "データソース'%s'のXML出力列を選択し、その右側のチェックボックスを切り替える必要があります"
 
 #: lib/data_query.php:2575
 #, fuzzy
@@ -16907,14 +16909,15 @@ msgid "Data Source is not set as Active"
 msgstr "データソースがアクティブに設定されていません"
 
 #: lib/dsdebug.php:277
-#, fuzzy, php-format
+#, php-format
 msgid "RRDfile Folder (rra) is not writable by Poller.  Folder owner: %s.  Poller runs as: %s"
-msgstr "RRD FolderはPollerによって書き込みができません。 RRDオーナー："
+msgstr ""
+"RRDファイルフォルダ(rra)はポーラーによって書き込み可能ではありません。フォルダーの所有者: %s。ポーラーは次の名前で実行されます: %s"
 
 #: lib/dsdebug.php:282
-#, fuzzy, php-format
+#, php-format
 msgid "RRDfile is not writable by Poller.  RRDfile owner: %s.  Poller runs as %s"
-msgstr "RRD FileはPollerによって書き込み可能ではありません。 RRDオーナー："
+msgstr "RRDファイルはポーラーによって書き込み可能ではありません。RRDファイルの所有者: %s。ポーラーは%sとして実行されます"
 
 #: lib/dsdebug.php:291
 #, fuzzy
@@ -17055,9 +17058,9 @@ msgid "Authentication failed: %s"
 msgstr "認証に失敗しました：%s"
 
 #: lib/functions.php:5704
-#, fuzzy, php-format
+#, php-format
 msgid "HELO failed: %s"
-msgstr "HELOが失敗しました：％s"
+msgstr "ヘロが失敗しました：%s"
 
 #: lib/functions.php:5707
 #, fuzzy, php-format
@@ -17145,9 +17148,9 @@ msgid "Since Install"
 msgstr "インストール"
 
 #: lib/functions.php:6453 lib/functions.php:6548
-#, fuzzy, php-format
+#, php-format
 msgid "Cacti disabled plugin %s due to the following error: %s!  See the Cacti logfile for more details."
-msgstr "次のエラーのため、Cactiはプラグイン％sを無効にしました：％s！詳しくはCactiのログファイルを見てください。"
+msgstr "次のエラーのため、Cactiはプラグイン%sを無効にしました：%s! 詳細については、Cactiログファイルを参照してください。"
 
 #: lib/functions.php:7029
 #, fuzzy, php-format
@@ -17784,9 +17787,9 @@ msgid "Enter a valid directory path"
 msgstr "有効なディレクトリパスを入力してください"
 
 #: lib/html_form.php:1162
-#, fuzzy, php-format
+#, php-format
 msgid "Cacti Color (%s)"
-msgstr "サボテンの色（％s）"
+msgstr "サボテンの色（%s）"
 
 #: lib/html_form.php:1225
 #, fuzzy
@@ -17907,24 +17910,24 @@ msgid "Create %s Graphs from %s"
 msgstr "％sから％sグラフを作成"
 
 #: lib/html_graph.php:594
-#, fuzzy, php-format
+#, php-format
 msgid "Graph [Template: %s]"
-msgstr "グラフ[テンプレート：％s]"
+msgstr "グラフ[テンプレート：%s]"
 
 #: lib/html_graph.php:596
-#, fuzzy, php-format
+#, php-format
 msgid "Graph Items [Template: %s]"
-msgstr "グラフ項目[テンプレート：％s]"
+msgstr "グラフアイテム[テンプレート：%s]"
 
 #: lib/html_graph.php:601
-#, fuzzy, php-format
+#, php-format
 msgid "Data Source [Template: %s]"
-msgstr "データソース[テンプレート：％s]"
+msgstr "データソース[テンプレート：%s]"
 
 #: lib/html_graph.php:611
-#, fuzzy, php-format
+#, php-format
 msgid "Custom Data [Template: %s]"
-msgstr "カスタムデータ[テンプレート：％s]"
+msgstr "カスタムデータ[テンプレート：%s]"
 
 #: lib/html_reports.php:37
 msgid "New Report"
@@ -18262,24 +18265,24 @@ msgid "Send Reports Now"
 msgstr "レポートを送信"
 
 #: lib/html_reports.php:588
-#, fuzzy, php-format
+#, php-format
 msgid "Unable to send Report '%s'.  Please set destination e-mail addresses"
-msgstr "レポート &#39;％s&#39;を送信できません。送信先メールアドレスを設定してください"
+msgstr "レポート'%s'を送信できません。宛先メールアドレスを設定してください"
 
 #: lib/html_reports.php:590
-#, fuzzy, php-format
+#, php-format
 msgid "Unable to send Report '%s'.  Please set an e-mail subject"
-msgstr "レポート &#39;％s&#39;を送信できません。メールの件名を設定してください"
+msgstr "レポート'%s'を送信できません。メールの件名を設定してください"
 
 #: lib/html_reports.php:592
-#, fuzzy, php-format
+#, php-format
 msgid "Unable to send Report '%s'.  Please set an e-mail From Name"
-msgstr "レポート &#39;％s&#39;を送信できません。名前からEメールを設定してください"
+msgstr "レポート'%s'を送信できません。From Nameのメールアドレスを設定してください"
 
 #: lib/html_reports.php:594
-#, fuzzy, php-format
+#, php-format
 msgid "Unable to send Report '%s'.  Please set an e-mail from address"
-msgstr "レポート &#39;％s&#39;を送信できません。アドレスからEメールを設定してください"
+msgstr "レポート'%s'を送信できません。メールアドレスを設定してください"
 
 #: lib/html_reports.php:986
 #, fuzzy
@@ -18390,9 +18393,9 @@ msgid "Report Item [edit Report: %s]"
 msgstr "レポート項目[レポート編集：％s]"
 
 #: lib/html_reports.php:1139
-#, fuzzy, php-format
+#, php-format
 msgid "Report Item [new Report: %s]"
-msgstr "レポート項目[新しいレポート：％s]"
+msgstr "レポート項目[新しいレポート：%s]"
 
 #: lib/html_reports.php:1378
 msgid "Events"
@@ -18604,9 +18607,9 @@ msgid "Selected"
 msgstr "選択中"
 
 #: lib/html_utility.php:537 lib/html_utility.php:785
-#, fuzzy, php-format
+#, php-format
 msgid "The regular expression \"%s\" is not valid. Error is %s"
-msgstr "検索語 &quot;％s&quot;は無効です。エラーは％sです"
+msgstr "正規表現\"%s\"は無効です。エラーは%sです"
 
 #: lib/html_utility.php:944
 msgid "Cacti regular expressions are limited to 50 characters only for security reasons."
@@ -18677,9 +18680,9 @@ msgid "New Graph Template: %s"
 msgstr "グラフ[テンプレート：％s]"
 
 #: lib/import.php:1687 lib/import.php:1697
-#, fuzzy, php-format
+#, php-format
 msgid "New Data Query: %s"
-msgstr "データクエリ[％s]"
+msgstr "新しいデータクエリ：%s"
 
 #: lib/import.php:2314
 msgid "Unknown Field"
@@ -18809,9 +18812,9 @@ msgid "Failed to apply specified cron interval"
 msgstr "指定されたクーロン間隔を適用できませんでした"
 
 #: lib/installer.php:1107
-#, fuzzy, php-format
+#, php-format
 msgid "Failed to apply '%s' as Automation Range"
-msgstr "指定された自動化範囲を適用できませんでした"
+msgstr "'%s'を自動化範囲として適用できませんでした"
 
 #: lib/installer.php:1189
 #, fuzzy
@@ -18915,9 +18918,11 @@ msgid "License Agreement"
 msgstr "ライセンス契約"
 
 #: lib/installer.php:1897
-#, fuzzy, php-format
+#, php-format
 msgid "This version of Cacti (%s) does not appear to have a valid version code, please contact the Cacti Development Team to ensure this is corrected.  If you are seeing this error in a release, please raise a report immediately on GitHub"
-msgstr "このバージョンのCacti（％s）には有効なバージョンコードがありません。Cacti開発チームに連絡して問題が解決されたことを確認してください。リリースでこのエラーが発生した場合は、すぐにGitHubでレポートを作成してください。"
+msgstr ""
+"このバージョンのCacti （%s）には有効なバージョンコードがないようです。Cacti開発チームに連絡して、これが修正されていることを確認してください。"
+"リリースにこのエラーが表示されている場合は、GitHubで直ちに報告してください"
 
 #: lib/installer.php:1900
 #, fuzzy
@@ -18930,9 +18935,9 @@ msgid "Make sure you have read and followed the required steps needed to install
 msgstr "続行する前に、Cactiのインストールに必要な手順を読んでそれに従ったことを確認してください。インストール情報は、 <a href=\"%1$s\">Unix</a>および<a href=\"%2$s\">Win32</a>ベースのオペレーティングシステムにあります。"
 
 #: lib/installer.php:1904
-#, fuzzy, php-format
+#, php-format
 msgid "This process will guide you through the steps for upgrading from version '%s'. "
-msgstr "このプロセスは、バージョン &#39;％s&#39;からアップグレードするための手順を案内します。"
+msgstr "このプロセスでは、バージョン'%s'からのアップグレード手順をご案内します。 "
 
 #: lib/installer.php:1905
 #, fuzzy, php-format
@@ -18985,9 +18990,9 @@ msgid "Your Cacti configuration has the relative correct path (url_path) in conf
 msgstr "あなたのCacti設定はconfig.phpに相対的な正しいパス（url_path）を持っています。"
 
 #: lib/installer.php:2031
-#, fuzzy, php-format
+#, php-format
 msgid "PHP - Recommendations (%s)"
-msgstr "PHP  - おすすめ"
+msgstr "PHP -推奨事項（%s）"
 
 #: lib/installer.php:2035
 #, fuzzy
@@ -19121,9 +19126,9 @@ msgid "Installation Type"
 msgstr "インストールの種類"
 
 #: lib/installer.php:2228
-#, fuzzy, php-format
+#, php-format
 msgid "Upgrade from <strong>%s</strong> to <strong>%s</strong>"
-msgstr "<strong>％s</strong>の<strong>％s</strong>からのアップグレード"
+msgstr "<strong>%s</strong>から</strong>%s<strong>にアップグレード"
 
 #: lib/installer.php:2230
 #, fuzzy
@@ -19141,9 +19146,9 @@ msgid "If after clearing your cache and restarting your browser, you still exper
 msgstr "キャッシュをクリアしてブラウザを再起動しても問題が解決しない場合は、Googleに問題を報告してください。その原因を特定します。"
 
 #: lib/installer.php:2239
-#, fuzzy, php-format
+#, php-format
 msgid "Downgrade from <strong>%s</strong> to <strong>%s</strong>"
-msgstr "<strong>％s</strong>の<strong>％s</strong>からのダウングレード"
+msgstr "<strong>%s</strong>から</strong>%s<strong>にダウングレード"
 
 #: lib/installer.php:2240
 #, fuzzy
@@ -19191,29 +19196,32 @@ msgid "Local Database Connection Information"
 msgstr "ローカルデータベース接続情報"
 
 #: lib/installer.php:2317 lib/installer.php:2329
-#, fuzzy, php-format
+#, php-format
 msgid "Database: <b>%s</b>"
-msgstr "データベース： <b>％s</b>"
+msgstr "データベース<b>：%s</b>"
 
 #: lib/installer.php:2318 lib/installer.php:2330
 #, fuzzy, php-format
 msgid "Database User: <b>%s</b>"
-msgstr "データベースユーザー： <b>％s</b>"
+msgstr ""
+"あなたのデータベースユーザがテーブルを作成する権限がありません。私たちは、単にテーブルを空にすることによって復元しようとします。これは、a）あなたは同じデ"
+"ータベース構造でWordPressのバージョンから復元しているのように動作する必要があり、およびb）あなたのインポートされたデータベースは、すでにインポー"
+"トサイトに存在しない任意のテーブルが含まれていません。"
 
 #: lib/installer.php:2319 lib/installer.php:2331
-#, fuzzy, php-format
+#, php-format
 msgid "Database Hostname: <b>%s</b>"
-msgstr "データベースのホスト名： <b>％s</b>"
+msgstr "データベースホスト名<b>：%s</b>"
 
 #: lib/installer.php:2320 lib/installer.php:2332
-#, fuzzy, php-format
+#, php-format
 msgid "Port: <b>%s</b>"
-msgstr "ポート： <b>％s</b>"
+msgstr "ポート<b>：%s</b>"
 
 #: lib/installer.php:2321 lib/installer.php:2333
-#, fuzzy, php-format
+#, php-format
 msgid "Server Operating System Type: <b>%s</b>"
-msgstr "サーバーのオペレーティングシステムの種類： <b>％s</b>"
+msgstr "サーバーオペレーティングシステムタイプ<b>：%s</b>"
 
 #: lib/installer.php:2326
 #, fuzzy
@@ -19346,9 +19354,9 @@ msgid "If SELinux is enabled on your server, you can either permanently disable 
 msgstr "サーバーでSELinuxが有効になっている場合は、これを永久に無効にするか、一時的に無効にしてからSELinuxコマンドラインツールを使用して適切な権限を追加します。"
 
 #: lib/installer.php:2576
-#, fuzzy, php-format
+#, php-format
 msgid "The user '%s' should have MODIFY permission to enable read/write."
-msgstr "読み取り/書き込みを有効にするには、ユーザ &#39;％s&#39;にMODIFY権限が必要です。"
+msgstr "ユーザー'%s'には、読み取り/書き込みを有効にするための変更権限が必要です。"
 
 #: lib/installer.php:2586
 #, fuzzy
@@ -19653,9 +19661,9 @@ msgid "Your Cacti Server is almost ready.  Please check that you are happy to pr
 msgstr "あなたのCactiサーバはほぼ準備ができています。続行してよろしいですか。"
 
 #: lib/installer.php:2912
-#, fuzzy, php-format
+#, php-format
 msgid "Press '%s' then click '%s' to complete the installation process after selecting your Device Templates."
-msgstr "デバイステンプレートを選択したら、 &#39;％s&#39;を押してから &#39;％s&#39;をクリックしてインストールプロセスを完了してください。"
+msgstr "'%s'を押し、'%s'をクリックして、デバイステンプレートを選択した後、インストールプロセスを完了します。"
 
 #: lib/installer.php:2928
 #, fuzzy, php-format
@@ -19714,24 +19722,24 @@ msgid "Found %s templates to install"
 msgstr "インストールする％sテンプレートが見つかりました"
 
 #: lib/installer.php:3289
-#, fuzzy, php-format
+#, php-format
 msgid "About to import Package #%s '%s'."
-msgstr "パッケージ＃％s '％s'をインポートしようとしています。"
+msgstr "パッケージ#%s '%s'をインポートしようとしています。"
 
 #: lib/installer.php:3298
-#, fuzzy, php-format
+#, php-format
 msgid "Import of Package #%s '%s' under Profile '%s' succeeded"
-msgstr "プロファイル '％s'のパッケージ＃％s '％s'のインポートに成功しました"
+msgstr "プロファイル'%s'のパッケージ#%s'%s'のインポートに成功しました"
 
 #: lib/installer.php:3304
-#, fuzzy, php-format
+#, php-format
 msgid "Import of Package #%s '%s' under Profile '%s' failed"
-msgstr "プロファイル '％s'のパッケージ＃％s '％s'のインポートに失敗しました"
+msgstr "プロファイル'%s'のパッケージ#%s'%s'のインポートに失敗しました"
 
 #: lib/installer.php:3320
-#, fuzzy, php-format
+#, php-format
 msgid "Mapping Automation Template for Device Template '%s'"
-msgstr "[削除済みテンプレート]の自動化テンプレート"
+msgstr "デバイステンプレート'%s'のマッピング自動化テンプレート"
 
 #: lib/installer.php:3343
 #, fuzzy
@@ -19749,14 +19757,14 @@ msgid "Setting default data source profile to %s (%s)"
 msgstr "このデータテンプレートのデフォルトのデータソースプロファイル。"
 
 #: lib/installer.php:3414
-#, fuzzy, php-format
+#, php-format
 msgid "Failed to find selected profile (%s), no changes were made"
-msgstr "指定されたプロファイル％sを適用できませんでした！=％s"
+msgstr "選択したプロファイル（%s）が見つかりませんでした。変更は行われませんでした"
 
 #: lib/installer.php:3425
-#, fuzzy, php-format
+#, php-format
 msgid "Updating automation network (%s), mode \"%s\" => \"%s\", subnet \"%s\" => %s\""
-msgstr "自動化ネットワーク（％s）、モード \"％s\" => \"％s\"、サブネット \"％s\" =>％s \"を更新しています"
+msgstr "自動化ネットワーク（%s）の更新、モード\"%s\" => \"%s\"、サブネット\"%s\" => %s\""
 
 #: lib/installer.php:3441
 #, fuzzy
@@ -19849,9 +19857,9 @@ msgid "Found %s tables to convert"
 msgstr "変換する％sテーブルが見つかりました"
 
 #: lib/installer.php:3610
-#, fuzzy, php-format
+#, php-format
 msgid "Converting Table #%s '%s'"
-msgstr "テーブル＃％s '％s'の変換"
+msgstr "テーブル#%s「%s」を変換しています"
 
 #: lib/installer.php:3627
 #, fuzzy
@@ -19864,14 +19872,14 @@ msgid "Switched from %s to %s"
 msgstr "％sから％sに切り替えました"
 
 #: lib/installer.php:3642
-#, fuzzy, php-format
+#, php-format
 msgid "NOTE: Using temporary file for db cache: %s"
-msgstr "注：データベースキャッシュに一時ファイルを使用：％s"
+msgstr "注：データベースキャッシュに一時ファイルを使用する：%s"
 
 #: lib/installer.php:3665
-#, fuzzy, php-format
+#, php-format
 msgid "Upgrading from v%s (DB %s) to v%s"
-msgstr "v％s（DB％s）からv％sへのアップグレード"
+msgstr "V %s（ DB %s）からv %sにアップグレード中"
 
 #: lib/installer.php:3674
 #, fuzzy, php-format
@@ -19889,9 +19897,9 @@ msgid "Background was already started at %s, this attempt at %s was skipped"
 msgstr "バックグラウンドはすでに％sで開始されました。％sでのこの試行はスキップされました"
 
 #: lib/installer.php:3790
-#, fuzzy, php-format
+#, php-format
 msgid "Exception occurred during installation: #%s - %s"
-msgstr "インストール中に例外が発生しました。"
+msgstr "インストール中に例外が発生しました: #%s - %s"
 
 #: lib/installer.php:3799
 #, fuzzy, php-format
@@ -19931,9 +19939,9 @@ msgid "Setting PHP Option %s = %s"
 msgstr "PHPオプション％s =％sの設定"
 
 #: lib/installer.php:3866
-#, fuzzy, php-format
+#, php-format
 msgid "Failed to set PHP option %s, is %s (should be %s)"
-msgstr "PHPオプション％sの設定に失敗しました。％sです（％sでなければなりません）"
+msgstr "PHPオプション%sの設定に失敗しました。%sです（%sにする必要があります）"
 
 #: lib/installer.php:3886
 #, fuzzy
@@ -19960,29 +19968,29 @@ msgid "No username defined"
 msgstr "ユーザー名が定義されていません"
 
 #: lib/ldap.php:412
-#, fuzzy, php-format
+#, php-format
 msgid "Protocol Error, Unable to set version (%s) on Server (%s)"
-msgstr "プロトコルエラー、バージョンを設定できません"
+msgstr "プロトコルエラー、サーバー（%s）にバージョン（%s）を設定できません"
 
 #: lib/ldap.php:416
-#, fuzzy, php-format
+#, php-format
 msgid "Protocol Error, Unable to set referrals option (%s) on Server (%s)"
-msgstr "プロトコルエラー、紹介オプションを設定できません"
+msgstr "プロトコルエラー、サーバー（%s）に紹介オプション（%s）を設定できません"
 
 #: lib/ldap.php:420
-#, fuzzy, php-format
+#, php-format
 msgid "Protocol Error, unable to start TLS communications (%s) on Server (%s)"
-msgstr "プロトコルエラー、TLS通信を開始できません"
+msgstr "プロトコルエラー、サーバー（%s）でTLS通信（%s）を開始できません"
 
 #: lib/ldap.php:424
-#, fuzzy, php-format
+#, php-format
 msgid "Protocol Error, General failure (%s)"
-msgstr "プロトコルエラー、一般エラー（％s）"
+msgstr "プロトコルエラー、一般的な失敗（%s）"
 
 #: lib/ldap.php:428
-#, fuzzy, php-format
+#, php-format
 msgid "Protocol Error, Unable to bind, LDAP result: (%s) on Server (%s)"
-msgstr "プロトコルエラー、バインドできません、LDAPの結果：％s"
+msgstr "プロトコルエラー、バインドできません、サーバー（%s）のLDAP結果： （%s）"
 
 #: lib/ldap.php:432
 #, php-format
@@ -19995,14 +20003,14 @@ msgid "Connection Timeout to Server (%s)"
 msgstr "接続タイムアウト"
 
 #: lib/ldap.php:440
-#, fuzzy, php-format
+#, php-format
 msgid "Insufficient Access to Server (%s)"
-msgstr "コンソールアクセス"
+msgstr "サーバーへの不十分なアクセス（%s）"
 
 #: lib/ldap.php:444
-#, fuzzy, php-format
+#, php-format
 msgid "Group DN could not be found to compare on Server (%s)"
-msgstr "グループDNを比較することができませんでした"
+msgstr "サーバー（%s）で比較するグループDNが見つかりませんでした"
 
 #: lib/ldap.php:448
 #, fuzzy
@@ -20035,9 +20043,9 @@ msgid "Invalid Password provided.  Login failed."
 msgstr "無効なパスワードが提供されました。ログインに失敗しました。"
 
 #: lib/ldap.php:473
-#, fuzzy, php-format
+#, php-format
 msgid "Unexpected error %s (Ldap Error: %s) on Server (%s)"
-msgstr "予期しないエラー％s（LDAPエラー：％s）"
+msgstr "サーバー（%s）で予期しないエラー%s（ LDAPエラー：%s）"
 
 #: lib/ping.php:146
 #, fuzzy
@@ -20045,9 +20053,9 @@ msgid "ICMP Ping timed out"
 msgstr "ICMP pingがタイムアウトしました"
 
 #: lib/ping.php:234 lib/ping.php:252
-#, fuzzy, php-format
+#, php-format
 msgid "ICMP Ping Success (%s ms)"
-msgstr "ICMP ping成功（％sミリ秒）"
+msgstr "ICMP Ping成功（%sミリ秒）"
 
 #: lib/ping.php:239 lib/ping.php:257
 #, fuzzy
@@ -20073,18 +20081,18 @@ msgid "UDP ping error: %s"
 msgstr "UDP pingエラー：％s"
 
 #: lib/ping.php:463
-#, fuzzy, php-format
+#, php-format
 msgid "UDP Ping Success (%s ms)"
-msgstr "UDP ping成功（％sミリ秒）"
+msgstr "UDP Ping成功（%sミリ秒）"
 
 #: lib/ping.php:529
 msgid "IPv6 support appears to be missing!"
 msgstr ""
 
 #: lib/ping.php:552
-#, fuzzy, php-format
+#, php-format
 msgid "TCP ping: socket_connect(), reason: %s"
-msgstr "TCP ping：socket_connect（）、理由：％s"
+msgstr "TCP ping ： socket_connect （ ）、理由：%s"
 
 #: lib/ping.php:570
 #, fuzzy, php-format
@@ -20092,9 +20100,9 @@ msgid "TCP ping: socket_select() failed, reason: %s"
 msgstr "TCP ping：socket_select（）が失敗しました、理由：％s"
 
 #: lib/ping.php:585
-#, fuzzy, php-format
+#, php-format
 msgid "TCP Ping Success (%s ms)"
-msgstr "TCP ping成功（％sミリ秒）"
+msgstr "TCP Ping成功（%sミリ秒）"
 
 #: lib/ping.php:595
 #, fuzzy
@@ -20124,17 +20132,19 @@ msgstr "プラグインをインストールできません。"
 #: lib/plugins.php:741
 #, php-format
 msgid "The Plugin directory '%s' needs to be renamed to remove 'plugin_' from the name before it can be installed."
-msgstr ""
+msgstr "プラグインディレクトリ'%s'は、インストールする前に名前から'plugin _'を削除するために名前を変更する必要があります。"
 
 #: lib/plugins.php:744
 #, php-format
 msgid "The Plugin in the directory '%s' does not include an version function '%s()'.  This function must exist for the plugin to be installed."
 msgstr ""
+"ディレクトリ'%s'のプラグインには、バージョン関数'%s()'が含まれていません。プラグインをインストールするには、この関数が存在する必要があります。"
 
 #: lib/plugins.php:773
 #, php-format
 msgid "The Plugin in the directory '%s' does not include an install function '%s()'.  This function must exist for the plugin to be installed."
 msgstr ""
+"ディレクトリ'%s'のプラグインには、インストール関数'%s()'が含まれていません。プラグインをインストールするには、この関数が存在する必要があります。"
 
 #: lib/plugins.php:1265 lib/plugins.php:1272 plugins.php:487 plugins.php:576
 msgid "Plugins"
@@ -20156,9 +20166,9 @@ msgid "Not Stated"
 msgstr "言及なし"
 
 #: lib/reports.php:144
-#, fuzzy, php-format
+#, php-format
 msgid "Device '%s' successfully added to Report."
-msgstr "サボテンに追加"
+msgstr "デバイス'%s'はレポートに正常に追加されました。"
 
 #: lib/reports.php:147
 #, fuzzy
@@ -20171,9 +20181,9 @@ msgid "Device '%s' not added to Report as it already exists on report."
 msgstr "デバイス「%s」はレポートにすでに存在するため、レポートに追加されません。"
 
 #: lib/reports.php:625
-#, fuzzy, php-format
+#, php-format
 msgid "Problems sending Report '%s' Problem with e-mail Subsystem Error is '%s'"
-msgstr "電子メールサブシステムエラーのレポート '％s'の問題は '％s'です"
+msgstr "レポート'%s'の送信の問題電子メールサブシステムエラーの問題は'%s'です"
 
 #: lib/reports.php:634
 #, php-format
@@ -20215,79 +20225,81 @@ msgid "Graph Alignment:"
 msgstr "グラフの配置"
 
 #: lib/reports.php:2011
-#, fuzzy, php-format
+#, php-format
 msgid "Created Report Graph Item '<i>%s</i>'"
-msgstr "レポートグラフアイテム &#39; <i>％s</i> &#39;を作成しました"
+msgstr "レポートグラフアイテム<i>'%s'</i>を作成しました"
 
 #: lib/reports.php:2013
-#, fuzzy, php-format
+#, php-format
 msgid "Failed Adding Report Graph Item '<i>%s</i>' Already Exists"
-msgstr "レポートグラフアイテム &#39; <i>％s</i> &#39;の追加に失敗しました"
+msgstr "レポートグラフアイテム<i>'%s'</i>の追加に失敗しました"
 
 #: lib/reports.php:2016
-#, fuzzy, php-format
+#, php-format
 msgid "Skipped Report Graph Item '<i>%s</i>' Already Exists"
-msgstr "スキップされたレポートグラフアイテム &#39; <i>％s</i> &#39;は既に存在します"
+msgstr "スキップされたレポートグラフアイテム<i>'%s'</i>は既に存在します"
 
 #: lib/rrd.php:3108
-#, fuzzy, php-format
+#, php-format
 msgid "The required RRDfile step size is '%s' but observed step is '%s'"
-msgstr "必要なRRDステップサイズは &#39;％s&#39;です"
+msgstr "必要なRRDfileステップサイズは'%s'ですが、観察されたステップは'%s'です"
 
 #: lib/rrd.php:3168
-#, fuzzy, php-format
+#, php-format
 msgid "Type for Data Source '%s' should be '%s'"
-msgstr "データソース &#39;％1！&#39;の型は &#39;％2！&#39;にする必要があります"
+msgstr "データソース'%s'のタイプは'%s'である必要があります"
 
 #: lib/rrd.php:3174
-#, fuzzy, php-format
+#, php-format
 msgid "Heartbeat for Data Source '%s' should be '%s'"
-msgstr "データソース &#39;％1！&#39;のハートビートは &#39;％2！&#39;にする必要があります"
+msgstr "データソース'%s'のハートビートは'%s'である必要があります"
 
 #: lib/rrd.php:3186
-#, fuzzy, php-format
+#, php-format
 msgid "RRD minimum for Data Source '%s' should be '%s'"
-msgstr "データソース &#39;％1！&#39;のRRD最小値は &#39;％2！&#39;にする必要があります"
+msgstr "データソース'%s'のRRD最小値は'%s'である必要があります"
 
 #: lib/rrd.php:3195
-#, fuzzy, php-format
+#, php-format
 msgid "DS '%s' missing in Cacti definition"
-msgstr "サボテンの定義にDS &#39;％s&#39;がありません"
+msgstr "Cactiの定義にDS '%s'がありません"
 
 #: lib/rrd.php:3209 lib/rrd.php:3210
-#, fuzzy, php-format
+#, php-format
 msgid "Cacti RRA '%s' has same CF/steps (%s, %s) as '%s'"
-msgstr "サボテンRRA &#39;％s&#39;は &#39;％s&#39;と同じCF /ステップ（％s、％s）を持っています"
+msgstr "Cacti RRA '%s'は'%s'と同じCF/ステップ（%s、%s）を持っています"
 
 #: lib/rrd.php:3224 lib/rrd.php:3225
-#, fuzzy, php-format
+#, php-format
 msgid "File RRA '%s' has same CF/steps (%s, %s) as '%s'"
-msgstr "ファイルRRA &#39;％s&#39;の &#39;CF&#39; /ステップ（％s、％s）は &#39;％s&#39;と同じです"
+msgstr "ファイルRRA '%s'は'%s'と同じCF/ステップ（%s、%s）を持っています"
 
 #: lib/rrd.php:3259
 #, php-format
 msgid "The pdp_per_row of '%s' is invalid for RRA '%s' should be '%s'.  Consider deleting and allowing Cacti to re-create RRDfile."
 msgstr ""
+"'%s'のpdp_per_rowは、RRA "
+"'%s'が'%s'であるために無効です。CactiがRRDファイルを再作成できるように削除することを検討してください。"
 
 #: lib/rrd.php:3263
-#, fuzzy, php-format
+#, php-format
 msgid "The XFF for Cacti RRA id is '%s' but should be '%s'"
-msgstr "サボテンRRA ID &#39;％s&#39;のXFFは &#39;％s&#39;でなければなりません"
+msgstr "Cacti RRA IDのXFFは'%s'ですが、'%s'である必要があります"
 
 #: lib/rrd.php:3267
-#, fuzzy, php-format
+#, php-format
 msgid "The number of rows for Cacti RRA id '%s' is incorrect.  The number of rows are '%s' but should be '%s'"
-msgstr "Cacti RRA ID &#39;％s&#39;の行数は &#39;％s&#39;であるべきです"
+msgstr "Cacti RRA ID '%s'の行数が正しくありません。行数は'%s'ですが、'%s'でなければなりません"
 
 #: lib/rrd.php:3285
-#, fuzzy, php-format
+#, php-format
 msgid "The RRA '%s' missing in the existing Cacti RRDfile"
-msgstr "RRDファイルにRRA &#39;％s&#39;がありません"
+msgstr "既存のCacti RRDファイルにRRA '%s'がありません"
 
 #: lib/rrd.php:3292
-#, fuzzy, php-format
+#, php-format
 msgid "RRA '%s' missing in Cacti definition"
-msgstr "サボテンの定義にRRA &#39;％s&#39;がありません"
+msgstr "Cacti定義にRRA '%s'がありません"
 
 #: lib/rrd.php:3313
 #, fuzzy
@@ -20383,14 +20395,14 @@ msgid "Error while parsing the XML of RRDtool dump"
 msgstr "RRDtoolダンプのXMLの構文解析中にエラーが発生しました"
 
 #: lib/rrd.php:3968
-#, fuzzy, php-format
+#, php-format
 msgid "RRA (CF=%s, ROWS=%d, PDP_PER_ROW=%d, XFF=%1.2f) removed from RRD file"
-msgstr "RRDファイルからRRA（CF =％s、行=％d、PDP_PER_ROW =％d、XFF =％1.2f）が削除されました"
+msgstr "RRDファイルから削除されたRRA （ CF =%s、行=%d、PDP_PER_ROW =%d、XFF =%1.2f）"
 
 #: lib/rrd.php:4008
-#, fuzzy, php-format
+#, php-format
 msgid "RRA (CF=%s, ROWS=%d, PDP_PER_ROW=%d, XFF=%1.2f) adding to RRD file"
-msgstr "RRDファイルにRRA（CF =％s、行=％d、PDP_PER_ROW =％d、XFF =％1.2f）を追加"
+msgstr "RRDファイルに追加するRRA （ CF =%s、行=%d、PDP_PER_ROW =%d、XFF =%1.2f）"
 
 #: lib/rrd.php:4040 lib/rrd.php:4054
 #, fuzzy, php-format
@@ -20874,9 +20886,9 @@ msgid "How often do you wish this page to be refreshed automatically."
 msgstr "このページを自動的に更新する頻度"
 
 #: links.php:587
-#, fuzzy, php-format
+#, php-format
 msgid "External Links [edit: %s]"
-msgstr "外部リンク[編集：％s]"
+msgstr "外部リンク[編集：%s]"
 
 #: links.php:589
 #, fuzzy
@@ -20946,9 +20958,9 @@ msgid "No SNMP Notification Receivers"
 msgstr "SNMP通知受信者なし"
 
 #: managers.php:291
-#, fuzzy, php-format
+#, php-format
 msgid "SNMP Notification Receiver [edit: %s]"
-msgstr "SNMP通知受信者[編集：％s]"
+msgstr "SNMP通知受信者[編集：%s]"
 
 #: managers.php:293
 #, fuzzy
@@ -21155,7 +21167,7 @@ msgstr ""
 #: package_import.php:351
 #, php-format
 msgid "The package \"%s\" download or validation failed"
-msgstr ""
+msgstr "パッケージ\"%s\"のダウンロードまたは検証に失敗しました"
 
 #: package_import.php:357
 msgid "See the cacti.log for more information.  It could be that you had either an API Key error or the package was tamered with, or the location is not available"
@@ -21452,14 +21464,14 @@ msgid "Plugin directories can not include spaces"
 msgstr "プラグインディレクトリにスペースを含めることはできません"
 
 #: plugins.php:883
-#, fuzzy, php-format
+#, php-format
 msgid "Plugin directory is not correct.  Should be '%s' but is '%s'"
-msgstr "プラグインディレクトリが正しくありません。 &#39;％s&#39;であるべきですが &#39;％s&#39;です"
+msgstr "プラグインディレクトリが正しくありません。'%s'である必要がありますが、'%s'です"
 
 #: plugins.php:892
-#, fuzzy, php-format
+#, php-format
 msgid "Plugin directory '%s' is missing setup.php"
-msgstr "プラグインディレクトリ &#39;％s&#39;にsetup.phpがありません"
+msgstr "プラグインディレクトリ'%s'にsetup.phpがありません"
 
 #: plugins.php:894
 #, fuzzy
@@ -21757,14 +21769,14 @@ msgid "Provides a way to disable verification of the server's SSL certificate Co
 msgstr ""
 
 #: pollers.php:334
-#, fuzzy, php-format
+#, php-format
 msgid "You have already used this hostname '%s'.  Please enter a non-duplicate hostname."
-msgstr "このホスト名「％s」はすでに使用しています。重複しないホスト名を入力してください。"
+msgstr "このホスト名'%s'は既に使用されています。重複しないホスト名を入力してください。"
 
 #: pollers.php:340
-#, fuzzy, php-format
+#, php-format
 msgid "You have already used this database hostname '%s'.  Please enter a non-duplicate database hostname."
-msgstr "このデータベースホスト名 '％s'は既に使用されています。重複しないデータベースホスト名を入力してください。"
+msgstr "このデータベースホスト名'%s'は既に使用されています。重複しないデータベースホスト名を入力してください。"
 
 #: pollers.php:560
 #, fuzzy
@@ -21862,9 +21874,9 @@ msgid "Click 'Continue' to Clear Statistics for following Data Collectors."
 msgstr "次のデータコレクタを有効にするには、[続行]をクリックします。"
 
 #: pollers.php:645 sites.php:460
-#, fuzzy, php-format
+#, php-format
 msgid "Site [edit: %s]"
-msgstr "サイト[編集：％s]"
+msgstr "サイト[編集:%s]"
 
 #: pollers.php:649 sites.php:462
 #, fuzzy
@@ -22189,9 +22201,9 @@ msgid "NOTE: Path Settings on this Tab are only saved locally!"
 msgstr "注：このタブのパス設定はローカルでのみ保存されます！"
 
 #: settings.php:138
-#, fuzzy, php-format
+#, php-format
 msgid "Cacti Settings (%s)%s"
-msgstr "サボテンの設定（％s）"
+msgstr "サボテンの設定（%s）%s"
 
 #: settings.php:248
 msgid "Changing Permission Model Warning"
@@ -22573,9 +22585,9 @@ msgid "No Sites Found"
 msgstr "サイトが見つかりません"
 
 #: spikekill.php:40
-#, fuzzy, php-format
+#, php-format
 msgid "FATAL: Spike Kill method '%s' is Invalid"
-msgstr "致命的：スパイクキルメソッド &#39;％s&#39;は無効です"
+msgstr "致命的：スパイクキルメソッド「%s」が無効です"
 
 #: spikekill.php:117
 #, fuzzy
@@ -22993,11 +23005,13 @@ msgstr "テンプレートエクスポート"
 #, php-format
 msgid "See the cacti.log for more information, and review the XML file for proper syntax.  The error details are shown below.<br><br><b>Errors:</b><br>%s"
 msgstr ""
+"詳細についてはcacti."
+"logを参照し、適切な構文についてはXMLファイルを確認してください。エラーの詳細を以下に示します。<br><br><b>エラー：{</b><br>%s}"
 
 #: templates_import.php:143
 #, php-format
 msgid "The Template XML file \"%s\" validation failed"
-msgstr ""
+msgstr "テンプレートXMLファイル\"%s\"の検証に失敗しました"
 
 #: templates_import.php:216
 msgid "Import Files [ If Files are missing, locate and install before using ]"
@@ -23035,7 +23049,7 @@ msgstr "Met: %d"
 #: templates_import.php:324
 #, php-format
 msgid "Unmet: %d"
-msgstr ""
+msgstr "未達成：%d"
 
 #: templates_import.php:333
 msgid "Some CDEF Items will not import due to an export error! Contact Template provider for an updated export."
@@ -23177,9 +23191,9 @@ msgid "Un-Lock Trees"
 msgstr "ツリーの公開を解除"
 
 #: tree.php:768
-#, fuzzy, php-format
+#, php-format
 msgid "Trees [edit: %s]"
-msgstr "木[編集：％s]"
+msgstr "ツリー[edit :%s]"
 
 #: tree.php:781
 #, fuzzy
@@ -23887,9 +23901,9 @@ msgid "Make Selected Domain Default"
 msgstr "選択したドメインをデフォルトにする"
 
 #: user_domains.php:283
-#, fuzzy, php-format
+#, php-format
 msgid "User Domain [edit: %s]"
-msgstr "ユーザードメイン[編集：％s]"
+msgstr "ユーザードメイン[編集：%s]"
 
 #: user_domains.php:285
 #, fuzzy
@@ -24367,9 +24381,9 @@ msgid "Members"
 msgstr "メンバー"
 
 #: user_group_admin.php:1684
-#, fuzzy, php-format
+#, php-format
 msgid "User Group Management [edit: %s]"
-msgstr "ユーザグループ管理[編集：％s]"
+msgstr "ユーザーグループ管理[編集：%s]"
 
 #: user_group_admin.php:1686
 #, fuzzy
@@ -24479,14 +24493,14 @@ msgid "Display Order"
 msgstr "表示順"
 
 #: utilities.php:409
-#, fuzzy, php-format
+#, php-format
 msgid "Log [Total Lines: %d - Non-Matching Items Hidden]"
-msgstr "ログ[合計行数：％d  - 一致しないアイテムは非表示]"
+msgstr "ログ[合計行数：%d -非表示の一致しないアイテム]"
 
 #: utilities.php:411
-#, fuzzy, php-format
+#, php-format
 msgid "Log [Total Lines: %d - All Items Shown]"
-msgstr "ログ[合計行数：％d  - すべての項目が表示されています]"
+msgstr "ログ[合計行数：%d -すべての項目が表示されます]"
 
 #: utilities.php:508
 #, fuzzy
@@ -24877,6 +24891,8 @@ msgstr "実行時統計"
 #, php-format
 msgid "Records: %s (ds rows), Time: %s (secs), GetRows: %s (secs), ResultsCycle: %s (secs), FileAndTemplate: %s (secs), LastUpdate: %s (secs), RRDUpdate: %s (secs), Delete: %s (secs)"
 msgstr ""
+"レコード：%s（ ds行）、時間：%s（秒）、GetRows ：%s（秒）、ResultsCycle ：%s（秒）、FileAndTemplate "
+"：%s（秒）、LastUpdate ：%s（秒）、RRDUpdate ：%s（秒）、Delete ：%s（秒）"
 
 #: utilities.php:1711
 #, fuzzy
@@ -24892,11 +24908,16 @@ msgstr "プロセス: %d"
 #, php-format
 msgid "Status: <span class=\"deviceUp\"><b>Running</b></span>, Remaining: %s (dses), CurrentRuntime: %s (secs), PrevRuntime: %s (secs), PrevProcessed: %10s (ds rows)"
 msgstr ""
+"ステータス：<span class=\"deviceUp\"><b>実行中</b></span>、残り：%s（ dses ）、"
+"CurrentRuntime ：%s（ secs ）、PrevRuntime ：%s（ secs ）、PrevProcessed ：%10s（ ds "
+"rows ）"
 
 #: utilities.php:1748
 #, php-format
 msgid "Status: <span class=\"deviceRecovering\"><b>Idle</b></span>, PrevRuntime: %s (secs), PrevProcessed: %10s (ds rows)"
 msgstr ""
+"ステータス：<span class=\"deviceRecovering\"><b>アイドル</b></span>、PrevRuntime ：%s（秒）、"
+"PrevProcessed ：%10s（ ds行）"
 
 #: utilities.php:1754
 #, fuzzy
@@ -25035,9 +25056,9 @@ msgid "Click 'Continue' to delete the following VDEF's."
 msgstr "次のVDEFを削除するには、[続行]をクリックします。"
 
 #: vdef.php:304
-#, fuzzy, php-format
+#, php-format
 msgid "VDEF Name: %s"
-msgstr "VDEF名：％s"
+msgstr "VDEF名：%s"
 
 #: vdef.php:312
 #, fuzzy
@@ -25050,9 +25071,9 @@ msgid "VDEF Preview"
 msgstr "VDEFプレビュー"
 
 #: vdef.php:394
-#, fuzzy, php-format
+#, php-format
 msgid "VDEF Items [edit: %s]"
-msgstr "VDEFアイテム[編集：％s]"
+msgstr "VDEFアイテム[編集：%s]"
 
 #: vdef.php:396
 #, fuzzy
@@ -25080,9 +25101,9 @@ msgid "Enter a value for this VDEF item."
 msgstr "このVDEF項目の値を入力してください。"
 
 #: vdef.php:547
-#, fuzzy, php-format
+#, php-format
 msgid "VDEFs [edit: %s]"
-msgstr "VDEF [編集：％s]"
+msgstr "VDEF [編集：%s]"
 
 #: vdef.php:549
 #, fuzzy
