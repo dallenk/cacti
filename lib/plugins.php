@@ -1430,8 +1430,20 @@ function api_plugin_archive_restore($plugin, $id, $type = 'archive') {
 			WHERE plugin = ?
 			AND id = ?',
 			array($plugin, $id));
+
+		$new_updated = db_fetch_cell_prepared('SELECT last_updated
+			FROM plugin_archive
+			WHERE plugin = ?
+			AND id = ?',
+			array($plugin, $id));
 	} else {
 		$archive = db_fetch_cell_prepared('SELECT archive
+			FROM plugin_available
+			WHERE plugin = ?
+			AND tag_name = ?',
+			array($plugin, $id));
+
+		$new_updated = db_fetch_cell_prepared('SELECT published_at
 			FROM plugin_available
 			WHERE plugin = ?
 			AND tag_name = ?',
@@ -1582,8 +1594,25 @@ function api_plugin_archive_restore($plugin, $id, $type = 'archive') {
 
 			if ($type == 'archive') {
 				raise_message('archive_restored', __('Restore succeeded!  The archived Plugin \'%s\' Restore succeeded.', $plugin), MESSAGE_LEVEL_INFO);
+
+				db_execute_prepared('UPDATE plugin_config 
+					SET last_updated = ?,
+					WHERE directory = ?', 
+					array($new_updated, $plugin));
 			} else {
 				raise_message('archive_restored', __('Load succeeded!  The available Plugin \'%s\' Load succeeded.', $plugin), MESSAGE_LEVEL_INFO);
+
+				if ($id == 'develop') {
+					db_execute_prepared('UPDATE plugin_config 
+						SET last_updated = NOW()
+						WHERE directory = ?', 
+						array($plugin));
+				} else {
+					db_execute_prepared('UPDATE plugin_config 
+						SET last_updated = ?,
+						WHERE directory = ?', 
+						array($new_updated, $plugin));
+				}
 			}
 
 			return true;

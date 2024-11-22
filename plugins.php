@@ -217,7 +217,7 @@ switch($action) {
 
 			raise_message('fetch_background', __('The fetch latest plugins process has been launched into background.'), MESSAGE_LEVEL_INFO);
 		} elseif ($running === true) {
-			raise_message('fetch_background', __('The fetch latest plugins process has already been started.'), MESSAGE_LEVEL_INFO);
+			raise_message('fetch_background', __('The fetch latest plugins process has already been started.'), MESSAGE_LEVEL_WARN);
 		}
 
 		header('Location: plugins.php');
@@ -1001,7 +1001,7 @@ function update_show_current() {
 			$sql = "SELECT pa.id, pa.plugin, pa.description, pi.status, pi.remote_status,
 				pa.author, pa.webpage, pi.version, pi.capabilities, pi.requires, pi.last_updated,
 				pa.requires AS archive_requires, pa.compat AS archive_compat, pa.version AS archive_version,
-				pa.user_id, pa.last_updated AS archive_date, pa.dir_md5sum
+				pa.user_id, pa.last_updated AS archive_date, pa.dir_md5sum, length(archive) AS archive_length
 				FROM plugin_archive AS pa
 				LEFT JOIN $table AS pi
 				ON pa.plugin = pi.plugin
@@ -1017,7 +1017,7 @@ function update_show_current() {
 				pa.plugin, pa.description AS avail_description,
 				pa.author AS avail_author, pa.webpage AS avail_webpage,
 				pa.compat AS avail_compat, pa.published_at AS avail_published, pa.tag_name AS avail_tag_name,
-				pa.requires AS avail_requires, length(pa.changelog) AS changelog
+				pa.requires AS avail_requires, length(pa.changelog) AS changelog, length(archive) AS archive_length
 				FROM plugin_available AS pa
 				LEFT JOIN $table AS pi
 				ON pa.plugin = pi.plugin
@@ -1080,7 +1080,7 @@ function update_show_current() {
 					'tip'     => __('The author of this Plugin.')
 				),
 				'pa.compat' => array(
-					'display' => __('Min Cacti Release'),
+					'display' => __('Cacti Requires'),
 					'align'   => 'right',
 					'sort'    => 'ASC',
 					'tip'     => __('The version of this Plugin.')
@@ -1337,11 +1337,20 @@ function format_plugin_row($plugin, $last_plugin, $include_ordering, $table) {
 		$row .= "<td class='nowrap'>" . $status_names[$plugin['status']];
 	}
 
-	$newer = db_fetch_cell_prepared('SELECT COUNT(*)
-		FROM plugin_available
-		WHERE plugin = ?
-		AND last_updated > ?',
-		array($plugin['plugin'], $plugin['last_updated']));
+	if (read_config_option('github_allow_unsafe') == 'on') {
+		$newer = db_fetch_cell_prepared('SELECT COUNT(*)
+			FROM plugin_available
+			WHERE plugin = ?
+			AND last_updated > ?',
+			array($plugin['plugin'], $plugin['last_updated']));
+	} else {
+		$newer = db_fetch_cell_prepared('SELECT COUNT(*)
+			FROM plugin_available
+			WHERE plugin = ?
+			AND last_updated > ?
+			AND tag_name != "develop"',
+			array($plugin['plugin'], $plugin['last_updated']));
+	}
 
 	if ($newer > 0) {
 		$row .= ", <a class='pic deviceUp' href='" . html_escape('plugins.php?action=list&state=6&filter=' . $plugin['plugin']) . "'>" . __('Newer Version Available') . '</a>';
