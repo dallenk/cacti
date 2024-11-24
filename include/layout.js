@@ -858,10 +858,8 @@ function applySkin() {
 	/**
  	 * Destroy all tooltips on a page after refresh
  	 */
-	$('.ui-tooltip').each(function() {
-		if ($(this).tooltip('instance')) {
-			$(this).tooltip('destroy');
-		}
+	$('.ui-helper-hidden-accessible').each(function() {
+		$(this).remove();
 	});
 
 	/* Replace icons */
@@ -2543,6 +2541,7 @@ function postUrl(options, data) {
 	}
 
 	$.ajaxQ.abortAll();
+
 	return $.post(options.url, data)
 		.done(function (html) {
 			handleAjaxResponse(html, options);
@@ -2708,8 +2707,6 @@ function handleAjaxResponse(html, options) {
 			}
 		}
 
-		applySkin();
-
 		var scrollTop = (isMobile.any() != null) ? 1 : 0;
 
 		if (options.scroll) {
@@ -2734,6 +2731,8 @@ function handleAjaxResponse(html, options) {
 	if (options.redirect.trim() != '') {
 		document.location = options.redirect;
 	}
+
+	applySkin();
 }
 
 function getPresentHTTPError(data) {
