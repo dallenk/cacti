@@ -981,8 +981,8 @@ function update_show_current() {
 	$sql_order = get_order_string();
 	$sql_limit = ' LIMIT ' . ($rows * (get_request_var('page') - 1)) . ',' . $rows;
 
-	$sql_order = str_replace('`version` ', 'INET_ATON(`version`) ', $sql_order);
-	$sql_order = str_replace('version ', 'version+0 ', $sql_order);
+	$sql_order = str_replace('`pa`.`version` ', 'INET_ATON(`pa`.`version`) ', $sql_order);
+	$sql_order = str_replace('`pi`.`version` ', 'INET_ATON(`pi`.`version`) ', $sql_order);
 	$sql_order = str_replace('id DESC', 'id ASC', $sql_order);
 
 	if (get_request_var('state') == 8) {
@@ -1164,7 +1164,7 @@ function update_show_current() {
 					'sort'    => 'ASC',
 					'tip'     => __('The Cacti Releases that are eligible to use this Plugin.  The format of the allowed versions follows common naming.')
 				),
-				'version' => array(
+				'pi.version' => array(
 					'display' => __('Installed Version'),
 					'align'   => 'right',
 					'sort'    => 'ASC',
