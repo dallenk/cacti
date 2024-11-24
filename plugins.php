@@ -1091,17 +1091,29 @@ function update_show_current() {
 					'sort'    => 'ASC',
 					'tip'     => __('The version of this Plugin.')
 				),
+				'pa.version' => array(
+					'display' => __('Archived Version'),
+					'align'   => 'right',
+					'sort'    => 'ASC',
+					'tip'     => __('The version of this Plugin.')
+				),
+				'pa.archive_length' => array(
+					'display' => __('Archive Size'),
+					'align'   => 'right',
+					'sort'    => 'ASC',
+					'tip'     => __('The compressed size of this Plugin in bytes.')
+				),
 				'requires' => array(
 					'display' => __('Archived Requires'),
 					'align'   => 'right',
 					'sort'    => 'ASC',
 					'tip'     => __('This Plugin requires the following Plugins be installed first.')
 				),
-				'pa.version' => array(
-					'display' => __('Archived Version'),
+				'pa.last_updated' => array(
+					'display' => __('Archived Date'),
 					'align'   => 'right',
 					'sort'    => 'ASC',
-					'tip'     => __('The version of this Plugin.')
+					'tip'     => __('The date that this Plugin was Archived.')
 				),
 				'pi.last_updated' => array(
 					'display' => __('Last Installed/Upgraded'),
@@ -1109,12 +1121,6 @@ function update_show_current() {
 					'sort'    => 'ASC',
 					'tip'     => __('The date that this Plugin was last Installed or Upgraded.')
 				),
-				'pa.last_updated' => array(
-					'display' => __('Date Archived'),
-					'align'   => 'right',
-					'sort'    => 'ASC',
-					'tip'     => __('The date that this Plugin was Archived.')
-				)
 			);
 
 			break;
@@ -1174,6 +1180,12 @@ function update_show_current() {
 					'align'   => 'right',
 					'sort'    => 'ASC',
 					'tip'     => __('The Available version for install for this Plugin.')
+				),
+				'pa.archive_length' => array(
+					'display' => __('Available Size'),
+					'align'   => 'right',
+					'sort'    => 'ASC',
+					'tip'     => __('The compressed size of this Plugin in bytes.')
 				),
 				'nosort3' => array(
 					'display' => __('Available Requires'),
@@ -1385,7 +1397,7 @@ function format_plugin_row($plugin, $last_plugin, $include_ordering, $table) {
 		$requires = $plugin['requires'];
 	}
 
-	if ($plugin['last_updated'] == '') {
+	if ($plugin['last_updated'] == '0000-00-00 00:00:00') {
 		$last_updated = __('N/A');
 	} else {
 		$last_updated = substr($plugin['last_updated'], 0, 16);
@@ -1522,9 +1534,32 @@ function format_available_plugin_row($plugin, $table) {
 		$last_updated = substr($plugin['last_updated'], 0, 16);
 	}
 
-	$row .= "<td class='right'>" . $last_updated                             . '</td>';
-	$row .= "<td class='right'>" . html_escape($plugin['avail_tag_name'])    . '</td>';
+	if ($plugin['avail_tag_name'] !== 'develop') {
+		$tag_version = str_replace('v', '', $plugin['avail_tag_name']);
+	} else {
+		$tag_version = $plugin['avail_tag_name'];
+	}
+
+	$row .= "<td class='right'>" . $last_updated             . '</td>';
+	$row .= "<td class='right'>" . html_escape($tag_version) . '</td>';
+
+	$size   = $plugin['archive_length'];
+	$suffix = '';
+
+	if ($size > 1024) {
+		$suffix = ' KB';
+		$size /= 1024;
+	}
+
+	if ($size > 1024) {
+		$suffix = ' MB';
+		$size /= 1024;
+	}
+
+	$row .= "<td class='right'>"  . number_format_i18n($size, 1) . $suffix   . '</td>';
+
 	$row .= "<td class='right'>" . html_escape($requires)                    . '</td>';
+
 	$row .= "<td class='right'>" . substr($plugin['avail_published'], 0, 16) . '</td>';
 
 	return $row;
@@ -1590,7 +1625,7 @@ function format_archive_plugin_row($plugin, $table) {
 	}
 
 	$row .= "<td class='nowrap'>" . filter_value($plugin['author'], get_request_var('filter')) . '</td>';
-	$row .= "<td class='right'>" . html_escape($plugin['archive_compat']) . '</td>';
+	$row .= "<td class='right'>"  . html_escape($plugin['archive_compat'])                     . '</td>';
 
 	if ($plugin['version'] == '') {
 		$row .= "<td class='right'>" . __esc('Not Installed')          . '</td>';
@@ -1598,8 +1633,24 @@ function format_archive_plugin_row($plugin, $table) {
 		$row .= "<td class='right'>" . html_escape($plugin['version']) . '</td>';
 	}
 
-	$row .= "<td class='right'>" . html_escape($plugin['archive_requires']) . '</td>';
 	$row .= "<td class='right'>" . html_escape($plugin['archive_version'])  . '</td>';
+
+	$size   = $plugin['archive_length'];
+	$suffix = '';
+
+	if ($size > 1024) {
+		$suffix = ' KB';
+		$size /= 1024;
+	}
+
+	if ($size > 1024) {
+		$suffix = ' MB';
+		$size /= 1024;
+	}
+
+	$row .= "<td class='right'>"  . number_format_i18n($size, 1) . $suffix  . '</td>';
+
+	$row .= "<td class='right'>" . html_escape($plugin['archive_requires']) . '</td>';
 
 	if ($plugin['last_updated'] == '') {
 		$last_updated = __('N/A');
@@ -1609,8 +1660,9 @@ function format_archive_plugin_row($plugin, $table) {
 
 	$archive_date = substr($plugin['archive_date'], 0, 16);
 
-	$row .= "<td class='right'>" . $last_updated . '</td>';
 	$row .= "<td class='right'>" . $archive_date . '</td>';
+
+	$row .= "<td class='right'>" . $last_updated . '</td>';
 
 	return $row;
 }

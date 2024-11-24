@@ -46,7 +46,7 @@ function upgrade_to_1_3_0() {
 	db_install_add_column('aggregate_graph_templates_graph', array('name' => 't_left_axis_format', 'type' => 'char(2)',  'default' => '0', 'after' => 'right_axis_formatter'));
 	db_install_add_column('aggregate_graph_templates_graph', array('name' => 'left_axis_format', 'type' => 'mediumint(8)', 'NULL' => true, 'after' => 't_left_axis_format'));
 
-	db_install_add_column('plugin_config', array('name' => 'last_updated', 'type' => 'timestamp', 'NULL' => true, 'after' => 'version'));
+	db_install_add_column('plugin_config', array('name' => 'last_updated', 'type' => 'timestamp', 'NULL' => false, 'default' => 'CURRENT_TIMESTAMP', 'after' => 'version'));
 
 	db_install_execute('UPDATE plugin_config SET last_updated = NOW() WHERE status IN (1,2,3,4) AND last_updated = NULL');
 
@@ -65,7 +65,7 @@ function upgrade_to_1_3_0() {
 		`readme` blob DEFAULT NULL,
 		`changelog` blob DEFAULT NULL,
 		`archive` longblob DEFAULT NULL,
-		`last_updated` timestamp NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+		`last_updated` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
 		PRIMARY KEY (`plugin`,`tag_name`))
 		ENGINE=InnoDB
 		ROW_FORMAT=DYNAMIC");
@@ -206,7 +206,7 @@ function upgrade_to_1_3_0() {
 
 	if (!db_column_exists('poller_output_boost', 'last_updated')) {
 		db_install_execute('ALTER TABLE poller_output_boost
-			ADD COLUMN last_updated timestamp NOT NULL default current_timestamp,
+			ADD COLUMN last_updated timestamp NOT NULL default CURRENT_TIMESTAMP,
 			ADD INDEX last_updated(last_updated)');
 	}
 
