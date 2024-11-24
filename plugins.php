@@ -1371,7 +1371,7 @@ function format_plugin_row($plugin, $last_plugin, $include_ordering, $table) {
 	}
 
 	if ($newer > 0) {
-		$row .= ", <a class='pic deviceUp' href='" . html_escape('plugins.php?action=list&state=6&filter=' . $plugin['plugin']) . "'>" . __('Newer Version Available') . '</a>';
+		$row .= ", <a class='pic deviceUp' href='" . html_escape('plugins.php?action=list&state=6&type=3&filter=' . $plugin['plugin']) . "'>" . __('Newer Version Available') . '</a>';
 	}
 
 	if ($config['poller_id'] > 1) {
