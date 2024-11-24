@@ -989,14 +989,14 @@ function update_show_current() {
 		$sql_order = str_replace('`pi`.`plugin` ', '`pa`.`plugin` ', $sql_order);
 		$sql_order = str_replace('pi.plugin ', 'pa.plugin ', $sql_order);
 		$sql_order = str_replace('`pi`.last_updated ', '`pa`.`last_updated` ', $sql_order);
-	} elseif (get_request_var('state') != 6 && get_request_var('state') != 0) {
-		$sql_order = str_replace('`pa`.`plugin` ', '`pi`.`plugin` ', $sql_order);
-		$sql_order = str_replace('pa.plugin ', 'pi.plugin ', $sql_order);
-		$sql_order = str_replace('`pa`.last_updated ', '`pi`.`last_updated` ', $sql_order);
-	} else {
+	} elseif (get_request_var('state') == 6) {
 		$sql_order = str_replace('`pi`.`plugin` ', '`pa`.`plugin` ', $sql_order);
 		$sql_order = str_replace('pi.plugin ', 'pa.plugin ', $sql_order);
 		$sql_order = str_replace('`pi`.last_updated ', '`pa`.`last_updated` ', $sql_order);
+	} else {
+		$sql_order = str_replace('`pa`.`plugin` ', '`pi`.`plugin` ', $sql_order);
+		$sql_order = str_replace('pa.plugin ', 'pi.plugin ', $sql_order);
+		$sql_order = str_replace('`pa`.last_updated ', '`pi`.`last_updated` ', $sql_order);
 	}
 
 	switch(get_request_var('state')) {
@@ -1355,19 +1355,23 @@ function format_plugin_row($plugin, $last_plugin, $include_ordering, $table) {
 		$row .= "<td class='nowrap'>" . $status_names[$plugin['status']];
 	}
 
-	if (read_config_option('github_allow_unsafe') == 'on') {
-		$newer = db_fetch_cell_prepared('SELECT COUNT(*)
-			FROM plugin_available
-			WHERE plugin = ?
-			AND published_at > ?',
-			array($plugin['plugin'], $plugin['last_updated']));
+	if ($plugin['last_updated'] != '0000-00-00 00:00:00') {
+		if (read_config_option('github_allow_unsafe') == 'on') {
+			$newer = db_fetch_cell_prepared('SELECT COUNT(*)
+				FROM plugin_available
+				WHERE plugin = ?
+				AND published_at > ?',
+				array($plugin['plugin'], $plugin['last_updated']));
+		} else {
+			$newer = db_fetch_cell_prepared('SELECT COUNT(*)
+				FROM plugin_available
+				WHERE plugin = ?
+				AND last_updated > ?
+				AND tag_name != "develop"',
+				array($plugin['plugin'], $plugin['last_updated']));
+		}
 	} else {
-		$newer = db_fetch_cell_prepared('SELECT COUNT(*)
-			FROM plugin_available
-			WHERE plugin = ?
-			AND last_updated > ?
-			AND tag_name != "develop"',
-			array($plugin['plugin'], $plugin['last_updated']));
+		$newer = 0;
 	}
 
 	if ($newer > 0) {
