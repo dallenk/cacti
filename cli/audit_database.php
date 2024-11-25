@@ -171,9 +171,9 @@ function upgrade_database() {
 		cacti_log(sprintf('NOTE: Cacti Upgrade succeeded in %.2f seconds', $end - $start), true, 'UPGRADE');
 	} else {
 		cacti_log('WARNING: Cacti Upgrade Encountered Errors.  Messages below.  Details are below, but also in Cacti upgrade log.', true, 'UPGRADE');
-		print '---------------------------------------------------------------------------------------------' . PHP_EOL;
+		print '------------------------------------------------------------------------------------------------' . PHP_EOL;
 		print implode(PHP_EOL, $output) . PHP_EOL;
-		print '---------------------------------------------------------------------------------------------' . PHP_EOL;
+		print '------------------------------------------------------------------------------------------------' . PHP_EOL;
 	}
 
 	$pistart = microtime(true);
@@ -259,14 +259,14 @@ function upgrade_database() {
 							if ($return_var == 0) {
 								print implode(PHP_EOL, $output) . PHP_EOL;
 								cacti_log("NOTE: Cacti Plugin $pname Upgrade Succeeded.", true, 'UPGRADE');
-								print '---------------------------------------------------------------------------------------------' . PHP_EOL;
+								print '------------------------------------------------------------------------------------------------' . PHP_EOL;
 								print implode(PHP_EOL, $output) . PHP_EOL;
-								print '---------------------------------------------------------------------------------------------' . PHP_EOL;
+								print '------------------------------------------------------------------------------------------------' . PHP_EOL;
 							} else {
 								cacti_log("WARNING: Cacti Plugin $pname Upgrade Encountered Errors.", true, 'UPGRADE');
-								print '---------------------------------------------------------------------------------------------' . PHP_EOL;
+								print '------------------------------------------------------------------------------------------------' . PHP_EOL;
 								print implode(PHP_EOL, $output) . PHP_EOL;
-								print '---------------------------------------------------------------------------------------------' . PHP_EOL;
+								print '------------------------------------------------------------------------------------------------' . PHP_EOL;
 							}
 						}
 					} else {
@@ -285,7 +285,7 @@ function upgrade_database() {
 	// We keep legacy tables due to potential
 	// issues.
 
-	print '---------------------------------------------------------------------------------------------' . PHP_EOL;
+	print '------------------------------------------------------------------------------------------------' . PHP_EOL;
 	cacti_log('NOTE: Pruning invalid and deprecated plugins while preserving tables', true, 'UPGRADE');
 
 	$plugins = db_fetch_assoc('SELECT directory FROM plugin_config');
@@ -309,7 +309,7 @@ function upgrade_database() {
 			}
 		}
 	}
-	print '---------------------------------------------------------------------------------------------' . PHP_EOL;
+	print '------------------------------------------------------------------------------------------------' . PHP_EOL;
 
 	$end = microtime(true);
 
@@ -365,7 +365,7 @@ function repair_database($run = true) {
 			$sql = 'ALTER TABLE `' . $table . "`\n   " . implode(",\n   ", $changes) . $suffix . ';';
 
 			if ($run) {
-				print '---------------------------------------------------------------------------------------------' . PHP_EOL;
+				print '------------------------------------------------------------------------------------------------' . PHP_EOL;
 				print 'Executing Alter for Table : ' . $table;
 
 				$result = db_execute($sql);
@@ -379,14 +379,14 @@ function repair_database($run = true) {
 					print $sql . PHP_EOL;
 				}
 			} else {
-				print '---------------------------------------------------------------------------------------------' . PHP_EOL;
+				print '------------------------------------------------------------------------------------------------' . PHP_EOL;
 				print '-- Proposed Alter for Table : ' . $table . PHP_EOL . PHP_EOL;
 				print $sql . PHP_EOL . PHP_EOL;
 			}
 		}
 	}
 
-	print '---------------------------------------------------------------------------------------------' . PHP_EOL;
+	print '------------------------------------------------------------------------------------------------' . PHP_EOL;
 
 	if ($bad == 0 && $good == 0) {
 		print($altersopt ? '-- ' : '') . 'Repair Completed!  No changes performed.' . PHP_EOL;
@@ -439,7 +439,7 @@ function report_audit_results($output = true) {
 			}
 
 			if ($output) {
-				print '---------------------------------------------------------------------------------------------' . PHP_EOL;
+				print '------------------------------------------------------------------------------------------------' . PHP_EOL;
 				printf('Checking Table: %-45s', '\'' . $table_name . '\'');
 			} else {
 				printf(($altersopt ? '-- ' : '') . 'Scanning Table: %-45s', '\'' . $table_name . '\'');
@@ -529,7 +529,9 @@ function report_audit_results($output = true) {
 
 								/* work around MariaDB compatibility issue */
 								$c[$col]     = ! $c[$col] ?: str_replace('current_timestamp()', 'CURRENT_TIMESTAMP', $c[$col]);
-								$dbc[$dbcol] = ! $dbc[$dbcol] ?: str_replace('current_timestamp()', 'CURRENT_TIMESTAMP',$dbc[$dbcol]);
+								$c[$col]     = ! $c[$col] ?: str_replace('on update', 'ON UPDATE', $c[$col]);
+								$dbc[$dbcol] = ! $dbc[$dbcol] ?: str_replace('current_timestamp()', 'CURRENT_TIMESTAMP', $dbc[$dbcol]);
+								$dbc[$dbcol] = ! $dbc[$dbcol] ?: str_replace('on update', 'ON UPDATE', $dbc[$dbcol]);
 
 								/* work around MySQL 8.x simplified int columns */
 								if (strpos($dbc[$dbcol], 'int(') !== false) {
@@ -730,7 +732,7 @@ function report_audit_results($output = true) {
 	}
 
 	if ($output) {
-		print '---------------------------------------------------------------------------------------------' . PHP_EOL;
+		print '------------------------------------------------------------------------------------------------' . PHP_EOL;
 
 		if (cacti_sizeof($alters)) {
 			print 'ERRORS are fixable using the --repair option.  WARNINGS will not be repaired' . PHP_EOL;
@@ -738,7 +740,7 @@ function report_audit_results($output = true) {
 		} else {
 			print 'Audit was clean, no errors or warnings' . PHP_EOL;
 		}
-		print '---------------------------------------------------------------------------------------------' . PHP_EOL;
+		print '------------------------------------------------------------------------------------------------' . PHP_EOL;
 	}
 
 	return $alters;
@@ -753,6 +755,7 @@ function make_column_props(&$dbc) {
 
 	if (isset($dbc['table_extra'])) {
 		$dbc['table_extra']   = str_replace('current_timestamp()', 'CURRENT_TIMESTAMP', $dbc['table_extra']);
+		$dbc['table_extra']   = str_replace('on update', 'ON UPDATE', $dbc['table_extra']);
 		$dbc['table_extra']   = trim(str_replace('DEFAULT_GENERATED', '', $dbc['table_extra']));
 	}
 
