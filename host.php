@@ -1901,11 +1901,21 @@ function host() {
 			form_selectable_cell('<a class="linkEditMain" href="' . $sites_url . '">' . get_colored_site_status(($host['site_disabled'] == 'on' ? true : false), $host['site_name']) .'</a>', $host['id'], '', '');
 			form_selectable_cell($availability_options[$host['availability_method']], $host['id'], '', 'right');
 			form_selectable_cell(get_timeinstate($host), $host['id'], '', 'right');
-			form_selectable_cell($uptime, $host['id'], '', 'right');
-			form_selectable_cell(round($host['polling_time'], 2), $host['id'], '', 'right');
-			form_selectable_cell(round(($host['cur_time']), 2), $host['id'], '', 'right');
-			form_selectable_cell(round(($host['avg_time']), 2), $host['id'], '', 'right');
-			form_selectable_cell(round($host['availability'], 2) . ' %', $host['id'], '', 'right');
+
+			if ($host['availability_method'] != AVAIL_STREAM) {
+				form_selectable_cell($uptime, $host['id'], '', 'right');
+				form_selectable_cell(round($host['polling_time'], 2), $host['id'], '', 'right');
+				form_selectable_cell(round(($host['cur_time']), 2), $host['id'], '', 'right');
+				form_selectable_cell(round(($host['avg_time']), 2), $host['id'], '', 'right');
+				form_selectable_cell(round($host['availability'], 2) . ' %', $host['id'], '', 'right');
+			} else {
+				form_selectable_cell(__('N/A'), $host['id'], '', 'right');
+				form_selectable_cell(__('N/A'), $host['id'], '', 'right');
+				form_selectable_cell(__('N/A'), $host['id'], '', 'right');
+				form_selectable_cell(__('N/A'), $host['id'], '', 'right');
+				form_selectable_cell(__('N/A'), $host['id'], '', 'right');
+			}
+
 			form_selectable_cell($host['created'] == '' ? __('Unknown') : substr($host['created'], 0, 10), $host['id'], '', 'right');
 			form_checkbox_cell($host['description'], $host['id']);
 			form_end_row();

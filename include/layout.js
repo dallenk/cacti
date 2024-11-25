@@ -5101,29 +5101,45 @@ function checkSNMPPassphraseConfirm(type) {
 // 2 - SNMP Uptime
 // 5 - SNMP Desc
 // 6 - SNMP GetNext
+// 7 - Stream Device
 // 3 - Ping
 const availabilityToggleOptions = ['1', '2', '4', '5', '6'];
+const streamAvailabilityToggleOptions = ['0', '1', '2', '3', '4', '5', '6'];
+const streamSNMPToggleOptions = ['1', '2', '3'];
 
 function setAvailability() {
-   var hasChanged = false;
-	if ($('#snmp_version').val() == '0') {
-		$('#availability_method').disableOptions(availabilityToggleOptions, function() {
-			if ($('#availability_method').val() != '3' && $('#availability_method').val() != '0') {
-				$('#availability_method').val('3');
-			}
-		});
+	var hasChanged = false;
+
+	if ($('#availability_method').val() != '7') {
+		if ($('#snmp_version').val() == '0') {
+			$('#availability_method').disableOptions(availabilityToggleOptions, function() {
+				if ($('#availability_method').val() != '3' && $('#availability_method').val() != '0' && $('#availability_method').val() != '7') {
+					$('#availability_method').val('3');
+				}
+			});
+		} else {
+			$('#availability_method').enableOptions(availabilityToggleOptions);
+		}
+
+		var availability_method = $('#availability_method').val();
+		var canPing = true;
+
+		if (availability_method == 0 ||
+			availability_method == 2 ||
+			availability_method == 5 ||
+			availability_method == 6) {
+			$('#ping_method').val('1');
+			canPing = false;
+		} else if (availability_method == 7) {
+			$('#ping_method').val('0');
+			canPing = false;
+		}
 	} else {
-		$('#availability_method').enableOptions(availabilityToggleOptions);
-	}
+		$('#availability_method').disableOptions(streamAvailabilityToggleOptions, function() {
+		});
 
-	var availability_method = $('#availability_method').val();
-	var canPing = true;
+		$('#snmp_version').disableOptions(streamSNMPToggleOptions);
 
-	if (availability_method == 0 ||
-		availability_method == 2 ||
-		availability_method == 5 ||
-		availability_method == 6) {
-		$('#ping_method').val('1');
 		canPing = false;
 	}
 
@@ -5140,12 +5156,28 @@ function setPing() {
 	var ping_method = $('#ping_method').val();
 	var show_ping_port = (availability_method == 1 || availability_method == 4 || availability_method == 3) && ping_method != 1;
 	var show_ping_method = availability_method == 1 || availability_method == 3 || availability_method == 4;
+	var canPing = true;
+
+	if (availability_method != '7') {
+		if (availability_method == 0 ||
+			availability_method == 2 ||
+			availability_method == 5 ||
+			availability_method == 6) {
+			$('#ping_method').val('1');
+			canPing = false;
+		} else if (availability_method == 7) {
+			$('#ping_method').val('0');
+			canPing = false;
+		}
+	} else {
+		canPing = false;
+	}
 
 	toggleFields({
 		ping_method: show_ping_method,
-		ping_port: show_ping_port,
-		ping_timeout: availability_method > 0,
-		ping_retries: availability_method > 0
+		ping_port: canPing,
+		ping_timeout: canPing,
+		ping_retries: canPing
 	});
 }
 
