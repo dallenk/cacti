@@ -1103,7 +1103,7 @@ function display_tooltip($text) {
 	 in length and number of rows per page
    @arg $current_page - the current page number
    @arg $pages_per_screen - the maximum number of pages allowed on a single screen. odd numbered
-	 values for this argument are prefered for equality reasons
+	 values for this argument are preferred for equality reasons
    @arg $current_page - the current page number
    @arg $total_rows - the total number of available rows
    @arg $url - the url string to prepend to each page click

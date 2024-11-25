@@ -198,7 +198,7 @@ function html_start_box($title, $width, $div, $cell_padding, $align, $add_text, 
  * @param  string - A string of URL parameters like 'action=edit&id=x'
  * @param  string - An option session variable to use to store
  *   the current tab status.  Defaults to the page
- *   name and the suffic of current_tab
+ *   name and the suffix of current_tab
  *
  * @return null  - Output is printed to standard output
  */

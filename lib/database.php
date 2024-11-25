@@ -124,7 +124,7 @@ function db_connect_real($device, $user, $pass, $db_name, $db_type = 'mysql', $p
 		}
 	}
 
-	/* set connection timout for down servers */
+	/* set connection timeout for down servers */
 	$flags[PDO::ATTR_TIMEOUT] = 2;
 	$flage[PDO::ATTR_ERRMODE] = PDO::ERRMODE_EXCEPTION;
 
@@ -267,7 +267,7 @@ function db_connect_real($device, $user, $pass, $db_name, $db_type = 'mysql', $p
  *  attempt to reconnect, otherwise return the connection
  *
  * @param bool|object  The connection to check
- * @param bool         Wether or not to log the connection check
+ * @param bool         Whether or not to log the connection check
  *
  * @return bool        The database true is the database is connected else false
  */
