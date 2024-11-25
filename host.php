@@ -1191,74 +1191,95 @@ function device_javascript(bool $hasHost = true) {
 				}
 			}
 
-			$('[id^="reload"]').click(function(data) {
-				$(this).addClass('fa-spin');
-				strURL = 'host.php?action=query_reload&id=' + $(this).attr('data-id') + '&host_id=' + $('#id').val();
-				loadUrl({
-					url: strURL,
-					scroll: true,
-					nostate: true
+			if ($('#availability_method').val() != 7) {
+				$('[id^="reload"]').click(function(data) {
+					$(this).addClass('fa-spin');
+					strURL = 'host.php?action=query_reload&id=' + $(this).attr('data-id') + '&host_id=' + $('#id').val();
+					loadUrl({
+						url: strURL,
+						scroll: true,
+						nostate: true
+					});
 				});
-			});
 
-			$('[id^="verbose"]').click(function(data) {
-				$(this).addClass('fa-spin');
-				strURL = 'host.php?action=query_verbose&id=' + $(this).attr('data-id') + '&host_id=' + $('#id').val();
-				loadUrl({
-					url: strURL,
-					scroll: true,
-					nostate: true
+				$('[id^="verbose"]').click(function(data) {
+					$(this).addClass('fa-spin');
+					strURL = 'host.php?action=query_verbose&id=' + $(this).attr('data-id') + '&host_id=' + $('#id').val();
+					loadUrl({
+						url: strURL,
+						scroll: true,
+						nostate: true
+					});
 				});
-			});
 
-			$('[id^="remove"]').click(function(data) {
-				strURL = 'host.php?action=query_remove&id=' + $(this).attr('data-id') + '&host_id=' + $('#id').val();
-				loadUrl({
-					url: strURL,
-					scroll: true,
-					nostate: true
+				$('[id^="remove"]').click(function(data) {
+					strURL = 'host.php?action=query_remove&id=' + $(this).attr('data-id') + '&host_id=' + $('#id').val();
+					loadUrl({
+						url: strURL,
+						scroll: true,
+						nostate: true
+					});
 				});
-			});
 
-			$('[id^="gtremove"]').click(function(data) {
-				strURL = 'host.php?action=gt_remove&id=' + $(this).attr('data-id') + '&host_id=' + $('#id').val();
-				loadUrl({
-					url: strURL,
-					scroll: true,
-					nostate: true
+				$('[id^="gtremove"]').click(function(data) {
+					strURL = 'host.php?action=gt_remove&id=' + $(this).attr('data-id') + '&host_id=' + $('#id').val();
+					loadUrl({
+						url: strURL,
+						scroll: true,
+						nostate: true
+					});
 				});
-			});
 
-			$('#add_dq').click(function() {
-				var options = {
-					url: 'host.php?action=query_add',
-					scrollTop: $(window).scrollTop()
-				}
+				$('#add_dq').click(function() {
+					var options = {
+						url: 'host.php?action=query_add',
+						scrollTop: $(window).scrollTop()
+					}
 
-				var data = {
-					host_id: $('#id').val(),
-					snmp_query_id: $('#snmp_query_id').val(),
-					reindex_method: $('#reindex_method').val(),
-					__csrf_magic: csrfMagicToken
-				}
+					var data = {
+						host_id: $('#id').val(),
+						snmp_query_id: $('#snmp_query_id').val(),
+						reindex_method: $('#reindex_method').val(),
+						__csrf_magic: csrfMagicToken
+					}
 
-				postUrl(options, data);
-			});
+					postUrl(options, data);
+				});
 
-			$('#add_gt').click(function() {
-				var options = {
-					url: 'host.php?action=gt_add',
-					scrollTop: $(window).scrollTop()
-				}
+				$('#add_gt').click(function() {
+					var options = {
+						url: 'host.php?action=gt_add',
+						scrollTop: $(window).scrollTop()
+					}
 
-				var data = {
-					host_id: $('#id').val(),
-					graph_template_id: $('#graph_template_id').val(),
-					__csrf_magic: csrfMagicToken
-				}
+					var data = {
+						host_id: $('#id').val(),
+						graph_template_id: $('#graph_template_id').val(),
+						__csrf_magic: csrfMagicToken
+					}
 
-				postUrl(options, data);
-			});
+					postUrl(options, data);
+				});
+
+				$('input[id^="reindex_"]').change(function() {
+					strURL = urlPath + 'host.php?action=query_change';
+					strURL += '&host_id=' + $(this).attr('data-device-id');
+					strURL += '&data_query_id=' + $(this).attr('data-query-id');
+					strURL += '&reindex_method=' + $(this).attr('data-reindex-method');
+
+					height = $('.hostInfoHeader').height();
+
+					loadUrl({
+						url: strURL,
+						noState: true,
+						scroll: true
+					})
+
+					$('.hostInfoHeader').css('height', height);
+				});
+			} else {
+				$('#add_gt, #add_dq').button('disable');
+			}
 
 			changeHostForm();
 			$('#dbghide').click(function(data) {
@@ -1290,23 +1311,6 @@ function device_javascript(bool $hasHost = true) {
 				elementId: 'ping_results',
 				noState: true,
 				funcEnd: 'ping_results_finalize',
-			});
-
-			$('input[id^="reindex_"]').change(function() {
-				strURL = urlPath + 'host.php?action=query_change';
-				strURL += '&host_id=' + $(this).attr('data-device-id');
-				strURL += '&data_query_id=' + $(this).attr('data-query-id');
-				strURL += '&reindex_method=' + $(this).attr('data-reindex-method');
-
-				height = $('.hostInfoHeader').height();
-
-				loadUrl({
-					url: strURL,
-					noState: true,
-					scroll: true
-				})
-
-				$('.hostInfoHeader').css('height', height);
 			});
 		});
 
