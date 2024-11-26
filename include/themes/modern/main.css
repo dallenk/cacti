@@ -1454,6 +1454,16 @@ legend {
 	vertical-align: 10%;
 }
 
+.settingsFilter {
+	display: table;
+}
+
+.settingsFilter div {
+	display: table-cell;
+	padding: 5px 0px 5px 5px;
+	vertical-align: middle;
+}
+
 .formRow {
 	display: table;
 	width: 100%;

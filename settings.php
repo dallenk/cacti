@@ -57,19 +57,17 @@ function display_settings() {
 
 	top_header();
 
-	html_start_box(__('Cacti Settings'), '100%', '', '3', 'left', '');
+	html_start_box(__('Cacti Settings'), '100%', true, '3', 'left', '');
 
 	validate_settings_filter();
 
-	print '<tr><td>';
-	print '<table class="filterTable">';
-	print '<td>' . __('Search') . '</td>';
-	print '<td><input type="text" size="25" id="filter" value="' . html_escape_request_var('filter') . '"></td>';
-	print '<td><span><input type="button" id="clear" value="' . __esc('Clear') . '"></span></td>';
-	print '</tr></table>';
-	print '</td></tr>';
+	print '<div class="settingsFilter">';
+	print '<div>' . __('Search') . '</div>';
+	print '<div><input class="ui-state-default ui-corner-all" type="text" size="25" id="filter" value="' . html_escape_request_var('filter') . '"></div>';
+	print '<div><span><input class="ui-state-default ui-corner-all" type="button" id="clear" value="' . __esc('Clear') . '"></span></div>';
+	print '</div>';
 
-	html_end_box();
+	html_end_box(false, true);
 
 	/* set the default settings category */
 	if (!isset_request_var('tab')) {

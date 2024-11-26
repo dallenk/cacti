@@ -352,7 +352,7 @@ function color_import() {
 		<td class='left'>
 			<div>
 				<label class='import_label' for='import_file'><?php print __('Select a File'); ?></label>
-				<input class='import_button' type='file' id='import_file' name='import_file'>
+				<input class='ui-state-default ui-corner-all import_button' type='file' id='import_file' name='import_file'>
 				<span class='import_text'></span>
 			</div>
 		</td>

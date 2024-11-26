@@ -306,7 +306,7 @@ function show_database_processes() {
 						<?php print __('Queries');?>
 					</td>
 					<td>
-						<select id='rows'>
+						<select id='rows' name='rows'>
 							<option value='-1'<?php print (get_request_var('rows') == '-1' ? ' selected>':'>') . __('Default');?></option>
 							<?php
 							if (cacti_sizeof($item_rows)) {
@@ -318,7 +318,9 @@ function show_database_processes() {
 						</select>
 					</td>
 					<td>
-						<input type='button' id='refreshbtn' value='<?php print __esc('Refresh');?>' title='<?php print __esc('Refresh Values');?>'>
+						<span>
+							<input class='ui-button ui-corner-all ui-widget' type='button' id='refreshbtn' value='<?php print __esc('Refresh');?>' title='<?php print __esc('Refresh Values');?>'>
+						</span>
 					</td>
 				</tr>
 			</table>
@@ -565,14 +567,14 @@ function show_cacti_processes() {
 								print '<option value="' . $key . '"' . (get_filter_request_var('refresh') == $key ? ' selected':'') . '>' . $interval . '</option>';
 							}
 							?>
+						</select>
 					</td>
 					<td>
 						<?php print __('Processes');?>
 					</td>
 					<td>
-						<select id='rows' name='rows' onChange='applyFilter()'>
+						<select id='rows' name='rows'>
 							<option value='-1'<?php print (get_request_var('rows') == '-1' ? ' selected>':'>') . __('Default');?></option>
-
 							<?php
 							if (cacti_sizeof($item_rows)) {
 								foreach ($item_rows as $key => $value) {
@@ -583,7 +585,9 @@ function show_cacti_processes() {
 						</select>
 					</td>
 					<td>
-						<input type='button' id='refreshbtn' value='<?php print __esc('Refresh');?>' title='<?php print __esc('Refresh Values');?>'>
+						<span>
+							<input class='ui-button ui-corner-all ui-widget' type='button' id='refreshbtn' value='<?php print __esc('Refresh');?>' title='<?php print __esc('Refresh Values');?>'>
+						</span>
 					</td>
 				</tr>
 			</table>
