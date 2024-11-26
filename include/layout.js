@@ -2508,7 +2508,12 @@ function loadUrl(options) {
 
 		closeDateFilters();
 
-		clearAllTimeouts();
+		/**
+		 * commenting out as this is causing issues in
+		 * current browsers with the current jQuery.
+		 *
+		 * clearAllTimeouts();
+		 */
 
 		$.ajaxQ.abortAll();
 		return $.get(options.url)
