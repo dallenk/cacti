@@ -5,7 +5,7 @@
  * billboard.js, JavaScript chart library
  * https://naver.github.io/billboard.js/
  *
- * @version 3.14.0
+ * @version 3.14.2
  */
 (function webpackUniversalModuleDefinition(root, factory) {
 	if(typeof exports === 'object' && typeof module === 'object')
@@ -157,12 +157,12 @@ module.exports = __WEBPACK_EXTERNAL_MODULE__14__;
 /******/ 	
 /************************************************************************/
 var __webpack_exports__ = {};
-// This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
+// This entry needs to be wrapped in an IIFE because it needs to be isolated against other entry modules.
 !function() {
 // extracted by mini-css-extract-plugin
 
 }();
-// This entry need to be wrapped in an IIFE because it need to be isolated against other entry modules.
+// This entry needs to be wrapped in an IIFE because it needs to be isolated against other entry modules.
 !function() {
 // ESM COMPAT FLAG
 __webpack_require__.r(__webpack_exports__);
@@ -2520,9 +2520,15 @@ function getScrollPosition(node) {
 function getTransformCTM(node, x = 0, y = 0, inverse = true) {
   const point = new DOMPoint(x, y);
   const screen = node.getScreenCTM();
-  return point.matrixTransform(
+  const res = point.matrixTransform(
     inverse ? screen == null ? void 0 : screen.inverse() : screen
   );
+  if (inverse === false) {
+    const rect = node.getBoundingClientRect();
+    res.x -= rect.x;
+    res.y -= rect.y;
+  }
+  return res;
 }
 function getTranslation(node) {
   const transform = node ? node.transform : null;
@@ -4162,11 +4168,13 @@ function getDataKeyForJson(keysParam, config) {
       const isRotated = config.axis_rotated;
       const scrollPos = getScrollPosition($el.chart.node());
       const e = inputType === "touch" && event.changedTouches ? event.changedTouches[0] : event;
-      let point = isRotated ? e.clientY + scrollPos.y - rect.top : e.clientX + scrollPos.x - rect.left;
+      let point = isRotated ? e.clientY + scrollPos.y : e.clientX + scrollPos.x;
       if (hasViewBox($el.svg)) {
         const pos = [point, 0];
         isRotated && pos.reverse();
         point = getTransformCTM($el.svg.node(), ...pos)[isRotated ? "y" : "x"];
+      } else {
+        point -= isRotated ? rect.top : rect.left;
       }
       index = findIndex(
         coords,
@@ -7654,32 +7662,44 @@ function getTextXPos(pos = "left", width) {
       });
     }
   },
+  /**
+   * Get tooltip position when svg has vieBox attribute
+   * @param {number} tWidth Tooltip width value
+   * @param {number} tHeight Tooltip height value
+   * @param {object} currPos Current event position value from SVG coordinate
+   * @returns {object} top, left value
+   */
   getTooltipPositionViewBox(tWidth, tHeight, currPos) {
     var _a, _b;
     const $$ = this;
-    const { $el: { eventRect, main }, config, state } = $$;
+    const { $el: { eventRect, svg }, config, state } = $$;
     const isRotated = config.axis_rotated;
-    const hasArcType = $$.hasArcType(void 0, ["radar"]) || state.hasFunnel || state.hasTreemap;
-    const target = (_b = (_a = state.hasRadar ? main : eventRect) == null ? void 0 : _a.node()) != null ? _b : state.event.target;
-    const size = 38;
+    const hasArcType = $$.hasArcType() || state.hasFunnel || state.hasTreemap;
+    const target = (_b = (_a = hasArcType ? svg : eventRect) == null ? void 0 : _a.node()) != null ? _b : state.event.target;
     let { x, y } = currPos;
     if (state.hasAxis) {
       x = isRotated ? x : currPos.xAxis;
       y = isRotated ? currPos.xAxis : y;
     }
     const ctm = getTransformCTM(target, x, y, false);
+    const rect = target.getBoundingClientRect();
+    const size = getTransformCTM(target, 20, 0, false).x;
     let top = ctm.y;
-    let left = ctm.x + size;
+    let left = ctm.x + tWidth / 2 + size;
     if (hasArcType) {
-      top += tHeight;
-      left -= size;
+      if (state.hasFunnel || state.hasTreemap || state.hasRadar) {
+        left -= tWidth / 2 + size;
+        top += tHeight;
+      } else {
+        top += rect.height / 2;
+        left += rect.width / 2 - (tWidth - size);
+      }
     }
-    const rect = (hasArcType ? main.node() : target).getBoundingClientRect();
-    if (left + tWidth > rect.right) {
-      left = rect.right - tWidth - size;
+    if (left + tWidth > rect.width) {
+      left = rect.width - tWidth - size;
     }
-    if (top + tHeight > rect.bottom) {
-      top -= tHeight + size;
+    if (top + tHeight > rect.height) {
+      top -= tHeight * 2;
     }
     return {
       top,
@@ -7884,8 +7904,8 @@ function getTextXPos(pos = "left", width) {
       } else {
         const { clientX, clientY } = event;
         setTimeout(() => {
-          let target = browser_doc.elementFromPoint(clientX, clientY);
-          const data = (0,external_commonjs_d3_selection_commonjs2_d3_selection_amd_d3_selection_root_d3_.select)(target).datum();
+          let target = [clientX, clientY].every(Number.isFinite) && browser_doc.elementFromPoint(clientX, clientY);
+          const data = target && (0,external_commonjs_d3_selection_commonjs2_d3_selection_amd_d3_selection_root_d3_.select)(target).datum();
           if (data) {
             const d = $$.hasArcType() ? $$.convertToArcData($$.updateAngle(data)) : data == null ? void 0 : data.data;
             hasTreemap && (target = svg.node());
@@ -10907,7 +10927,7 @@ extend(zoom, {
     };
     $$.brush.scale = function(scale2) {
       const h = config.subchart_size_height;
-      let extent = $$.getExtent();
+      let extent = $$.axis.getExtent();
       if (!extent && scale2.range) {
         extent = [[0, 0], [scale2.range()[1], h]];
       } else if (isArray(extent)) {
@@ -11088,25 +11108,6 @@ extend(zoom, {
     const subXAxis = (transitions == null ? void 0 : transitions.axisSubX) ? transitions.axisSubX : $T(subchart.main.select(`.${classes.axisX}`), withTransition);
     subchart.main.attr("transform", $$.getTranslate("context"));
     subXAxis.attr("transform", $$.getTranslate("subX"));
-  },
-  /**
-   * Get extent value
-   * @returns {Array} default extent
-   * @private
-   */
-  getExtent() {
-    const $$ = this;
-    const { config, scale } = $$;
-    let extent = config.axis_x_extent;
-    if (extent) {
-      if (isFunction(extent)) {
-        extent = extent.bind($$.api)($$.getXDomain($$.data.targets), scale.subX);
-      } else if ($$.axis.isTimeSeries() && extent.every(isNaN)) {
-        const fn = parseDate.bind($$);
-        extent = extent.map((v) => scale.subX(fn(v)));
-      }
-    }
-    return extent;
   }
 });
 
@@ -11348,12 +11349,14 @@ extend(zoom, {
     let start = 0;
     let end = 0;
     let zoomRect;
+    let extent;
     const prop = {
       axis: isRotated ? "y" : "x",
       attr: isRotated ? "height" : "width",
       index: isRotated ? 1 : 0
     };
     $$.zoomBehaviour = (0,external_commonjs_d3_drag_commonjs2_d3_drag_amd_d3_drag_root_d3_.drag)().clickDistance(4).on("start", function(event) {
+      extent = $$.scale.zoom ? null : $$.axis.getExtent();
       state.event = event;
       $$.setDragStatus(true);
       $$.unselectRect();
@@ -11361,11 +11364,25 @@ extend(zoom, {
         zoomRect = $$.$el.main.append("rect").attr("clip-path", state.clip.path).attr("class", $ZOOM.zoomBrush).attr("width", isRotated ? state.width : 0).attr("height", isRotated ? 0 : state.height);
       }
       start = getPointer(event, this)[prop.index];
+      if (extent) {
+        if (start < extent[0]) {
+          start = extent[0];
+        } else if (start > extent[1]) {
+          start = extent[1];
+        }
+      }
       end = start;
       zoomRect.attr(prop.axis, start).attr(prop.attr, 0);
       $$.onZoomStart(event);
     }).on("drag", function(event) {
       end = getPointer(event, this)[prop.index];
+      if (extent) {
+        if (end > extent[1]) {
+          end = extent[1];
+        } else if (end < extent[0]) {
+          end = extent[0];
+        }
+      }
       zoomRect.attr(prop.axis, Math.min(start, end)).attr(prop.attr, Math.abs(end - start));
     }).on("end", (event) => {
       const scale = $$.scale.zoom || $$.scale.x;
@@ -13291,6 +13308,25 @@ class Axis_Axis {
     }
     return type;
   }
+  /**
+   * Get extent value
+   * @returns {Array} default extent
+   * @private
+   */
+  getExtent() {
+    const $$ = this.owner;
+    const { config, scale } = $$;
+    let extent = config.axis_x_extent;
+    if (extent) {
+      if (isFunction(extent)) {
+        extent = extent.bind($$.api)($$.getXDomain($$.data.targets), scale.subX);
+      } else if (this.isTimeSeries() && extent.every(isNaN)) {
+        const fn = parseDate.bind($$);
+        extent = extent.map((v) => scale.subX(fn(v)));
+      }
+    }
+    return extent;
+  }
   init() {
     const $$ = this.owner;
     const { config, $el: { main, axis }, state: { clip } } = $$;
@@ -14458,14 +14494,13 @@ class Axis_Axis {
   clickHandlerForMultipleXS(ctx) {
     const $$ = ctx;
     const { config, state } = $$;
-    const pointSensitivity = config.point_sensitivity;
     const targetsToShow = $$.filterTargetsToShow($$.data.targets);
     if ($$.hasArcType(targetsToShow)) {
       return;
     }
     const mouse = getPointer(state.event, this);
     const closest = $$.findClosestFromTargets(targetsToShow, mouse);
-    const sensitivity = pointSensitivity === "radius" ? closest == null ? void 0 : closest.r : isFunction(pointSensitivity) ? closest && pointSensitivity(closest) : pointSensitivity;
+    const sensitivity = $$.getPointSensitivity(closest);
     if (!closest) {
       return;
     }
@@ -15940,7 +15975,8 @@ function smoothLines(el, type) {
    */
   axis_x_height: void 0,
   /**
-   * Set default extent for subchart and zoom. This can be an array or function that returns an array.
+   * Set extent for subchart and zoom(drag only). This can be an array or function that returns an array.
+   * - **NOTE:** Specifying value, will limit the zoom scope selection within.
    * @name axis․x․extent
    * @memberof Options
    * @type {Array|Function}
@@ -19678,11 +19714,11 @@ const getTransitionName = () => getRandom();
     return $$.config.point_focus_only && !$$.hasType("bubble") && !$$.hasType("scatter") && !$$.hasArcType(null, ["radar"]);
   },
   isWithinCircle(node, r) {
-    const { config, state } = this;
+    const { state } = this;
     const mouse = getPointer(state.event, node);
     const element = (0,external_commonjs_d3_selection_commonjs2_d3_selection_amd_d3_selection_root_d3_.select)(node);
     const prefix = this.isCirclePoint(node) ? "c" : "";
-    const sensitivity = config.point_sensitivity === "radius" ? node.getAttribute("r") : config.point_sensitivity;
+    const pointSensitivity = this.getPointSensitivity(element == null ? void 0 : element.datum());
     let cx = +element.attr(`${prefix}x`);
     let cy = +element.attr(`${prefix}y`);
     if (!(cx || cy) && node.nodeType === 1) {
@@ -19692,7 +19728,7 @@ const getTransitionName = () => getRandom();
     }
     return Math.sqrt(
       Math.pow(cx - mouse[0], 2) + Math.pow(cy - mouse[1], 2)
-    ) < (r || sensitivity);
+    ) < (r || pointSensitivity);
   },
   /**
    * Get data point sensitivity radius
@@ -19702,7 +19738,9 @@ const getTransitionName = () => getRandom();
   getPointSensitivity(d) {
     const $$ = this;
     let sensitivity = $$.config.point_sensitivity;
-    if (isFunction(sensitivity)) {
+    if (!d) {
+      return sensitivity;
+    } else if (isFunction(sensitivity)) {
       sensitivity = sensitivity.call($$.api, d);
     } else if (sensitivity === "radius") {
       sensitivity = d.r;
@@ -21824,7 +21862,7 @@ const bb = {
    *    bb.version;  // "1.0.0"
    * @memberof bb
    */
-  version: "3.14.0",
+  version: "3.14.2",
   /**
    * Generate chart
    * - **NOTE:** Bear in mind for the possiblity of ***throwing an error***, during the generation when:

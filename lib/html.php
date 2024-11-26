@@ -2849,13 +2849,13 @@ function html_common_header($title, $selectedTheme = '') {
 	print get_md5_include_css('include/css/', theme: $selectedTheme, file: 'jquery.multiselect.filter.css');
 	print get_md5_include_css('include/css/', theme: $selectedTheme, file: 'jquery.timepicker.css');
 	print get_md5_include_css('include/css/', theme: $selectedTheme, file: 'jquery.colorpicker.css');
-	print get_md5_include_css('include/css/', theme: $selectedTheme, file: 'billboard.css');
 	print get_md5_include_css('include/css/', theme: $selectedTheme, file: 'pace.css');
 	print get_md5_include_css('include/css/', theme: $selectedTheme, file: 'Diff.css');
 	print get_md5_include_css('include/css/', theme: $selectedTheme, file: 'jquery.toast.css');
 	print get_md5_include_css('include/css/', theme: $selectedTheme, file: 'main.css');
 
 	/* Global styles */
+	print get_md5_include_css('include/css/billboard.css');
 	print get_md5_include_css('include/fa/css/all.css');
 	print get_md5_include_css('include/fa/css/fontawesome.css');
 	print get_md5_include_css('include/vendor/flag-icons/css/flag-icons.css');
