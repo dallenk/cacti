@@ -1,5 +1,5 @@
 msgid ""
-msgstr "Project-Id-Version: Cacti Russian Language File\nReport-Msgid-Bugs-To: developers@cacti.net\nPOT-Creation-Date: 2024-04-20 18:16-0400\nPO-Revision-Date: 2024-11-04 17:08+0000\nLast-Translator: Anton Zhuravlev <baka109g@gmail.com>\nLanguage-Team: Russian <http://translate.cacti.net/projects/cacti/core-v1-2-x/ru/>\nLanguage: ru-RU\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\nX-Generator: Weblate 4.8.1\n"
+msgstr "Project-Id-Version: Cacti Russian Language File\nReport-Msgid-Bugs-To: developers@cacti.net\nPOT-Creation-Date: 2024-04-20 18:16-0400\nPO-Revision-Date: 2024-11-26 19:04+0000\nLast-Translator: Anton Zhuravlev <baka109g@gmail.com>\nLanguage-Team: Russian <http://translate.cacti.net/projects/cacti/core-v1-2-x/ru/>\nLanguage: ru-RU\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\nX-Generator: Weblate 4.8.1\n"
 
 #: about.php:29 include/global_arrays.php:2630 lib/html.php:2543
 msgid "About Cacti"
@@ -2687,7 +2687,6 @@ msgstr[1] "Нажмите \"Продолжить\", чтобы удалить с
 msgstr[2] ""
 
 #: color.php:192
-#, fuzzy
 msgid "Delete Color"
 msgid_plural "Delete Colors"
 msgstr[0] "Удалить цвет"
@@ -6474,7 +6473,7 @@ msgid "Every %d Day"
 msgstr "Каждый %d день"
 
 #: include/global_arrays.php:758
-#, fuzzy, php-format
+#, php-format
 msgid "%0.1f Minutes"
 msgstr "%0.1f минут"
 
@@ -8105,9 +8104,9 @@ msgid "The number of SNMP OIDs that can be obtained in a single SNMP Get request
 msgstr "Указано количество OID, которые можно получить в одном запросе на получение SNMP Get."
 
 #: include/global_form.php:152
-#, fuzzy, php-format
+#, php-format
 msgid "%d OID"
-msgstr "82. Равенство всех перед законом и судами обеспечивается на основании законодательства Республики Армения."
+msgstr "%d OID"
 
 #: include/global_form.php:153 include/global_form.php:154
 #: include/global_form.php:155 include/global_form.php:156
@@ -8150,9 +8149,9 @@ msgstr "Повторение %d"
 #: include/global_form.php:190 include/global_form.php:191
 #: include/global_form.php:192 include/global_form.php:193
 #: include/global_form.php:194
-#, fuzzy, php-format
+#, php-format
 msgid "%d Repetitions"
-msgstr "Повторения"
+msgstr "%d Повторений"
 
 #: include/global_form.php:202
 msgid "SNMP Retries"
@@ -10031,18 +10030,18 @@ msgid "The default number of Device Threads.  This is only applicable when using
 msgstr "Номер по умолчанию: Device Threads (Потоки устройств).  Это применимо только при использовании коллектора данных позвоночника."
 
 #: include/global_settings.php:628
-#, fuzzy, php-format
+#, php-format
 msgid "%s Thread"
-msgstr "Резьба"
+msgstr "%s Поток"
 
 #: include/global_settings.php:629 include/global_settings.php:630
 #: include/global_settings.php:631 include/global_settings.php:632
 #: include/global_settings.php:633 include/global_settings.php:634
 #: include/global_settings.php:635 include/global_settings.php:636
 #: include/global_settings.php:637
-#, fuzzy, php-format
+#, php-format
 msgid "%s Threads"
-msgstr "Threads: 1"
+msgstr "%s Потоки"
 
 #: include/global_settings.php:641
 msgid "Re-index Method for Data Queries"
@@ -10552,9 +10551,8 @@ msgid "Only show business hours during weekdays."
 msgstr "Показывать рабочее время только в будние дни."
 
 #: include/global_settings.php:1148
-#, fuzzy
 msgid "Show business hours"
-msgstr "Рабочие часы"
+msgstr "Отобразить рабочие часы"
 
 #: include/global_settings.php:1149
 msgid "Display business hours on rrd graphs."
@@ -13310,9 +13308,9 @@ msgid "Failed to alter password field length, can not continue as may corrupt pa
 msgstr "Не удалось изменить длину поля пароля, не может продолжаться, как и может повредить пароль"
 
 #: lib/dsdebug.php:168
-#, fuzzy, php-format
+#, php-format
 msgid "Data Source ID %s does not exist"
-msgstr "Источник данных не существует."
+msgstr "Источник данных %s не существует."
 
 #: lib/dsdebug.php:253
 msgid "Debug not completed after 5 pollings"
@@ -13525,9 +13523,9 @@ msgid "WARNING: PollerID:%s has an invalid hostname:%s.  Is it not reachable via
 msgstr "ПРЕДУПРЕЖДЕНИЕ: PollerID:%s имеет недопустимое имя хоста:%s.  Это не доступно через DNS!"
 
 #: lib/functions.php:6455 lib/functions.php:6457
-#, fuzzy, php-format
+#, php-format
 msgid "- Beta %s"
-msgstr "бета"
+msgstr "- Бета %s"
 
 #: lib/functions.php:6455
 #, php-format
@@ -13611,9 +13609,9 @@ msgid "All %d %s"
 msgstr "Все %d %s"
 
 #: lib/html.php:616
-#, fuzzy, php-format
+#, php-format
 msgid "Current Page: %s"
-msgstr "Текущая страница"
+msgstr "Текущая страница: %s"
 
 #: lib/html.php:632
 #, php-format
@@ -14512,9 +14510,9 @@ msgid "[new]"
 msgstr "[новый]"
 
 #: lib/html_reports.php:1482
-#, fuzzy, php-format
+#, php-format
 msgid "Details %s"
-msgstr "%s, Детали:"
+msgstr "Подробности %s"
 
 #: lib/html_reports.php:1531
 #, php-format
@@ -14522,23 +14520,23 @@ msgid "Report Items %s"
 msgstr "Элементы отчета %s"
 
 #: lib/html_reports.php:1572
-#, fuzzy, php-format
+#, php-format
 msgid "Scheduled Events %s"
-msgstr "Запланированные События"
+msgstr "Запланированные события %s"
 
 #: lib/html_reports.php:1583
-#, fuzzy, php-format
+#, php-format
 msgid "Report Preview %s"
-msgstr "Предпросмотр отчета"
+msgstr "Предпросмотр отчета %s"
 
 #: lib/html_reports.php:1612
 msgid "Item Details"
 msgstr "Детали элемента"
 
 #: lib/html_reports.php:1624
-#, fuzzy, php-format
+#, php-format
 msgid "Graph: %s"
-msgstr "Удалить график(и)"
+msgstr "График: %s"
 
 #: lib/html_reports.php:1627 lib/html_reports.php:1653
 #: lib/html_reports.php:1666 lib/html_reports.php:1667
@@ -14556,9 +14554,9 @@ msgid ", Graph Template: All Templates"
 msgstr "Добавить шаблон графика в шаблон устройства"
 
 #: lib/html_reports.php:1642
-#, fuzzy, php-format
+#, php-format
 msgid ", Graph Template: %s"
-msgstr "Удалить шаблоны графиков"
+msgstr ", Шаблон графика: %s"
 
 #: lib/html_reports.php:1649 lib/html_reports.php:1712
 #, php-format
