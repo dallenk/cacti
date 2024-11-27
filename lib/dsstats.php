@@ -470,6 +470,16 @@ function dsstats_get_stats_command($local_data_id, $rrdfile, $use_proxy, $mode, 
 		$info = dsstats_rrdtool_execute("info $rrdfile", $rrd_process);
 	}
 
+	/**
+	 * Get the current values of stats and peak settings to see if there is any change to purge the cache
+	 */
+	$temp_mode = read_config_option('dsstats_mode');
+	$temp_peak = read_config_option('dsstats_peak');
+	set_config_option('dsstats_temp_mode', $temp_mode);
+	set_config_option('dsstats_temp_peak', $temp_peak);
+
+	$length = strlen($info);
+
 	$command = '';
 
 	/* don't do anything if RRDfile did not return data */
@@ -485,20 +495,22 @@ function dsstats_get_stats_command($local_data_id, $rrdfile, $use_proxy, $mode, 
 		 */
 		if (cacti_sizeof($info_array)) {
 			foreach ($info_array as $line) {
-				if (substr_count($line, 'ds[')) {
+				if (strpos($line, 'ds[') !== false) {
 					$parts  = explode(']', $line);
 					$parts2 = explode('[', $parts[0]);
 
 					$dsnames[trim($parts2[1])] = 1;
-				} elseif (substr_count($line, '.cf')) {
+				} elseif (strpos($line, '.cf') !== false) {
 					$parts = explode('=', $line);
 
-					if (substr_count($parts[1], 'AVERAGE')) {
+					if (strpos($parts[1], 'AVERAGE') !== false) {
 						$average = true;
-					} elseif (substr_count($parts[1], 'MAX')) {
+					}
+
+					if (strpos($parts[1], 'MAX') !== false) {
 						$max = true;
 					}
-				} elseif (substr_count($line, 'step')) {
+				} elseif (strpos($line, 'step') !== false) {
 					$parts = explode('=', $line);
 
 					$poller_interval = trim($parts[1]);
@@ -760,11 +772,11 @@ function dsstats_error_handler($errno, $errmsg, $filename, $linenum, $vars = arr
 			"' LINE NO:'" . $linenum . "'";
 
 		/* let's ignore some lesser issues */
-		if (substr_count($errmsg, 'date_default_timezone')) {
+		if (strpos($errmsg, 'date_default_timezone') !== false) {
 			return;
 		}
 
-		if (substr_count($errmsg, 'Only variables')) {
+		if (strpos($errmsg, 'Only variables') !== false) {
 			return;
 		}
 
@@ -1258,11 +1270,11 @@ function dsstats_rrdtool_execute($command, $rrd_process) {
 			while (!feof($pipes[1])) {
 				$stdout .= fgets($pipes[1], 4096);
 
-				if (substr_count($stdout, 'OK')) {
+				if (strpos($stdout, 'OK') !== false) {
 					break;
 				}
 
-				if (substr_count($stdout, 'ERROR')) {
+				if (strpos($stdout, 'ERROR') !== false) {
 					break;
 				}
 			}
