@@ -225,6 +225,7 @@ function show_database_processes() {
 			$(function() {
 				refreshMSeconds=$('#refresh').val()*1000;
 				refreshPage='support.php?tab=processes';
+				setupPageTimeout();
 
 				$('#refresh, #poller, #length, #rows').change(function() {
 					applyFilter();
@@ -238,6 +239,7 @@ function show_database_processes() {
 			function applyFilter() {
 				refreshMSeconds=$('#refresh').val()*1000;
 				refreshPage='support.php?tab=processes';
+				setupPageTimeout();
 
 				var strURL  = 'support.php';
 				strURL += '?tab=processes';
@@ -513,6 +515,7 @@ function show_cacti_processes() {
 			$(function() {
 				refreshMSeconds=$('#refresh').val()*1000;
 				refreshPage='support.php?tab=background';
+				setupPageTimeout();
 
 				$('#refresh, #rows, #tasks').change(function() {
 					applyFilter();
@@ -526,6 +529,7 @@ function show_cacti_processes() {
 			function applyFilter() {
 				refreshMSeconds=$('#refresh').val()*1000;
 				refreshPage='support.php?tab=background';
+				setupPageTimeout();
 
 				var strURL  = 'support.php?tab=background';
 				strURL += '&refresh=' + $('#refresh').val();
