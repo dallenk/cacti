@@ -62,7 +62,7 @@ function support_view_tech() {
 
 	$page = 'support.php?tab=' . $current_tab;
 
-	if ($current_tab != 'processes') {
+	if ($current_tab != 'processes' && $current_tab != 'background') {
 		$refresh = array(
 			'seconds' => 999999,
 			'page'    => $page,
@@ -258,6 +258,7 @@ function show_database_processes() {
 						<select id='refresh'>
 							<?php
 							$refresh_intervals = array(
+								1  => __esc('%d Seconds', 1),
 								3  => __esc('%d Seconds', 3),
 								5  => __esc('%d Seconds', 5),
 								10 => __esc('%d Seconds', 10),
@@ -556,6 +557,7 @@ function show_cacti_processes() {
 						<select id='refresh'>
 							<?php
 							$refresh_intervals = array(
+								1  => __esc('%d Seconds', 1),
 								3  => __esc('%d Seconds', 3),
 								5  => __esc('%d Seconds', 5),
 								10 => __esc('%d Seconds', 10),
