@@ -3831,9 +3831,13 @@ function finalizeGraphFilter(options, data) {
 function applyGraphFilter() {
 	var href = correctUrlParameters(graphPage + '?action=' + pageAction +
 		'&rfilter=' + base64_encode($('#rfilter').val()) +
-		(typeof $('#host_id').val() != 'undefined' ? '&host_id=' + $('#host_id').val() : '') +
+		(typeof $('#site_id').val()      != 'undefined' ? '&site_id='      + $('#site_id').val() : '') +
+		(typeof $('#location').val()     != 'undefined' ? '&location='     + $('#location').val() : '') +
+		(typeof $('#host_id').val()      != 'undefined' ? '&host_id='      + $('#host_id').val() : '') +
 		(typeof $('#graph_source').val() != 'undefined' ? '&graph_source=' + $('#graph_source').val() : '') +
-		(typeof $('#graph_order').val() != 'undefined' ? '&graph_order=' + $('#graph_order').val() : '') +
+		(typeof $('#graph_order').val()  != 'undefined' ? '&graph_order='  + $('#graph_order').val() : '') +
+		(typeof $('#cf').val()           != 'undefined' ? '&cf='           + $('#cf').val() : '') +
+		(typeof $('#measure').val()      != 'undefined' ? '&measure='      + $('#measure').val() : '') +
 		'&columns=' + $('#columns').val() +
 		'&graphs=' + $('#graphs').val() +
 		'&graph_template_id=' + $('#graph_template_id').val() +

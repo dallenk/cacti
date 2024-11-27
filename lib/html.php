@@ -2138,10 +2138,13 @@ function html_graph_tabs_right() {
 }
 
 function html_graph_order_filter() {
-	$output = '';
+	$output  = '';
+	$output .= '<td>' . __('Metric') . '</td>';
 
-	$output .= '<td>' . __('Ordering') . '</td>';
 	if (read_config_option('dsstats_enable') == 'on') {
+		$mode = read_config_option('dsstats_mode'); // 0 - Peak/Average only, 1 - Kitchen Sink
+		$peak = read_config_option('dsstats_peak'); // '' - Average CF Only, 'on' - Average and Max CF's
+
 		if (isset_request_var('graph_template_id')) {
 			$graph_templates = get_request_var('graph_template_id');
 
@@ -2201,13 +2204,47 @@ function html_graph_order_filter() {
 
 				$output .= '</td>';
 
-				$output .= '<td>' . __('Direction') . '</td>';
+				$output .= '<td>' . __('Sort Order') . '</td>';
 				$output .= '<td>';
 				$output .= "<select id='graph_order' data-defaultLabel='" .  __('Sort Order') . "' onChange='applyGraphFilter()'>";
 				$output .= "<option value='asc'" . (get_request_var('graph_order') == 'asc' ? ' selected':'') . '>' . __esc('Ascending') . '</option>';
 				$output .= "<option value='desc'" . (get_request_var('graph_order') == 'desc' ? ' selected':'') . '>' . __esc('Descending') . '</option>';
 				$output .= '</select>';
 				$output .= '</td>';
+
+				if ($peak == 'on') {
+					$output .= '<td>' . __('CF') . '</td>';
+					$output .= '<td>';
+					$output .= "<select id='cf' data-defaultLabel='" .  __('CF') . "' onChange='applyGraphFilter()'>";
+					$output .= "<option value='0'" . (get_request_var('cf') == '0' ? ' selected':'') . '>' . __esc('Average') . '</option>';
+					$output .= "<option value='1'" . (get_request_var('cf') == '1' ? ' selected':'') . '>' . __esc('Maximum') . '</option>';
+					$output .= '</select>';
+					$output .= '</td>';
+				}
+
+				if ($mode == 0) {
+					$output .= '<td>' . __('Measure') . '</td>';
+					$output .= '<td>';
+					$output .= "<select id='measure' data-defaultLabel='" .  __('Measure') . "' onChange='applyGraphFilter()'>";
+					$output .= "<option value='average'" . (get_request_var('measure') == 'average' ? ' selected':'') . '>' . __esc('Average') . '</option>';
+					$output .= "<option value='peak'"    . (get_request_var('measure') == 'peak'    ? ' selected':'') . '>' . __esc('Maximum') . '</option>';
+					$output .= '</select>';
+					$output .= '</td>';
+				} else {
+					$output .= '<td>' . __('Measure') . '</td>';
+					$output .= '<td>';
+					$output .= "<select id='measure' data-defaultLabel='" .  __('Measure') . "' onChange='applyGraphFilter()'>";
+					$output .= "<option value='average'" . (get_request_var('measure') == 'average' ? ' selected':'') . '>' . __esc('Average')                  . '</option>';
+					$output .= "<option value='peak'"    . (get_request_var('measure') == 'peak'    ? ' selected':'') . '>' . __esc('Maximum')                  . '</option>';
+					$output .= "<option value='p25n'"    . (get_request_var('measure') == 'p25n'    ? ' selected':'') . '>' . __esc('25th Percentile')          . '</option>';
+					$output .= "<option value='p50n'"    . (get_request_var('measure') == 'p50n'    ? ' selected':'') . '>' . __esc('50th Percentile (Median)') . '</option>';
+					$output .= "<option value='p75n'"    . (get_request_var('measure') == 'p75n'    ? ' selected':'') . '>' . __esc('75th Percentile')          . '</option>';
+					$output .= "<option value='p90n'"    . (get_request_var('measure') == 'p90n'    ? ' selected':'') . '>' . __esc('90th Percentile')          . '</option>';
+					$output .= "<option value='p95n'"    . (get_request_var('measure') == 'p95n'    ? ' selected':'') . '>' . __esc('95th Percentile')          . '</option>';
+					$output .= "<option value='sum'"     . (get_request_var('measure') == 'sum'     ? ' selected':'') . '>' . __esc('Total/Sum/Bandwidth')      . '</option>';
+					$output .= '</select>';
+					$output .= '</td>';
+				}
 			}
 		} else {
 			$output .= '<td><select disabled="disabled">';
@@ -2259,7 +2296,8 @@ function html_host_filter($host_id = '-1', $call_back = 'applyFilter', $sql_wher
 	} else {
 		if ($host_id > 0) {
 			$hostname = db_fetch_cell_prepared('SELECT description
-				FROM host WHERE id = ?',
+				FROM host
+				WHERE id = ?',
 				array($host_id));
 		} elseif ($host_id == 0) {
 			$hostname = __('None');
@@ -2301,18 +2339,12 @@ function html_site_filter($site_id = '-1', $call_back = 'applyFilter', $sql_wher
 
 			$sites = get_allowed_sites($sql_where);
 
-	if (cacti_sizeof($sites)) {
-		foreach ($sites as $site) {
-			print "<option value='" . $site['id'] . "'";
-
-			if ($site_id == $site['id']) {
-				print ' selected';
+			if (cacti_sizeof($sites)) {
+				foreach ($sites as $site) {
+					print "<option value='" . $site['id'] . "'" . ($site_id == $site['id'] ? ' selected':'') . '>' . html_escape($site['name']) . '</option>';
+				}
 			}
-
-			print '>' . html_escape($site['name']) . '</option>';
-		}
-	}
-	?>
+			?>
 		</select>
 	</td>
 	<?php
@@ -2335,9 +2367,13 @@ function html_location_filter($location = '', $call_back = 'applyFilter', $sql_w
 			<?php if (!$nonone) {?><option value='0'<?php if ($location == '0') {?> selected<?php }?>><?php print __('None');?></option><?php }?>
 			<?php
 
+			if ($sql_where != '' && strpos($sql_where, 'WHERE') === false) {
+				$sql_where = 'WHERE ' . $sql_where;
+			}
+
 			$locations = array_rekey(
 				db_fetch_assoc("SELECT DISTINCT location
-					FROM host
+					FROM host AS h
 					$sql_where
 					ORDER BY location ASC"),
 				'location', 'location'
@@ -2349,7 +2385,7 @@ function html_location_filter($location = '', $call_back = 'applyFilter', $sql_w
 						continue;
 					}
 
-					print "<option value='" . html_escape($l) . "'"; if ($location == $l) { print ' selected'; } print '>' . html_escape($l) . '</option>';
+					print "<option value='" . html_escape($l) . "'" . ($location == $l ? ' selected':'') . '>' . html_escape($l) . '</option>';
 				}
 			}
 			?>

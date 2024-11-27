@@ -111,6 +111,16 @@ function html_graph_validate_preview_request_vars() {
 			'filter'  => FILTER_VALIDATE_INT,
 			'default' => '1'
 		),
+		'site_id' => array(
+			'filter'  => FILTER_VALIDATE_INT,
+			'pageset' => true,
+			'default' => '-1'
+		),
+		'location' => array(
+			'filter'  => FILTER_DEFAULT,
+			'pageset' => true,
+			'default' => '0'
+		),
 		'graph_template_id' => array(
 			'filter'  => FILTER_VALIDATE_IS_NUMERIC_LIST,
 			'pageset' => true,
@@ -146,6 +156,15 @@ function html_graph_validate_preview_request_vars() {
 			'options' => array('options' => array('regexp' => '(asc|desc)')),
 			'default' => 'desc'
 		),
+		'cf' => array(
+			'filter'  => FILTER_VALIDATE_INT,
+			'default' => '0'
+		),
+		'measure' => array(
+			'filter'  => FILTER_CALLBACK,
+			'default' => 'average',
+			'options' => array('options' => 'sanitize_search_string')
+		),
 		'graph_list' => array(
 			'filter'  => FILTER_VALIDATE_IS_NUMERIC_LIST,
 			'default' => ''
@@ -179,7 +198,36 @@ function html_graph_preview_filter($page, $action, $devices_where = '', $templat
 		<form id='form_graph_view' method='post' action='<?php print $page;?>?action=<?php print $action;?>'>
 			<table id='device' class='filterTable'>
 				<tr>
-					<?php print html_host_filter(get_request_var('host_id'), 'applyGraphFilter', $devices_where);?>
+					<?php
+
+					if (get_request_var('site_id') > 0) {
+						$devices_where .= ($devices_where != '' ? ' AND ':'') . 'h.site_id = ' . get_request_var('site_id');
+					}
+
+					if (get_request_var('location') == '0') {
+						$devices_where .= ($devices_where != '' ? ' AND ':'') . 'h.location = ""';
+					} elseif (get_request_var('location') != -1 && get_request_var('location') != '') {
+						$devices_where .= ($devices_where != '' ? ' AND ':'') . 'h.location = ' . db_qstr(get_request_var('location'));
+					}
+
+					html_site_filter(get_request_var('site_id'), 'applyGraphFilter', $devices_where);
+					html_location_filter(get_request_var('location'), 'applyGraphFilter', $devices_where);
+					html_host_filter(get_request_var('host_id'), 'applyGraphFilter', $devices_where);
+					?>
+					<td>
+						<span>
+							<input type='submit' class='ui-button ui-corner-all ui-widget' id='go' value='<?php print __esc('Go');?>' title='<?php print __esc('Set/Refresh Filters');?>'>
+							<input type='button' class='ui-button ui-corner-all ui-widget' id='clear' value='<?php print __esc('Clear');?>' title='<?php print __esc('Clear Filters');?>'>
+							<?php if (is_view_allowed('graph_settings')) {?>
+							<input type='button' class='ui-button ui-corner-all ui-widget' id='save' value='<?php print __esc('Save');?>' title='<?php print __esc('Save the current Graphs, Columns, Thumbnail, Preset, and Timeshift preferences to your profile');?>'>
+							<?php }?>
+						<span>
+					</td>
+					<td id='text'></td>
+				</tr>
+			</table>
+			<table class='filterTable'>
+				<tr>
 					<td>
 						<?php print __('Template');?>
 					</td>
@@ -220,16 +268,6 @@ function html_graph_preview_filter($page, $action, $devices_where = '', $templat
 						</select>
 					</td>
 					<?php print html_graph_order_filter();?>
-					<td>
-						<span>
-							<input type='submit' class='ui-button ui-corner-all ui-widget' id='go' value='<?php print __esc('Go');?>' title='<?php print __esc('Set/Refresh Filters');?>'>
-							<input type='button' class='ui-button ui-corner-all ui-widget' id='clear' value='<?php print __esc('Clear');?>' title='<?php print __esc('Clear Filters');?>'>
-							<?php if (is_view_allowed('graph_settings')) {?>
-							<input type='button' class='ui-button ui-corner-all ui-widget' id='save' value='<?php print __esc('Save');?>' title='<?php print __esc('Save the current Graphs, Columns, Thumbnail, Preset, and Timeshift preferences to your profile');?>'>
-							<?php }?>
-						<span>
-					</td>
-					<td id='text'></td>
 				</tr>
 			</table>
 			<table id='search' class='filterTable'>

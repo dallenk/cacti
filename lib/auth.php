@@ -1436,7 +1436,7 @@ function get_allowed_tree_header_graphs($tree_id, $leaf_id = 0, $sql_where = '',
  *                          'start_time'  => unix_timestamp,
  *                          'end_time'    => unix_timestamp,
  *                          'cf'          => avg (0) | max (1)
- *                          'metric'      => average | peak | sum | p25 | p50 | p75 | p90 | p95
+ *                          'measure'     => average | peak | sum | p25 | p50 | p75 | p90 | p95
  *                      )
  *
  * @param  int          The limit on items to return.  If empty or -1, return all items
@@ -1499,7 +1499,7 @@ function get_allowed_graphs($sql_where = '', $sql_order = 'gtg.title_cache', $sq
 		) AS rs
 		ON gl.id = rs.local_graph_id";
 
-		$sql_order = "ORDER BY rs." . $sql_order['metric'] . ' ' . $sql_order['order'];
+		$sql_order = "ORDER BY rs." . $sql_order['measure'] . ' ' . $sql_order['order'];
 	} elseif ($sql_order != '') {
 		$sql_order = "ORDER BY $sql_order";
 	}

@@ -495,10 +495,22 @@ switch (get_nfilter_request_var('action')) {
 
 		$sql_where .= ($sql_or != '' && $sql_where != '' ? ' AND ':'') . $sql_or;
 
+		if (!isempty_request_var('site_id') && get_request_var('site_id') > 0) {
+			$sql_where .= ($sql_where == '' ? '' : ' AND') . ' h.site_id=' . get_request_var('site_id');
+		} elseif (isempty_request_var('site_id')) {
+			$sql_where .= ($sql_where == '' ? '' : ' AND') . ' h.site_id=0';
+		}
+
 		if (!isempty_request_var('host_id') && get_request_var('host_id') > 0) {
-			$sql_where .= (empty($sql_where) ? '' : ' AND') . ' gl.host_id=' . get_request_var('host_id');
+			$sql_where .= ($sql_where == '' ? '' : ' AND') . ' gl.host_id=' . get_request_var('host_id');
 		} elseif (isempty_request_var('host_id')) {
-			$sql_where .= (empty($sql_where) ? '' : ' AND') . ' gl.host_id=0';
+			$sql_where .= ($sql_where == '' ? '' : ' AND') . ' gl.host_id=0';
+		}
+
+		if (get_request_var('location') != '' && get_request_var('location') != '-1' && get_request_var('location') != '0') {
+			$sql_where .= ($sql_where == '' ? '' : ' AND') . ' h.location = ' . db_qstr(get_request_var('location'));
+		} elseif (get_request_var('location') == '0') {
+			$sql_where .= ($sql_where == '' ? '' : ' AND') . ' h.location = ""';
 		}
 
 		if (!isempty_request_var('graph_template_id') && get_request_var('graph_template_id') != '-1' && get_request_var('graph_template_id') != '0') {
@@ -515,8 +527,8 @@ switch (get_nfilter_request_var('action')) {
 				'order'       => get_request_var('graph_order'),
 				'start_time'  => get_current_graph_start(),
 				'end_time'    => get_current_graph_end(),
-				'cf'          => 'avg',
-				'metric'      => 'average'
+				'cf'          => get_request_var('cf'),
+				'measure'     => get_request_var('measure')
 			);
 		} else {
 			$sql_order  = 'gtg.title_cache';

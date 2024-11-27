@@ -735,8 +735,8 @@ function create_data_query_branch($leaf, $site_id = -1, $ht = -1) {
 					'order'       => get_request_var('graph_order'),
 					'start_time'  => get_current_graph_start(),
 					'end_time'    => get_current_graph_end(),
-					'cf'          => 'avg',
-					'metric'      => 'average'
+					'cf'          => get_request_var('cf'),
+					'measure'      => get_request_var('measure')
 				);
 			} else {
 				$sql_order = 'gtg.title_cache';
@@ -756,8 +756,8 @@ function create_data_query_branch($leaf, $site_id = -1, $ht = -1) {
 					'order'       => get_request_var('graph_order'),
 					'start_time'  => get_current_graph_start(),
 					'end_time'    => get_current_graph_end(),
-					'cf'          => 'avg',
-					'metric'      => 'average'
+					'cf'          => get_request_var('cf'),
+					'measure'      => get_request_var('measure')
 				);
 			} else {
 				$sql_order = 'gtg.title_cache';
@@ -874,6 +874,15 @@ function html_validate_tree_vars() {
 			'filter'  => FILTER_VALIDATE_REGEXP,
 			'options' => array('options' => array('regexp' => '(asc|desc)')),
 			'default' => 'desc'
+		),
+		'cf' => array(
+			'filter'  => FILTER_VALIDATE_INT,
+			'default' => '0'
+		),
+		'measure' => array(
+			'filter'  => FILTER_CALLBACK,
+			'default' => 'average',
+			'options' => array('options' => 'sanitize_search_string')
 		),
 		'columns' => array(
 			'filter'  => FILTER_VALIDATE_INT,
@@ -1108,6 +1117,20 @@ function grow_right_pane_tree($tree_id, $leaf_id, $host_group_data) {
 					<td>
 						<input type='text' class='ui-state-default ui-corner-all' id='rfilter' size='55' value='<?php print html_escape_request_var('rfilter');?>'>
 					</td>
+				</td>
+				<td>
+					<span>
+						<input type='submit' class='ui-button ui-corner-all ui-widget' id='go' value='<?php print __esc('Go');?>' title='<?php print __esc('Set/Refresh Filter');?>'>
+						<input type='button' class='ui-button ui-corner-all ui-widget' id='clear' value='<?php print __esc('Clear');?>' title='<?php print __esc('Clear Filters');?>'>
+						<?php if (is_view_allowed('graph_settings')) {?>
+						<input type='button' class='ui-button ui-corner-all ui-widget' id='save' value='<?php print __esc('Save');?>' title='<?php print __esc('Save the current Graphs, Columns, Thumbnail, Preset, and Timeshift preferences to your profile');?>'>
+						<?php }?>
+					</span>
+				</td>
+				<td id='text'></td>
+			</table>
+			<table class='filterTable'>
+				<tr>
 					<td>
 						<?php print __('Template');?>
 					</td>
@@ -1148,16 +1171,6 @@ function grow_right_pane_tree($tree_id, $leaf_id, $host_group_data) {
 						</select>
 					</td>
 					<?php print html_graph_order_filter();?>
-					<td>
-						<span>
-							<input type='submit' class='ui-button ui-corner-all ui-widget' id='go' value='<?php print __esc('Go');?>' title='<?php print __esc('Set/Refresh Filter');?>'>
-							<input type='button' class='ui-button ui-corner-all ui-widget' id='clear' value='<?php print __esc('Clear');?>' title='<?php print __esc('Clear Filters');?>'>
-							<?php if (is_view_allowed('graph_settings')) {?>
-							<input type='button' class='ui-button ui-corner-all ui-widget' id='save' value='<?php print __esc('Save');?>' title='<?php print __esc('Save the current Graphs, Columns, Thumbnail, Preset, and Timeshift preferences to your profile');?>'>
-							<?php }?>
-						</span>
-					</td>
-					<td id='text'></td>
 				</tr>
 			</table>
 			<table class='filterTable'>
@@ -1483,8 +1496,8 @@ function grow_right_pane_tree($tree_id, $leaf_id, $host_group_data) {
 				'order'       => get_request_var('graph_order'),
 				'start_time'  => get_current_graph_start(),
 				'end_time'    => get_current_graph_end(),
-				'cf'          => 'avg',
-				'metric'      => 'average'
+				'cf'          => get_request_var('cf'),
+				'measure'     => get_request_var('measure')
 			);
 		} else {
 			$sql_order = 'gtg.title_cache';
@@ -1626,8 +1639,8 @@ function get_host_graph_list($host_id, $graph_template_id, $data_query_id, $host
 					'order'       => get_request_var('graph_order'),
 					'start_time'  => get_current_graph_start(),
 					'end_time'    => get_current_graph_end(),
-					'cf'          => 'avg',
-					'metric'      => 'average'
+					'cf'          => get_request_var('cf'),
+					'measure'     => get_request_var('measure')
 				);
 			} else {
 				$sql_order = 'gtg.title_cache';
@@ -1703,8 +1716,8 @@ function get_host_graph_list($host_id, $graph_template_id, $data_query_id, $host
 						'order'       => get_request_var('graph_order'),
 						'start_time'  => get_current_graph_start(),
 						'end_time'    => get_current_graph_end(),
-						'cf'          => 'avg',
-						'metric'      => 'average'
+						'cf'          => get_request_var('cf'),
+						'measure'     => get_request_var('measure')
 					);
 				} else {
 					$sql_order = 'gtg.title_cache';
