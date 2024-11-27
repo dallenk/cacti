@@ -231,6 +231,16 @@ function show_database_processes() {
 					applyFilter();
 				});
 
+				$('#clear').click(function() {
+					var strURL  = 'support.php';
+					strURL += '?tab=processes&clear=1';
+					loadUrl({url: strURL});
+				});
+
+				$('#refresh').click(function() {
+					clearTimeout(myRefresh);
+				});
+
 				$('#refreshbtn').click(function() {
 					applyFilter();
 				});
@@ -323,6 +333,7 @@ function show_database_processes() {
 					<td>
 						<span>
 							<input class='ui-button ui-corner-all ui-widget' type='button' id='refreshbtn' value='<?php print __esc('Refresh');?>' title='<?php print __esc('Refresh Values');?>'>
+							<input class='ui-button ui-corner-all ui-widget' type='button' id='clear' value='<?php print __esc('Clear');?>' title='<?php print __esc('Reset Refresh');?>'>
 						</span>
 					</td>
 				</tr>
@@ -521,6 +532,16 @@ function show_cacti_processes() {
 					applyFilter();
 				});
 
+				$('#clear').click(function() {
+					var strURL  = 'support.php';
+					strURL += '?tab=background&clear=1';
+					loadUrl({url: strURL});
+				});
+
+				$('#refresh').click(function() {
+					clearTimeout(myRefresh);
+				});
+
 				$('#refreshbtn').click(function() {
 					applyFilter();
 				});
@@ -593,6 +614,7 @@ function show_cacti_processes() {
 					<td>
 						<span>
 							<input class='ui-button ui-corner-all ui-widget' type='button' id='refreshbtn' value='<?php print __esc('Refresh');?>' title='<?php print __esc('Refresh Values');?>'>
+							<input class='ui-button ui-corner-all ui-widget' type='button' id='clear' value='<?php print __esc('Clear');?>' title='<?php print __esc('Reset Refresh');?>'>
 						</span>
 					</td>
 				</tr>
