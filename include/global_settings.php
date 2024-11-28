@@ -46,7 +46,7 @@ $tabs = array(
 	'authentication' => __('Authentication'),
 	'boost'          => __('Performance'),
 	'spikes'         => __('Spikes'),
-	'mail'           => __('Mail/Reporting/DNS')
+	'mail'           => __('Mail/Reporting/DNS/Proxy')
 );
 
 $tabs_graphs = array(
