@@ -554,9 +554,11 @@ INSERT INTO `table_columns` VALUES ('graph_template_input_defs',2,'graph_templat
 INSERT INTO `table_columns` VALUES ('graph_templates',1,'id','mediumint(8) unsigned','NO','PRI',NULL,'auto_increment');
 INSERT INTO `table_columns` VALUES ('graph_templates',2,'hash','char(32)','NO','','','');
 INSERT INTO `table_columns` VALUES ('graph_templates',3,'name','char(255)','NO','MUL','','');
-INSERT INTO `table_columns` VALUES ('graph_templates',4,'multiple','char(2)','NO','MUL','','');
-INSERT INTO `table_columns` VALUES ('graph_templates',5,'test_source','char(2)','NO','','','');
-INSERT INTO `table_columns` VALUES ('graph_templates',6,'graphs','int(10) unsigned','NO','','0','');
+INSERT INTO `table_columns` VALUES ('graph_templates',4,'class','char(40)','NO','','','');
+INSERT INTO `table_columns` VALUES ('graph_templates',5,'version','char(10)','NO','','','');
+INSERT INTO `table_columns` VALUES ('graph_templates',6,'multiple','char(2)','NO','','','');
+INSERT INTO `table_columns` VALUES ('graph_templates',7,'test_source','char(2)','NO','','','');
+INSERT INTO `table_columns` VALUES ('graph_templates',8,'graphs','int(10) unsigned','NO','','0','');
 INSERT INTO `table_columns` VALUES ('graph_templates_gprint',1,'id','mediumint(8) unsigned','NO','PRI',NULL,'auto_increment');
 INSERT INTO `table_columns` VALUES ('graph_templates_gprint',2,'hash','varchar(32)','NO','','','');
 INSERT INTO `table_columns` VALUES ('graph_templates_gprint',3,'name','varchar(100)','NO','MUL','','');

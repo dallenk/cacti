@@ -658,9 +658,17 @@ function xml_to_graph_template($hash, &$xml_array, &$hash_cache, $hash_version, 
 		$previous_data = array();
 	}
 
-	$save['id']   = (empty($_graph_template_id) ? '0' : $_graph_template_id);
-	$save['hash'] = $hash;
-	$save['name'] = $xml_array['name'];
+	$save['id']    = (empty($_graph_template_id) ? '0' : $_graph_template_id);
+	$save['hash']  = $hash;
+	$save['name']  = $xml_array['name'];
+
+	if (isset($xml_array['class'])) {
+		$save['class'] = $xml_array['class'];
+	}
+
+	if (isset($xml_array['version'])) {
+		$save['version'] = $xml_array['version'];
+	}
 
 	if (isset($xml_array['multiple'])) {
 		$save['multiple'] = $xml_array['multiple'];

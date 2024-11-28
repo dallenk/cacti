@@ -43,12 +43,18 @@ function upgrade_to_1_3_0() {
 	db_install_add_column('graph_templates_graph', array('name' => 't_left_axis_format', 'type' => 'char(2)',  'default' => '', 'after' => 'right_axis_formatter'));
 	db_install_add_column('graph_templates_graph', array('name' => 'left_axis_format', 'type' => 'mediumint(8)', 'NULL' => true, 'after' => 't_left_axis_format'));
 
+	db_install_add_column('graph_templates', array('name' => 'class', 'type' => 'char(40)', 'default' => '', 'NULL' => true, 'after' => 'name'));
+	db_install_add_column('graph_templates', array('name' => 'version', 'type' => 'char(10)', 'default' => '', 'NULL' => true, 'after' => 'class'));
+
 	db_install_add_column('aggregate_graph_templates_graph', array('name' => 't_left_axis_format', 'type' => 'char(2)',  'default' => '0', 'after' => 'right_axis_formatter'));
 	db_install_add_column('aggregate_graph_templates_graph', array('name' => 'left_axis_format', 'type' => 'mediumint(8)', 'NULL' => true, 'after' => 't_left_axis_format'));
 
 	db_install_add_column('plugin_config', array('name' => 'last_updated', 'type' => 'timestamp', 'NULL' => false, 'default' => 'CURRENT_TIMESTAMP', 'after' => 'version'));
 
 	db_install_execute('UPDATE plugin_config SET last_updated = NOW() WHERE status IN (1,2,3,4) AND last_updated = NULL');
+
+	db_install_execute("UPDATE graph_templates SET class='unspecified' WHERE class = ''");
+	db_install_execute("UPDATE graph_templates SET version = '" . CACTI_VERSION . "' WHERE version = ''");
 
 	/* temporary workaround till project finished */
 	db_install_execute("CREATE TABLE IF NOT EXISTS `plugin_available` (

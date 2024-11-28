@@ -131,6 +131,7 @@ Cacti CHANGELOG
 -feature: Upgrade ua-parser.js to version 1.0.35
 -feature: Add parsedown to vendor library for plugin CHANGELOG and README viewing support
 -feature: Add year display to get_daysfromtime function
+-feature: Add class and version columns to Graph Template to support Streams feature
 
 1.2.29
 -issue#5843: Issue with temporary tables with use of microtime

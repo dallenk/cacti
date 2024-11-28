@@ -67,6 +67,8 @@ function graph_template_to_xml($graph_template_id) {
 
 	$xml_text .= '<hash_' . $hash['graph_template'] . ">\n";
 	$xml_text .= "\t<name>"        . xml_character_encode($graph_template['name'])        . "</name>\n";
+	$xml_text .= "\t<class>"       . xml_character_encode($graph_template['class'])       . "</class>\n";
+	$xml_text .= "\t<version>"     . xml_character_encode($graph_template['version'])     . "</version>\n";
 	$xml_text .= "\t<multiple>"    . xml_character_encode($graph_template['multiple'])    . "</multiple>\n";
 	$xml_text .= "\t<test_source>" . xml_character_encode($graph_template['test_source']) . "</test_source>\n";
 

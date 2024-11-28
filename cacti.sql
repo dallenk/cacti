@@ -1749,6 +1749,8 @@ CREATE TABLE graph_templates (
   `id` mediumint(8) unsigned NOT NULL auto_increment,
   `hash` char(32) NOT NULL default '',
   `name` char(255) NOT NULL default '',
+  `class` varchar(40) NOT NULL default '',
+  `version` varchar(10) NOT NULL default '',
   `multiple` char(2) NOT NULL default '',
   `test_source` char(2) NOT NULL default '',
   `graphs` int(10) unsigned NOT NULL default '0',
