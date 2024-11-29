@@ -1254,7 +1254,12 @@ class Installer implements JsonSerializable {
 		$default_template = null;
 		if (!empty($param_default_template)) {
 			foreach ($this->defaultAutomation as $item) {
-				if ($item[''] == $param_default_template) {
+				$id = db_fetch_cell_prepared('SELECT id
+					FROM host_template
+					WHERE hash = ?',
+					array($item['hash']));
+
+				if ($id == $param_default_template) {
 					$default_template = $param_default_template;
 					break;
 				}
@@ -1268,7 +1273,7 @@ class Installer implements JsonSerializable {
 		set_install_config_option('default_template', $default_template);
 
 		$default_template = $this->getDefaultTemplate();
-		log_install_always('templates', 'setDefaultTemplate(): Device default template is \'' . $default_template . '\'');
+		log_install_always('templates', 'setDefaultTemplate(): Default Device Template is \'' . $default_template . '\'');
 	}
 
 	/* getTemplates() - returns a list of expected templates and whether
