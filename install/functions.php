@@ -1329,7 +1329,9 @@ function install_full_sync() {
 			} elseif ($poller['gap'] < $gap_time) {
 				log_install_medium('sync', 'Replicating to Poller ' . $poller['id']);
 
-				if (read_config_option('disable_full_sync_on_upgrade') == '') {
+				if (read_config_option('disable_full_sync_on_upgrade') == '' && read_config_option('install_replicate', true) == '') {
+					set_config_option('install_replicate', 1);
+
 					if (replicate_out($poller['id'])) {
 						log_install_debug('sync', 'Completed replication to Poller ' . $poller['id']);
 						$success[] = $poller['id'];
