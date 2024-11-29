@@ -1288,6 +1288,10 @@ function template_edit() {
 		$header_label = __('Graph Template [new]');
 	}
 
+	if (isset($template['version']) && $template['version'] == '') {
+		$template['version'] = CACTI_VERSION;
+	}
+
 	form_start('graph_templates.php', 'graph_templates');
 
 	html_start_box($header_label, '100%', true, '3', 'center', '');
@@ -1366,7 +1370,7 @@ function template_edit() {
 }
 
 function template() {
-	global $actions, $item_rows, $image_types;
+	global $actions, $item_rows, $image_types, $graph_template_classes;
 
 	/* ================= input validation and session storage ================= */
 	$filters = array(
@@ -1585,10 +1589,14 @@ function template() {
 		FROM graph_templates AS gt
 		$sql_where");
 
+	$cacti_version = CACTI_VERSION;
+
 	$sql_order = get_order_string();
 	$sql_limit = ' LIMIT ' . ($rows * (get_request_var('page') - 1)) . ',' . $rows;
 
 	$template_list = db_fetch_assoc("SELECT gt.id, gt.name, gt.graphs,
+		IF(gt.version = '', '$cacti_version', gt.version) AS version,
+		IF(gt.class = '', 'unassigned', gt.class) AS class,
 		CONCAT(gtg.height, 'x', gtg.width) AS size, gtg.vertical_label, gtg.image_format_id
 		FROM graph_templates AS gt
 		INNER JOIN graph_templates_graph AS gtg
@@ -1610,6 +1618,18 @@ function template() {
 			'align'   => 'right',
 			'sort'    => 'ASC',
 			'tip'     => __('The internal ID for this Graph Template.  Useful when performing automation or debugging.')
+		),
+		'class' => array(
+			'display' => __('Class'),
+			'align'   => 'right',
+			'sort'    => 'ASC',
+			'tip'     => __('The Class of this Graph Template')
+		),
+		'version' => array(
+			'display' => __('Version'),
+			'align'   => 'right',
+			'sort'    => 'ASC',
+			'tip'     => __('The Version of this Graph Template')
 		),
 		'nosort3' => array(
 			'display' => __('Deletable'),
@@ -1666,6 +1686,8 @@ function template() {
 
 			form_selectable_cell(filter_value($template['name'], get_request_var('filter'), 'graph_templates.php?action=template_edit&id=' . $template['id']), $template['id']);
 			form_selectable_cell($template['id'], $template['id'], '', 'right');
+			form_selectable_cell($graph_template_classes[$template['class']], $template['id'], '', 'right');
+			form_selectable_cell($template['version'], $template['id'], '', 'right');
 			form_selectable_cell($disabled ? __('No'):__('Yes'), $template['id'], '', 'right');
 			form_selectable_cell(number_format_i18n($template['graphs'], '-1'), $template['id'], '', 'right');
 			form_selectable_cell($image_types[$template['image_format_id']], $template['id'], '', 'right');
