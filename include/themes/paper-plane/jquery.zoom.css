@@ -19,17 +19,15 @@
 	position:absolute;
 	overflow:hidden;
 	border:0;
+	padding:0;
+	margin:0;
 	z-index:auto;
 	pointer-events: all;
-	&:hover {
-		.zoom-crosshair {
-			/*visibility: visible;*/
-		}
-	}
+
 }
 
 .zoom-crosshair {
-	visibility: hidden;
+	display: none;
 	position:relative;
 	top:0;
 	right:0;
@@ -114,13 +112,36 @@
 		font-family: "Font Awesome 5 Free";
 		font-weight: 600;
 	}
-}
+	.zoom-marker-tooltip {
+		display: inline-flex;
+		position: absolute;
+		z-index:300;
+		background: transparent;
+		transform: translateX(-100%);
+		color: #9d9d9d;
 
-.zoom-marker-tooltip {
-	display: none;
-	position: absolute;
-	z-index:auto;
-	color: #9d9d9d;
+		&[id$="-1"] { top: 0.5rem; }
+		&[id$="-2"] { bottom: 0.5rem; }
+
+		&::before,
+		&::after {
+			color: rgba(204,204,204,0.4);
+			display: none;
+			content: "\f0d9";
+			font-family: "Font Awesome 5 Free";
+			font-weight: 600;
+			font-size: 1rem;
+			z-index:301;
+			margin-top: 0.3rem;
+		}
+		&::after {
+			display: unset;
+			content: "\f0da";
+		}
+		&.relative-right { transform: unset }
+		&.relative-right::after { display: none; }
+		&.relative-right::before { display: unset; }
+	}
 }
 
 .zoom-marker-tooltip-value{
@@ -132,53 +153,6 @@
 	padding-right: 3px;
 	border: 1px solid rgba(204,204,204,0.4);
 }
-
-.zoom-marker-tooltip-arrow-left {
-	float:left;
-	width: 0;
-	height: 0;
-	margin-right: -1px;
-	margin-top: 4px;
-	border-top: 4px solid transparent;
-	border-bottom: 4px solid transparent;
-	border-right: 8px solid rgba(204,204,204,0.4);
-}
-
-.zoom-marker-tooltip-arrow-left-inner {
-	position: relative;
-	top: -4px;
-	left: 2px;
-	width: 0;
-	height: 0;
-	border-top: 4px solid transparent;
-	border-bottom: 4px solid transparent;
-	border-right: 8px solid #222222;
-	z-index: auto;
-}
-
-.zoom-marker-tooltip-arrow-right {
-	float:left;
-	width: 0;
-	height: 0;
-	margin-left: -1px;
-	margin-top: 4px;
-	border-top: 4px solid transparent;
-	border-bottom: 4px solid transparent;
-	border-left: 8px solid rgba(204,204,204,0.4);
-}
-
-.zoom-marker-tooltip-arrow-right-inner {
-	position: relative;
-	top: -4px;
-	left: -10px;
-	width: 0;
-	height: 0;
-	border-top: 4px solid transparent;
-	border-bottom: 4px solid transparent;
-	border-left: 8px solid #222222;
-	z-index: auto;
-}
-
 
 .zoom-menu,
 .zoom-livedata {

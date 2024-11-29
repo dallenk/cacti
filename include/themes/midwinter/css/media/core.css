@@ -233,6 +233,26 @@ input[type="checkbox"]:focus-within + label:before {
     justify-content: flex-start;
 }
 
+/*
+.graphPage {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+
+    & .graphWrapperOuter {
+        flex-shrink: 0;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        .cols1 & { width:  100%; }
+        .cols2 & { width:   50%; }
+        .cols3 & { width:   33%; }
+        .cols4 & { width:   25%; }
+        .cols5 & { width:   20%; }
+        .cols6 & { width: 16.6%; }
+    }
+}
+ */
 
 /* New Checkbox Stuff */
 .checkboxSwitch {

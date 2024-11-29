@@ -100,69 +100,45 @@
 		font-family: "Font Awesome 5 Free";
 		font-weight: 600;
 	}
-}
+	.zoom-marker-tooltip {
+		display: inline-flex;
+		position: absolute;
+		z-index:300;
+		background: transparent;
+		transform: translateX(-100%);
 
-.zoom-marker-tooltip {
-	display: none;
-	position: absolute;
-	z-index:auto;
-	color: var(--text-color-lighter);
+		&[id$="-1"] { top: 0.5rem; }
+		&[id$="-2"] { bottom: 0.5rem; }
+
+		&::before,
+		&::after {
+			display: none;
+			content: "\f0d9";
+			font-family: "Font Awesome 5 Free";
+			font-weight: 600;
+			font-size: 1.25rem;
+			z-index:301;
+			margin-top: 0.3rem;
+		}
+		&::after {
+			display: unset;
+			content: "\f0da";
+		}
+		&.relative-right { transform: unset }
+		&.relative-right::after { display: none; }
+		&.relative-right::before { display: unset; }
+	}
 }
 
 .zoom-marker-tooltip-value{
 	white-space: pre-line;
-	font-size: 1em;
-	float: left;
-	background: var(--background-lowlight);
-    padding: 0.3rem;
+	color: var(--text-color-normal);
+	background: var(--background-content);
+    padding: 0.25rem 0.5rem;
 	border: 1px solid var(--border-color);
-    border-radius: 4px;
-}
-
-.zoom-marker-tooltip-arrow-left {
-	float:left;
-	width: 0;
-	height: 0;
-	margin-right: -2px;
-	margin-top: 4px;
-	border-top: 6px solid transparent;
-	border-bottom: 6px solid transparent;
-	border-right: 10px solid var(--border-color);
-}
-
-.zoom-marker-tooltip-arrow-left-inner {
-	position: relative;
-	top: -6px;
-	left: 2px;
-	width: 0;
-	height: 0;
-	border-top: 6px solid transparent;
-	border-bottom: 6px solid transparent;
-	border-right: 10px solid var(--background-lowlight);
-	z-index: auto;
-}
-
-.zoom-marker-tooltip-arrow-right {
-	float:left;
-	width: 0;
-	height: 0;
-	margin-left: 0;
-	margin-top: 4px;
-	border-top: 6px solid transparent;
-	border-bottom: 6px solid transparent;
-	border-left: 10px solid var(--border-color);
-}
-
-.zoom-marker-tooltip-arrow-right-inner {
-	position: relative;
-	top: -6px;
-	left: -12px;
-	width: 0;
-	height: 0;
-	border-top: 6px solid transparent;
-	border-bottom: 6px solid transparent;
-	border-left: 10px solid var(--background-lowlight);
-	z-index: auto;
+	border-radius: 5px;
+	box-shadow: var(--box-shadow-color) 0 5px 10px;
+	opacity: 0.98;
 }
 
 .zoom-menu,
