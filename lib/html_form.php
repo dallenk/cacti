@@ -161,8 +161,8 @@ function draw_edit_form($array) {
 			$i++;
 		}
 
-		if (isset($_SESSION['sess_error_fields'])) {
-			kill_session_var('sess_error_fields');
+		if (isset($_SESSION[SESS_ERROR_FIELDS]) && !cacti_sizeof($_SESSION[SESS_ERROR_FIELDS])) {
+			kill_session_var(SESS_ERROR_FIELDS);
 		}
 	}
 }
@@ -728,7 +728,7 @@ function form_text_box($form_name, $form_previous_value, $form_default_value, $f
 		$form_previous_value = $form_default_value;
 	}
 
-	print "<input type='$type' " . ($type == 'password' || $type == 'password_confirm' ? 'autocomplete="off" readonly onfocus="this.removeAttribute(\'readonly\');"' : '') . ($title != '' ? ' title="' . $title . '"' : '');
+	print "<input type='$type' " . ($type == 'password' || $type == 'password_confirm' ? 'autocomplete="off" readonly onfocus="this.removeAttribute(\'readonly\');"' : '') . ($title != '' ? ' title="' . html_escape($title) . '"' : '');
 
 	if (isset($_SESSION[SESS_ERROR_FIELDS])) {
 		if (!empty($_SESSION[SESS_ERROR_FIELDS][$form_name])) {
