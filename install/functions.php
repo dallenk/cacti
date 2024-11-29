@@ -663,48 +663,44 @@ function install_setup_get_templates() {
 
 function install_setup_get_tables() {
 	/* ensure all tables are utf8 enabled */
-	$db_tables = db_fetch_assoc('SHOW TABLES');
-
+	$db_tables = get_cacti_base_tables();
 	if ($db_tables === false) {
 		return false;
 	}
 
 	$t = array();
+	foreach ($tables as $table) {
+		$table_status = db_fetch_row("SHOW TABLE STATUS LIKE '$table'");
 
-	foreach ($db_tables as $tables) {
-		foreach ($tables as $table) {
-			$table_status = db_fetch_row("SHOW TABLE STATUS LIKE '$table'");
+		$collation  = '';
+		$engine     = '';
+		$rows       = 0;
+		$row_format = '';
 
-			$collation  = '';
-			$engine     = '';
-			$rows       = 0;
-			$row_format = '';
-
-			if ($table_status !== false) {
-				if (isset($table_status['Collation']) && $table_status['Collation'] != 'utf8mb4_unicode_ci') {
-					$collation = $table_status['Collation'];
-				}
-
-				if (isset($table_status['Engine']) && $table_status['Engine'] == 'MyISAM') {
-					$engine = $table_status['Engine'];
-				}
-
-				if (isset($table_status['Rows'])) {
-					$rows = $table_status['Rows'];
-				}
-
-				if (isset($table_status['Row_format']) && $table_status['Row_format'] == 'Compact' && $table_status['Engine'] == 'InnoDB') {
-					$row_format = 'Dynamic';
-				}
+		if ($table_status !== false) {
+			if (isset($table_status['Collation']) && $table_status['Collation'] != 'utf8mb4_unicode_ci') {
+				$collation = $table_status['Collation'];
 			}
 
-			if ($table_status === false || $collation != '' || $engine != '' || $row_format != '') {
-				$t[$table]['Name']       = $table;
-				$t[$table]['Collation']  = $table_status['Collation'];
-				$t[$table]['Engine']     = $table_status['Engine'];
-				$t[$table]['Rows']       = $rows;
-				$t[$table]['Row_format'] = $table_status['Row_format'];
+			if (isset($table_status['Engine']) && $table_status['Engine'] == 'MyISAM') {
+				$engine = $table_status['Engine'];
 			}
+
+			if (isset($table_status['Rows'])) {
+				$rows = $table_status['Rows'];
+			}
+
+			if (isset($table_status['Row_format']) && $table_status['Row_format'] == 'Compact' && $table_status['Engine'] == 'InnoDB') {
+				$row_format = 'Dynamic';
+			}
+		}
+
+		if ($table_status === false || $collation != '' || $engine != '' || $row_format != '') {
+			$t[$table]['Name']       = $table;
+			$t[$table]['Collation']  = $table_status['Collation'];
+			$t[$table]['Engine']     = $table_status['Engine'];
+			$t[$table]['Rows']       = $rows;
+			$t[$table]['Row_format'] = $table_status['Row_format'];
 		}
 	}
 
