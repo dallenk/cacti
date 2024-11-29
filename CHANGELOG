@@ -125,6 +125,7 @@ Cacti CHANGELOG
 -feature#5922: Add HPE Nimble/Alletra template
 -feature#5923: If RRDtool crashes due to a segmentation fault, report that and retry a few times
 -feature#5931: Make it easier to connect content in the table data_input_data to the host and data source
+-feature#5935: Add additional detail to the Admin Email to trace the server's impacted by the errors
 -feature: Allow messages to be popup notifications
 -feature: Upgrade billboard.js to version 3.14.1
 -feature: Upgrade jQueryUI to 1.14.1

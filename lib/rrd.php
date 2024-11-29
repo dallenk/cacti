@@ -398,7 +398,7 @@ function __rrd_execute($command_line, $log_to_stdout, $output_flag, $rrdtool_pip
 							$email_message = __('WARNING: RRDtool Crashed execution the following command line %s.  %s', $command_line, $backtrace);
 
 							cacti_log($log_message, false, 'RRDTOOL');
-							admin_email(__('Poller in Heartbeat Mode'), $email_message);
+							admin_email(__('RRDtool Command Crashed'), $email_message);
 						}
 
 						$attempts++;

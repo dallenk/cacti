@@ -5149,6 +5149,18 @@ function general_header() {
 function admin_email(string $subject, string $message) : bool {
 	$result = false;
 
+	$server_name = gethostname();
+	$server_addr = gethostbyname($server_name);
+
+	$fin_message  = "<h1>Cacti Admin Notification</h1>";
+	$fin_message .= "<h2>$subject</h2>";
+	$fin_message .= "<div class='cactiTable'>";
+	$fin_message .= "<p>Cacti Server: $server_name</p>";
+	$fin_message .= "<p>Server IP: $server_addr</p>";
+	$fin_message .= "<p><b>The Cacti Server below generated an error that needs to be addressed.</b></p>";
+	$fin_message .= "<p>$message</p>";
+	$fin_message .= "</div>";
+
 	if (read_config_option('admin_user') > 0) {
 		if (read_config_option('notify_admin') == 'on') {
 			$admin_details = db_fetch_row_prepared('SELECT full_name, email_address
@@ -5174,7 +5186,7 @@ function admin_email(string $subject, string $message) : bool {
 					}
 
 					// If we get any message back then we have failed
-					$result = empty(send_mail($to, $from, $subject, $message, html: true, expandIds: true));
+					$result = empty(send_mail($to, $from, $subject, $fin_message, html: true, expandIds: true));
 				}
 			}
 		}
