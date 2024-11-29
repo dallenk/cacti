@@ -27,7 +27,7 @@ Cacti CHANGELOG
 -issue#5900: Please add the ability to select compiled RRDtool v1.9+
 -feature#412: Import Export for Graph and Tree rules
 -feature#1214: Move Tree Create/Remove/Modify Functions to lib/api_tree.php
--feature#1398: Implement an interactive web based Plugin upgrade process 
+-feature#1398: Implement an interactive web based Plugin upgrade process
 -feature#1442: Add validation to GUI inputs
 -feature#1523: Value above RRD maximum value
 -feature#1987: Plugins should be able to be downloaded, installed, and upgraded from Plugin Management
@@ -123,7 +123,7 @@ Cacti CHANGELOG
 -feature#5908: Add Searching of Notes and External ID when Searching for a Device
 -feature#5920: Remove the use of tables for alignment on graphs page and move to flex alignment
 -feature#5922: Add HPE Nimble/Alletra template
--feature#5923: If RRDtool crashes due to a segmentation fault, report that and retry a few times 
+-feature#5923: If RRDtool crashes due to a segmentation fault, report that and retry a few times
 -feature#5931: Make it easier to connect content in the table data_input_data to the host and data source
 -feature: Allow messages to be popup notifications
 -feature: Upgrade billboard.js to version 3.14.1
@@ -142,7 +142,10 @@ Cacti CHANGELOG
 -issue#5867: Disabling a Tree does not function as expected
 -issue#5868: Error when remove Orphaned Graphs from GUI
 -issue#5870: CLI utility splice_rrd.php generates an error in PHP8+
--issue#5874: IPV6 address colon format causes the snmp query to not work 
+-issue#5874: IPV6 address colon format causes the snmp query to not work
+-issue#5884: Fix Fortigate and Aruba OSCX switch template, improve Clearpass template
+-issue#5932: When upgrading Cacti, the replicate_out() process runs repeatedly
+-feature#5921: Add HPE Nimble/Alletra template
 
 1.2.28
 -security#GHSA-49f2-hwx9-qffr: XSS vulnerability when creating external links with the consolenewsection parameter

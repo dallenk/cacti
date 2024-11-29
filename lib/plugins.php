@@ -848,6 +848,7 @@ function api_plugin_uninstall_integrated() {
 function api_plugin_uninstall($plugin, $tables = true) {
 	global $config;
 
+	$plugin_found = false;
 	if (file_exists(CACTI_PATH_PLUGINS . "/$plugin/setup.php")) {
 		include_once(CACTI_PATH_PLUGINS . "/$plugin/setup.php");
 
@@ -856,6 +857,8 @@ function api_plugin_uninstall($plugin, $tables = true) {
 
 		if (function_exists($function)) {
 			$function();
+
+			$plugin_found = true;
 		}
 	}
 
@@ -874,9 +877,11 @@ function api_plugin_uninstall($plugin, $tables = true) {
 			array($plugin));
 	}
 
-	api_plugin_replicate_config();
+	if ($plugin_found) {
+		api_plugin_replicate_config();
 
-	cacti_log(sprintf('NOTE: Cacti Plugin %s has been uninstalled by %s', $plugin, get_username()), false, 'PLUGIN');
+		cacti_log(sprintf('NOTE: Cacti Plugin %s has been uninstalled by %s', $plugin, get_username()), false, 'PLUGIN');
+	}
 }
 
 function api_plugin_check_config($plugin) {
@@ -1595,22 +1600,22 @@ function api_plugin_archive_restore($plugin, $id, $type = 'archive') {
 			if ($type == 'archive') {
 				raise_message('archive_restored', __('Restore succeeded!  The archived Plugin \'%s\' Restore succeeded.', $plugin), MESSAGE_LEVEL_INFO);
 
-				db_execute_prepared('UPDATE plugin_config 
+				db_execute_prepared('UPDATE plugin_config
 					SET last_updated = ?,
-					WHERE directory = ?', 
+					WHERE directory = ?',
 					array($new_updated, $plugin));
 			} else {
 				raise_message('archive_restored', __('Load succeeded!  The available Plugin \'%s\' Load succeeded.', $plugin), MESSAGE_LEVEL_INFO);
 
 				if ($id == 'develop') {
-					db_execute_prepared('UPDATE plugin_config 
+					db_execute_prepared('UPDATE plugin_config
 						SET last_updated = NOW()
-						WHERE directory = ?', 
+						WHERE directory = ?',
 						array($plugin));
 				} else {
-					db_execute_prepared('UPDATE plugin_config 
+					db_execute_prepared('UPDATE plugin_config
 						SET last_updated = ?,
-						WHERE directory = ?', 
+						WHERE directory = ?',
 						array($new_updated, $plugin));
 				}
 			}
@@ -2300,4 +2305,3 @@ function plugin_make_github_request($url, $type = 'json') {
 		}
 	}
 }
-
