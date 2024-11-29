@@ -782,6 +782,8 @@ function api_plugin_uninstall_integrated() {
 function api_plugin_uninstall($plugin, $tables = true) {
 	global $config;
 
+	$plugin_found = false;
+
 	if (file_exists($config['base_path'] . "/plugins/$plugin/setup.php")) {
 		include_once($config['base_path'] . "/plugins/$plugin/setup.php");
 
@@ -790,6 +792,8 @@ function api_plugin_uninstall($plugin, $tables = true) {
 
 		if (function_exists($function)) {
 			$function();
+
+			$plugin_found = true;
 		}
 	}
 
@@ -808,7 +812,9 @@ function api_plugin_uninstall($plugin, $tables = true) {
 			array($plugin));
 	}
 
-	api_plugin_replicate_config();
+	if ($plugin_found) {
+		api_plugin_replicate_config();
+	}
 }
 
 function api_plugin_check_config($plugin) {

@@ -12,6 +12,7 @@ Cacti CHANGELOG
 -issue#5874: IPV6 address colon format causes the snmp query to not work 
 -issue#5884: Fix Fortigate and Aruba OSCX switch template, improve Clearpass template
 -feature#5921: Add HPE Nimble/Alletra template
+-issue#5932: When upgrading Cacti, the replicate_out() process runs repeatedly
 
 1.2.28
 -security#GHSA-49f2-hwx9-qffr: XSS vulnerability when creating external links with the consolenewsection parameter
