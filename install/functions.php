@@ -669,7 +669,7 @@ function install_setup_get_tables() {
 	}
 
 	$t = array();
-	foreach ($tables as $table) {
+	foreach ($db_tables as $table) {
 		$table_status = db_fetch_row("SHOW TABLE STATUS LIKE '$table'");
 
 		$collation  = '';
