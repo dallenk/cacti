@@ -709,7 +709,8 @@ function template_edit() {
 			$form_array[$field_name]['sub_checkbox'] = array(
 				'name'          => 't_' . $field_name,
 				'friendly_name' => __esc('Check this checkbox if you wish to allow the user to override the value on the right during Data Source creation.'),
-				'value'         => (isset($template_data['t_' . $field_name]) ? $template_data['t_' . $field_name] : '')
+				'value'         => (isset($template_data['t_' . $field_name]) ? $template_data['t_' . $field_name] : ''),
+				'default'       => ''
 			);
 		}
 	}
@@ -804,11 +805,12 @@ function template_edit() {
 	foreach ($struct_data_source_item as $field_name => $field_array) {
 		$form_array += array($field_name => $struct_data_source_item[$field_name]);
 
-		$form_array[$field_name]['value']        = (isset($template_rrd) ? $template_rrd[$field_name] : '');
+		$form_array[$field_name]['value']        = (isset($template_rrd[$field_name]) ? $template_rrd[$field_name] : '');
 		$form_array[$field_name]['sub_checkbox'] = array(
 			'name'          => 't_' . $field_name,
 			'friendly_name' => __esc('Check this checkbox if you wish to allow the user to override the value on the right during Data Source creation.'),
-			'value'         => (isset($template_rrd) ? $template_rrd['t_' . $field_name] : '')
+			'value'         => (isset($template_rrd['t_' . $field_name]) ? $template_rrd['t_' . $field_name] : ''),
+			'default'       => ''
 		);
 	}
 
