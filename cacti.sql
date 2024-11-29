@@ -1166,56 +1166,56 @@ CREATE TABLE data_input_data (
 -- Dumping data for table `data_input_data`
 --
 
-INSERT INTO `data_input_data` VALUES (1,4,'','');
-INSERT INTO `data_input_data` VALUES (1,5,'','');
-INSERT INTO `data_input_data` VALUES (1,6,'','');
-INSERT INTO `data_input_data` VALUES (1,19,'','');
-INSERT INTO `data_input_data` VALUES (1,20,'','');
-INSERT INTO `data_input_data` VALUES (1,22,'','');
-INSERT INTO `data_input_data` VALUES (1,23,'','');
-INSERT INTO `data_input_data` VALUES (1,24,'','');
-INSERT INTO `data_input_data` VALUES (1,25,'','');
-INSERT INTO `data_input_data` VALUES (1,26,'','');
-INSERT INTO `data_input_data` VALUES (1,27,'','');
-INSERT INTO `data_input_data` VALUES (1,30,'','');
-INSERT INTO `data_input_data` VALUES (1,31,'','');
-INSERT INTO `data_input_data` VALUES (1,32,'','');
-INSERT INTO `data_input_data` VALUES (1,33,'','');
-INSERT INTO `data_input_data` VALUES (1,34,'','');
-INSERT INTO `data_input_data` VALUES (1,58,'','');
-INSERT INTO `data_input_data` VALUES (1,59,'','');
-INSERT INTO `data_input_data` VALUES (1,68,'','');
-INSERT INTO `data_input_data` VALUES (2,4,'','');
-INSERT INTO `data_input_data` VALUES (2,5,'','');
-INSERT INTO `data_input_data` VALUES (2,6,'','');
-INSERT INTO `data_input_data` VALUES (2,19,'','');
-INSERT INTO `data_input_data` VALUES (2,20,'','');
-INSERT INTO `data_input_data` VALUES (2,22,'','');
-INSERT INTO `data_input_data` VALUES (2,23,'','');
-INSERT INTO `data_input_data` VALUES (2,24,'','');
-INSERT INTO `data_input_data` VALUES (2,25,'','');
-INSERT INTO `data_input_data` VALUES (2,26,'','');
-INSERT INTO `data_input_data` VALUES (2,27,'','');
-INSERT INTO `data_input_data` VALUES (2,30,'','');
-INSERT INTO `data_input_data` VALUES (2,31,'','');
-INSERT INTO `data_input_data` VALUES (2,32,'','');
-INSERT INTO `data_input_data` VALUES (2,33,'','');
-INSERT INTO `data_input_data` VALUES (2,34,'','');
-INSERT INTO `data_input_data` VALUES (2,58,'','');
-INSERT INTO `data_input_data` VALUES (2,59,'','');
-INSERT INTO `data_input_data` VALUES (2,68,'','');
-INSERT INTO `data_input_data` VALUES (3,4,'','');
-INSERT INTO `data_input_data` VALUES (3,5,'','');
-INSERT INTO `data_input_data` VALUES (3,6,'','');
-INSERT INTO `data_input_data` VALUES (3,19,'','');
-INSERT INTO `data_input_data` VALUES (3,20,'','');
-INSERT INTO `data_input_data` VALUES (3,22,'','');
-INSERT INTO `data_input_data` VALUES (3,23,'','');
-INSERT INTO `data_input_data` VALUES (3,24,'','');
-INSERT INTO `data_input_data` VALUES (3,25,'','');
-INSERT INTO `data_input_data` VALUES (3,26,'','');
-INSERT INTO `data_input_data` VALUES (3,27,'','');
-INSERT INTO `data_input_data` VALUES (3,30,'','');
+INSERT INTO `data_input_data` VALUES (1,4,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (1,5,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (1,6,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (1,19,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (1,20,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (1,22,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (1,23,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (1,24,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (1,25,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (1,26,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (1,27,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (1,30,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (1,31,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (1,32,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (1,33,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (1,34,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (1,58,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (1,59,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (1,68,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (2,4,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (2,5,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (2,6,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (2,19,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (2,20,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (2,22,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (2,23,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (2,24,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (2,25,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (2,26,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (2,27,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (2,30,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (2,31,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (2,32,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (2,33,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (2,34,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (2,58,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (2,59,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (2,68,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (3,4,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (3,5,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (3,6,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (3,19,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (3,20,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (3,22,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (3,23,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (3,24,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (3,25,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (3,26,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (3,27,0,0,0,'','');
+INSERT INTO `data_input_data` VALUES (3,30,0,0,0,'','');
 
 --
 -- Table structure for table `data_input_fields`
@@ -3316,3 +3316,19 @@ CREATE TABLE version (
 --
 
 INSERT INTO version VALUES ('new_install');
+
+--
+-- Update some columns as required
+--
+
+UPDATE data_input_data AS did
+INNER JOIN data_template_data AS dtd
+ON did.data_template_data_id = dtd.id
+SET did.local_data_id = dtd.local_data_id, did.data_template_id = dtd.data_template_id;
+
+UPDATE data_input_data AS did
+INNER JOIN data_template_data AS dtd
+ON did.data_template_data_id = dtd.id
+INNER JOIN data_local AS dl ON dl.id = dtd.local_data_id
+SET did.host_id = dl.host_id;
+

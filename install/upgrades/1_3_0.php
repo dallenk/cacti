@@ -56,16 +56,24 @@ function upgrade_to_1_3_0() {
 	db_install_execute("UPDATE graph_templates SET class='unspecified' WHERE class = ''");
 	db_install_execute("UPDATE graph_templates SET version = '" . CACTI_VERSION . "' WHERE version = ''");
 
-	db_install_add_column('data_input_data', array('name' => 'local_data_id', 'type' => 'int', 'unsigned' => true, 'NULL' => false, 'default' => '0', 'after' => 'data_template_data_id'));
+	db_install_add_column('data_input_data', array('name' => 'data_template_id', 'type' => 'int', 'unsigned' => true, 'NULL' => false, 'default' => '0', 'after' => 'data_template_data_id'));
+	db_install_add_column('data_input_data', array('name' => 'local_data_id', 'type' => 'int', 'unsigned' => true, 'NULL' => false, 'default' => '0', 'after' => 'data_template_id'));
 	db_install_add_column('data_input_data', array('name' => 'host_id', 'type' => 'int', 'unsigned' => true, 'NULL' => false, 'default' => '0', 'after' => 'local_data_id'));
 
+	db_add_index('data_input_data', 'INDEX', 'data_template_id', array('data_template_id'));
 	db_add_index('data_input_data', 'INDEX', 'local_data_id', array('local_data_id'));
 	db_add_index('data_input_data', 'INDEX', 'host_id', array('host_id'));
 
 	db_install_execute("UPDATE data_input_data AS did
 		INNER JOIN data_template_data AS dtd
 		ON did.data_template_data_id = dtd.id
-		SET did.local_data_id = dtd.local_data_id");
+		SET did.local_data_id = dtd.local_data_id, did.data_template_id = dtd.data_template_id");
+
+	db_install_execute("UPDATE data_input_data AS did
+		INNER JOIN data_template_data AS dtd
+		ON did.data_template_data_id = dtd.id
+		INNER JOIN data_local AS dl ON dl.id = dtd.local_data_id
+		SET did.host_id = dl.host_id");
 
 	/* temporary workaround till project finished */
 	db_install_execute("CREATE TABLE IF NOT EXISTS `plugin_available` (
