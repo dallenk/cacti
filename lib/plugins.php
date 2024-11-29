@@ -779,6 +779,14 @@ function api_plugin_uninstall_integrated() {
 	}
 }
 
+function api_plugin_hooks_found($plugin) {
+	return db_fetch_cell_prepared('SELECT COUNT(*) FROM plugin_hooks WHERE name = ?', array($plugin)) ? true:false;
+}
+
+function api_plugin_realms_found($plugin) {
+	return db_fetch_cell_prepared('SELECT COUNT(*) FROM plugin_realms WHERE plugin = ?', array($plugin)) ? true:false;
+}
+
 function api_plugin_uninstall($plugin, $tables = true) {
 	global $config;
 
@@ -797,8 +805,13 @@ function api_plugin_uninstall($plugin, $tables = true) {
 		}
 	}
 
-	api_plugin_remove_hooks($plugin);
-	api_plugin_remove_realms($plugin);
+	if (api_plugin_hooks_found($plugin)) {
+		api_plugin_remove_hooks($plugin);
+	}
+
+	if (api_plugin_realms_found($plugin)) {
+		api_plugin_remove_realms($plugin);
+	}
 
 	db_execute_prepared('DELETE FROM plugin_config
 		WHERE directory = ?',
