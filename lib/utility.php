@@ -940,6 +940,8 @@ function push_out_host($host_id, $local_data_id = 0, $data_template_id = 0) {
 	}
 
 	if (cacti_sizeof($hosts)) {
+		$poller_ids = array();
+
 		foreach($hosts as $host) {
 			if (isset($host['poller_id'])) {
 				$poller_ids[$host['poller_id']] = $host['poller_id'];
