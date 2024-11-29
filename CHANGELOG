@@ -124,6 +124,7 @@ Cacti CHANGELOG
 -feature#5920: Remove the use of tables for alignment on graphs page and move to flex alignment
 -feature#5922: Add HPE Nimble/Alletra template
 -feature#5923: If RRDtool crashes due to a segmentation fault, report that and retry a few times 
+-feature#5931: Make it easier to connect content in the table data_input_data to the host and data source
 -feature: Allow messages to be popup notifications
 -feature: Upgrade billboard.js to version 3.14.1
 -feature: Upgrade jQueryUI to 1.14.1

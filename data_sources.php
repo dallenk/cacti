@@ -156,7 +156,7 @@ function form_save() {
 
 		/* ok, first pull out all 'input' values so we know how much to save */
 		$input_fields = db_fetch_assoc_prepared("SELECT dtd.data_input_id, dl.host_id, dif.id, dif.input_output,
-			dif.data_name, dif.regexp_match, dif.allow_nulls, dif.type_code
+			dif.data_name, dif.regexp_match, dif.allow_nulls, dif.type_code, dtd.data_template_id, dl.id AS local_data_id
 			FROM data_template_data AS dtd
 			LEFT JOIN data_input_fields AS dif
 			ON dif.data_input_id = dtd.data_input_id
@@ -199,10 +199,17 @@ function form_save() {
 
 					if (!is_error_message()) {
 						db_execute_prepared("REPLACE INTO data_input_data
-							(data_input_field_id, data_template_data_id, t_value, value)
+							(data_input_field_id, data_template_data_id, data_template_id, local_data_id, host_id, t_value, value)
 							VALUES
-							(?, ?, '', ?)",
-							array($input_field['id'], get_request_var('data_template_data_id'), $form_value)
+							(?, ?, ?, ?, ?, '', ?)",
+							array(
+								$input_field['id'],
+								get_request_var('data_template_data_id'),
+								$input_field['data_template_id'],
+								$input_field['local_data_id'],
+								$input_field['host_id'],
+								$form_value
+							)
 						);
 					}
 				}

@@ -1197,6 +1197,9 @@ function xml_to_data_template($hash, &$xml_array, &$hash_cache, $import_as_new, 
 				unset($save);
 				$save['data_template_data_id'] = $data_template_data_id;
 				$save['data_input_field_id']   = resolve_hash_to_id($item_array['data_input_field_id'], $hash_cache, 'data_input_data');
+				$save['data_template_id']      = $data_template_id;
+				$save['local_data_id']         = 0;
+				$save['host_id']               = 0;
 
 				/**
 				 * fix legacy broken input fields for type_code (index_type, index_value, output_type) which

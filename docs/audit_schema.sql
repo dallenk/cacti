@@ -372,8 +372,10 @@ INSERT INTO `table_columns` VALUES ('data_input',6,'data_sources','int(10) unsig
 INSERT INTO `table_columns` VALUES ('data_input',7,'templates','int(10) unsigned','NO','','0','');
 INSERT INTO `table_columns` VALUES ('data_input_data',1,'data_input_field_id','mediumint(8) unsigned','NO','PRI','0','');
 INSERT INTO `table_columns` VALUES ('data_input_data',2,'data_template_data_id','int(10) unsigned','NO','PRI','0','');
-INSERT INTO `table_columns` VALUES ('data_input_data',3,'t_value','char(2)','YES','MUL',NULL,'');
-INSERT INTO `table_columns` VALUES ('data_input_data',4,'value','text','YES','',NULL,'');
+INSERT INTO `table_columns` VALUES ('data_input_data',3,'local_data_id','int(10) unsigned','NO','','0','');
+INSERT INTO `table_columns` VALUES ('data_input_data',4,'host_id','int(10) unsigned','NO','','0','');
+INSERT INTO `table_columns` VALUES ('data_input_data',5,'t_value','char(2)','YES','MUL',NULL,'');
+INSERT INTO `table_columns` VALUES ('data_input_data',6,'value','text','YES','',NULL,'');
 INSERT INTO `table_columns` VALUES ('data_input_fields',1,'id','mediumint(8) unsigned','NO','PRI',NULL,'auto_increment');
 INSERT INTO `table_columns` VALUES ('data_input_fields',2,'hash','varchar(32)','NO','','','');
 INSERT INTO `table_columns` VALUES ('data_input_fields',3,'data_input_id','mediumint(8) unsigned','NO','MUL','0','');
@@ -1263,6 +1265,8 @@ INSERT INTO `table_indexes` VALUES ('data_input',0,'PRIMARY',1,'id','A',12,NULL,
 INSERT INTO `table_indexes` VALUES ('data_input_data',1,'data_template_data_id',1,'data_template_data_id','A',50,NULL,NULL,'','BTREE','');
 INSERT INTO `table_indexes` VALUES ('data_input_data',0,'PRIMARY',1,'data_input_field_id','A',6,NULL,NULL,'','BTREE','');
 INSERT INTO `table_indexes` VALUES ('data_input_data',0,'PRIMARY',2,'data_template_data_id','A',50,NULL,NULL,'','BTREE','');
+INSERT INTO `table_indexes` VALUES ('data_input_data',1,'loca_data_id',1,'loca_data_id','A',2,NULL,NULL,'YES','BTREE','');
+INSERT INTO `table_indexes` VALUES ('data_input_data',1,'host_id',1,'host_id','A',2,NULL,NULL,'YES','BTREE','');
 INSERT INTO `table_indexes` VALUES ('data_input_data',1,'t_value',1,'t_value','A',2,NULL,NULL,'YES','BTREE','');
 INSERT INTO `table_indexes` VALUES ('data_input_fields',1,'data_input_id',1,'data_input_id','A',46,NULL,NULL,'','BTREE','');
 INSERT INTO `table_indexes` VALUES ('data_input_fields',1,'input_output',1,'input_output','A',4,NULL,NULL,'','BTREE','');

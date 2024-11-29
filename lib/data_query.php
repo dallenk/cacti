@@ -2516,18 +2516,18 @@ function update_snmp_index_order($local_data) {
 		/* only update data source index if there actually *is* an index returned from host_snmp_cache */
 		if (!empty($snmp_cache_value)) {
 			db_execute_prepared('REPLACE INTO data_input_data
-				(data_input_field_id, data_template_data_id, t_value, value)
+				(data_input_field_id, data_template_data_id, data_template_id, local_data_id, host_id, t_value, value)
 				VALUES
-				(?, ?, "", ?),
-				(?, ?, "", ?),
-				(?, ?, "", ?)',
+				(?, ?, ?, ?, ?, "", ?),
+				(?, ?, ?, ?, ?, "", ?),
+				(?, ?, ?, ?, ?, "", ?)',
 				array(
 					/* save the value to index on (ie. ifindex, ifip, etc) */
-					$data_input_field['index_type'], $local_data['data_template_data_id'], $local_data['snmp_index_on'],
+					$data_input_field['index_type'], $local_data['data_template_data_id'], $local_data['data_template_id'], $local_data['local_data_id'], $local_data['host_id'], $local_data['snmp_index_on'],
 					/* save the actual value (ie. 3, 192.168.1.101, etc) */
-					$data_input_field['index_value'], $local_data['data_template_data_id'], $snmp_cache_value,
+					$data_input_field['index_value'], $local_data['data_template_data_id'], $local_data['data_template_id'], $local_data['local_data_id'], $local_data['host_id'], $snmp_cache_value,
 					/* set the expected output type (ie. bytes, errors, packets) */
-					$data_input_field['output_type'], $local_data['data_template_data_id'], $local_data['snmp_query_graph_id']
+					$data_input_field['output_type'], $local_data['data_template_data_id'], $local_data['data_template_id'], $local_data['local_data_id'], $local_data['host_id'], $local_data['snmp_query_graph_id']
 				)
 			);
 		}

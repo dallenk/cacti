@@ -295,6 +295,10 @@ function data_template_to_xml($data_template_id) {
 			$xml_text .= "\t\t<item_" . str_pad(strval($i), 3, '0', STR_PAD_LEFT) . ">\n";
 
 			$xml_text .= "\t\t\t<data_input_field_id>hash_" . get_hash_version('data_input_field') . get_hash_data_input($item['data_input_field_id'], 'data_input_field') . "</data_input_field_id>\n";
+			$xml_text .= "\t\t\t<data_template_id>hash_" .  $hash['data_template'] . "</data_template_id>\n";
+			$xml_text .= "\t\t\t<local_data_id>0</local_data_id>\n";
+			$xml_text .= "\t\t\t<host_id>0</host_id>\n";
+
 			$xml_text .= "\t\t\t<t_value>" . xml_character_encode($item['t_value']) . "</t_value>\n";
 			$xml_text .= "\t\t\t<value>" . xml_character_encode($item['value']) . "</value>\n";
 

@@ -298,9 +298,18 @@ function form_save() {
 								}
 
 								db_execute_prepared('INSERT INTO data_input_data
-									(data_input_field_id, data_template_data_id, t_value, value)
-									VALUES (?, ?, ?, ?)',
-									array($input_field['id'], $data_template_data_id, $template_this_item, $value));
+									(data_input_field_id, data_template_data_id, data_template_id, local_data_id, host_id, t_value, value)
+									VALUES (?, ?, ?, ?, ?, ?, ?)',
+									array(
+										$input_field['id'],
+										$data_template_data_id,
+										$data_template_id,
+										0,
+										0,
+										$template_this_item,
+										$value
+									)
+								);
 							}
 						}
 					}

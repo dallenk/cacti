@@ -741,9 +741,18 @@ function api_duplicate_data_source($_local_data_id, $_data_template_id, $data_so
 	if (cacti_sizeof($data_input_datas)) {
 		foreach ($data_input_datas as $data_input_data) {
 			db_execute_prepared('INSERT IGNORE INTO data_input_data
-				(data_input_field_id, data_template_data_id, t_value, value)
+				(data_input_field_id, data_template_data_id, data_template_id, local_data_id, host_id, t_value, value)
 				VALUES (?, ?, ?, ?)',
-				array($data_input_data['data_input_field_id'], $data_template_data_id, $data_input_data['t_value'], $data_input_data['value']));
+				array(
+					$data_input_data['data_input_field_id'],
+					$data_template_data_id,
+					$data_input_data['data_template_id'],
+					$data_input_data['local_data_id'],
+					$data_input_data['host_id'],
+					$data_input_data['t_value'],
+					$data_input_data['value']
+				)
+			);
 		}
 	}
 

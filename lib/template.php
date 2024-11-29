@@ -95,7 +95,7 @@ function push_out_data_source_custom_data($data_template_id) {
 	 * so we will verify against the list of data_input_field id's taken from above
 	 */
 	$input_fields = db_fetch_assoc_prepared("SELECT dtd.id AS data_template_data_id,
-		dif.id, dif.type_code, did.value, did.t_value
+		dif.id, dif.type_code, did.value, did.t_value, did.data_template_id, did.local_data_id, did.host_id
 		FROM data_input_fields AS dif
 		INNER JOIN data_input_data AS did
 		ON dif.id = did.data_input_field_id
@@ -125,11 +125,28 @@ function push_out_data_source_custom_data($data_template_id) {
 						 */
 						if (!preg_match('/^' . VALID_HOST_FIELDS . '$/i', $input_field['type_code'])) {
 							/* this is not a 'host field', so we should either push out the value if it is templated */
-							$did_vals .= ($did_cnt == 0 ? '':',') . '(' . $input_field['id'] . ', ' . $data_source['id'] . ', ' . db_qstr($template_input_fields[$input_field['id']]['value']) . ')';
+							$did_vals .= ($did_cnt == 0 ? '':',') .
+								'(' .
+									$input_field['id']               . ', ' .
+									$data_source['id']               . ', ' .
+									$input_field['data_template_id'] . ', ' .
+									$input_field['local_data_id']    . ', ' .
+									$input_field['host_id']          . ', ' .
+									db_qstr($template_input_fields[$input_field['id']]['value']) .
+								')';
+
 							$did_cnt++;
 						} elseif ($template_input_fields[$input_field['id']]['value'] != $input_field['value']) {
 							/* templated input field deviates from current data source, so update required */
-							$did_vals .= ($did_cnt == 0 ? '':',') . '(' . $input_field['id'] . ', ' . $data_source['id'] . ', ' . db_qstr($template_input_fields[$input_field['id']]['value']) . ')';
+							$did_vals .= ($did_cnt == 0 ? '':',') .
+								'(' .
+									$input_field['id']               . ', ' .
+									$data_source['id']               . ', ' .
+									$input_field['data_template_id'] . ', ' .
+									$input_field['local_data_id']    . ', ' .
+									$input_field['host_id']          . ', ' .
+									db_qstr($template_input_fields[$input_field['id']]['value']) .
+								')';
 							$did_cnt++;
 						}
 					}
@@ -166,7 +183,7 @@ function push_out_data_source_templates($did_vals, $ds_in_str) {
 	/* update all templated input fields */
 	if ($did_vals != '') {
 		db_execute("INSERT INTO data_input_data
-			(data_input_field_id, data_template_data_id, value)
+			(data_input_field_id, data_template_data_id, data_template_id, local_data_id, host_id, value)
 			VALUES $did_vals
 			ON DUPLICATE KEY UPDATE value=VALUES(value)");
 	}
@@ -179,7 +196,10 @@ function push_out_data_source_item($data_template_rrd_id) {
 	global $struct_data_source_item;
 
 	/* get information about this data template */
-	$data_template_rrd = db_fetch_row_prepared('SELECT * FROM data_template_rrd WHERE id = ?', array($data_template_rrd_id));
+	$data_template_rrd = db_fetch_row_prepared('SELECT *
+		FROM data_template_rrd
+		WHERE id = ?',
+		array($data_template_rrd_id));
 
 	/* must be a data template */
 	if (empty($data_template_rrd['data_template_id'])) {
@@ -389,7 +409,7 @@ function change_data_template($local_data_id, $data_template_id, $profile = arra
 	}
 
 	/* make sure to copy down script data (data_input_data) as well */
-	$data_input_data = db_fetch_assoc_prepared('SELECT data_input_field_id, t_value, value
+	$data_input_data = db_fetch_assoc_prepared('SELECT *
 		FROM data_input_data
 		WHERE data_template_data_id = ?',
 		array($template_data['id']));
@@ -404,9 +424,18 @@ function change_data_template($local_data_id, $data_template_id, $profile = arra
 			 */
 			if ($new_save == true || (empty($item['t_value']) && !data_input_field_always_checked($item['data_input_field_id']))) {
 				db_execute_prepared('REPLACE INTO data_input_data
-					(data_input_field_id, data_template_data_id, t_value, value)
-					VALUES (?, ?, ?, ?)',
-					array($item['data_input_field_id'], $data_template_data_id, $item['t_value'], $item['value']));
+					(data_input_field_id, data_template_data_id, data_template_id, local_data_id, host_id, t_value, value)
+					VALUES (?, ?, ?, ?, ?, ?, ?)',
+					array(
+						$item['data_input_field_id'],
+						$data_template_data_id,
+						$item['data_template_id'],
+						$item['local_data_id'],
+						$item['host_id'],
+						$item['t_value'],
+						$item['value']
+					)
+				);
 			}
 		}
 	}
@@ -1733,24 +1762,51 @@ function create_complete_graph_from_template($graph_template_id, $host_id, $snmp
 									/* save the value to index on (ie. ifindex, ifip, etc) */
 									db_execute_prepared('REPLACE INTO data_input_data
 										(data_input_field_id, data_template_data_id, t_value, value)
-										VALUES (?, ?, ?, ?)',
-										array($id, $data_template_data_id, $checked, $snmp_query_array['snmp_index_on']));
+										VALUES (?, ?, ?, ?, ?, ?, ?)',
+										array(
+											$id,
+											$data_template_data_id,
+											$data_template['id'],
+											$cache_array['local_data_id'],
+											$host_id,
+											$checked,
+											$snmp_query_array['snmp_index_on']
+										)
+									);
 
 									break;
 								case 'index_value':
 									/* save the actual value (ie. 3, 192.168.1.101, etc) */
 									db_execute_prepared('REPLACE INTO data_input_data
 										(data_input_field_id, data_template_data_id, t_value, value)
-										VALUES (?, ?, ?, ?)',
-										array($id, $data_template_data_id, $checked, $snmp_cache_value));
+										VALUES (?, ?, ?, ?, ?, ?, ?)',
+										array(
+											$id,
+											$data_template_data_id,
+											$data_template['id'],
+											$cache_array['local_data_id'],
+											$host_id,
+											$checked,
+											$snmp_cache_value
+										)
+									);
 
 									break;
 								case 'output_type':
 									/* set the expected output type (ie. bytes, errors, packets) */
 									db_execute_prepared('REPLACE INTO data_input_data
 										(data_input_field_id, data_template_data_id, t_value, value)
-										VALUES (?, ?, ?, ?)',
-										array($id, $data_template_data_id, $checked, $snmp_query_array['snmp_query_graph_id']));
+										VALUES (?, ?, ?, ?, ?, ?, ?)',
+										array(
+											$id,
+											$data_template_data_id,
+											$data_template['id'],
+											$cache_array['local_data_id'],
+											$host_id,
+											$checked,
+											$snmp_query_array['snmp_query_graph_id']
+										)
+									);
 
 									break;
 							}
@@ -1795,9 +1851,17 @@ function create_complete_graph_from_template($graph_template_id, $host_id, $snmp
 				if (isset($suggested_vals[$graph_template_id]['custom_data'][$data_template['id']])) {
 					foreach ($suggested_vals[$graph_template_id]['custom_data'][$data_template['id']] as $data_input_field_id => $field_value) {
 						db_execute_prepared('REPLACE INTO data_input_data
-							(data_input_field_id, data_template_data_id, t_value, value)
-							VALUES (?, ?, "", ?)',
-							array($data_input_field_id, $data_template_data_id, $field_value));
+							(data_input_field_id, data_template_data_id, data_template_id, local_data_id, host_id, t_value, value)
+							VALUES (?, ?, ?, ?, ?, "", ?)',
+							array(
+								$data_input_field_id,
+								$data_template_data_id,
+								$data_template_id['id'],
+								$cache_array['local_data_id'],
+								$host_id,
+								$field_value
+							)
+						);
 					}
 				}
 

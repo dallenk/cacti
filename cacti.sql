@@ -1149,11 +1149,17 @@ INSERT INTO data_input VALUES (12,'332111d8b54ac8ce939af87a7eac0c06','Get Script
 CREATE TABLE data_input_data (
   data_input_field_id mediumint(8) unsigned NOT NULL default '0',
   data_template_data_id int(10) unsigned NOT NULL default '0',
+  data_template_id int(10) unsigned NOT NULL default '0',
+  local_data_id int(10) unsigned NOT NULL default '0',
+  host_id int(10) unsigned NOT NULL default '0',
   t_value char(2) default NULL,
   value text,
   PRIMARY KEY (data_input_field_id,data_template_data_id),
   KEY data_template_data_id (data_template_data_id),
-  KEY t_value (t_value)
+  KEY t_value (t_value),
+  KEY data_template_id (data_template_id),
+  KEY local_data_id (local_data_id),
+  KEY host_id (host_id)
 ) ENGINE=InnoDB ROW_FORMAT=Dynamic;
 
 --
