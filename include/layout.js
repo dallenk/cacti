@@ -855,13 +855,6 @@ function applySkin() {
 
 	$('#messageContainer').remove();
 
-	/**
- 	 * Destroy all tooltips on a page after refresh
- 	 */
-	$('.ui-helper-hidden-accessible').each(function() {
-		$(this).remove();
-	});
-
 	/* Replace icons */
 	$('.fa-arrow-down').addClass('fa-chevron-down').removeClass('fa-arrow-down');
 	$('.fa-arrow-up').addClass('fa-chevron-up').removeClass('fa-arrow-up');
