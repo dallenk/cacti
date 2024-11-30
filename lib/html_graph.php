@@ -119,7 +119,7 @@ function html_graph_validate_preview_request_vars() {
 		'location' => array(
 			'filter'  => FILTER_DEFAULT,
 			'pageset' => true,
-			'default' => '0'
+			'default' => '-1'
 		),
 		'graph_template_id' => array(
 			'filter'  => FILTER_VALIDATE_IS_NUMERIC_LIST,
