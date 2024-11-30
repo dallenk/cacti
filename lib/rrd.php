@@ -1649,7 +1649,7 @@ function rrdtool_function_graph($local_graph_id, $rra_id, $graph_data_array, $rr
 		gti.cdef_id, gti.vdef_id, gti.text_format, gti.value, gti.hard_return,
 		gti.consolidation_function_id, gti.graph_type_id, gtgp.gprint_text,
 		colors.hex, gti.alpha, gti.line_width, gti.dashes, gti.shift,
-		gti.dash_offset, gti.textalign, dl.snmp_query_id, dl.snmp_index,
+		gti.dash_offset, gti.textalign, dl.snmp_query_id, dl.snmp_index, gti.legend,
 		dtr.id AS data_template_rrd_id, dtr.local_data_id,
 		dtr.rrd_minimum, dtr.rrd_maximum, dtr.data_source_name, dtr.local_data_template_rrd_id
 		FROM graph_templates_item AS gti
@@ -1821,7 +1821,11 @@ function rrdtool_function_graph($local_graph_id, $rra_id, $graph_data_array, $rr
 
 					$cf_ds_cache[$graph_item['data_template_rrd_id']][$graph_cf] = "$i";
 
-					$legends[$graph_item['local_data_id']][$graph_item['data_source_name']][$consolidation_functions[$graph_cf]] = $graph_item['data_source_name'] . ' (' . $consolidation_functions[$graph_cf] . ')';
+					if ($graph_item['legend'] == '') {
+						$legends[$graph_item['local_data_id']][$graph_item['data_source_name']][$consolidation_functions[$graph_cf]] = ucwords(str_replace('_', ' ', $graph_item['data_source_name'])) . ' (' . $consolidation_functions[$graph_cf] . ')';
+					} else {
+						$legends[$graph_item['local_data_id']][$graph_item['data_source_name']][$consolidation_functions[$graph_cf]] = $graph_item['legend'];
+					}
 
 					$i++;
 				}
