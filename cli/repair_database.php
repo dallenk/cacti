@@ -112,9 +112,11 @@ if (cacti_sizeof($repaired_hosts) && $total_repairs > 0) {
 			WHERE id = ?',
 			array($host_id));
 
-		printf('NOTE: Pushing out Device %s (%s) after repair!' . PHP_EOL, $h['description'], $h['hostname']);
+		if (cacti_sizeof($h)) {
+			printf('NOTE: Pushing out Device %s (%s) after repair!' . PHP_EOL, $h['description'], $h['hostname']);
 
-		push_out_host($host_id);
+			push_out_host($host_id);
+		}
 	}
 }
 
@@ -354,6 +356,28 @@ function simple_checks() {
 		printf('NOTE: Found and removed %s orphaned Poller Items.' . PHP_EOL, $fixes);
 	} else {
 		printf('NOTE: Found 0 problems with orphaned Poller Items.' . PHP_EOL);
+	}
+
+	if (db_column_exists('data_input_data', 'local_data_id')) {
+		printf('NOTE: Deleting Invalid Data Input Data rows due to incorrect Data Input Field Mappings' . PHP_EOL);
+
+		db_execute('DELETE did
+			FROM data_input_data AS did
+			INNER JOIN data_template_data AS dtd
+			ON dtd.local_data_id = did.local_data_id
+			AND did.local_data_id > 0
+			AND data_input_field_id NOT IN (SELECT id FROM data_input_fields WHERE data_input_id = dtd.data_input_id)');
+
+		$fixes = db_affected_rows();
+
+		$total_repairs += $fixes;
+		$total_errors  += $fixes;
+
+		if ($fixes) {
+			printf('NOTE: Found and removed %s Invalid Data Input Data rows.' . PHP_EOL, $fixes);
+		} else {
+			printf('NOTE: Found 0 problems with Invalid Data Input Data rows.' . PHP_EOL);
+		}
 	}
 }
 
