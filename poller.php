@@ -449,14 +449,24 @@ if (cacti_sizeof($totals)) {
 	}
 }
 
+$devices = db_fetch_cell_prepared('SELECT COUNT(DISTINCT host_id)
+	FROM poller_item
+	WHERE pi.poller_id = ?',
+	array($poller_id));
+
 /**
  * Update poller data source statistics in the poller table
  */
-db_execute_prepared('INSERT INTO poller (id, snmp, script, server, last_status, status)
-	VALUES (?, ?, ?, ?, NOW(), 1)
-	ON DUPLICATE KEY UPDATE snmp=VALUES(snmp), script=VALUES(script),
-	server=VALUES(server), last_status=VALUES(last_status), status=VALUES(status)',
-	array($poller_id, $snmp, $script, $server), true, $poller_db_cnn_id);
+db_execute_prepared('INSERT INTO poller (id, devices, snmp, script, server, last_status, status)
+	VALUES (?, ?, ?, ?, ?, NOW(), 1)
+	ON DUPLICATE KEY UPDATE
+		devices=VALUES(devices),
+		snmp=VALUES(snmp),
+		script=VALUES(script),
+		server=VALUES(server),
+		last_status=VALUES(last_status),
+		status=VALUES(status)',
+	array($poller_id, $devices, $snmp, $script, $server), true, $poller_db_cnn_id);
 
 /**
  * Freshen the field mappings in cases where they
@@ -690,7 +700,7 @@ while ($poller_runs_completed < $poller_runs) {
 		}
 
 		/* Populate each execution file with appropriate information */
-		if ($total_polling_hosts) {
+		if ($total_polling_hosts > 0) {
 			foreach ($polling_hosts as $item) {
 				if ($host_count == 1) {
 					$first_host = $item['id'];
@@ -755,7 +765,7 @@ while ($poller_runs_completed < $poller_runs) {
 			$poller_finishing_dispatched = false;
 
 			while (true) {
-				$finished_processes = db_fetch_cell_prepared('SELECT ' . SQL_NO_CACHE . " count(*)
+				$finished_processes = db_fetch_cell_prepared('SELECT ' . SQL_NO_CACHE . " COUNT(*)
 					FROM poller_time
 					WHERE poller_id = ?
 					AND end_time >'0000-00-00 00:00:00'",
@@ -820,13 +830,19 @@ while ($poller_runs_completed < $poller_runs) {
 				rrd_close($rrdtool_pipe);
 			}
 		} else {
-			// Mark the poller done immediately due to lack of devices
-			$start_end = date('Y-m-d H:i:s');
+			if ($poller_id > 1) {
+				log_cacti_stats($loop_start, $method, $concurrent_processes, $max_threads,
+					($poller_id == '1' ? $total_polling_hosts - 1 : $total_polling_hosts), $hosts_per_process, $num_polling_items, $rrds_processed);
+				poller_run_stats($loop_start);
 
-			db_execute_prepared('INSERT INTO poller_time
-				(pid, poller_id, start_time, end_time)
-				VALUES (?, ?, ?, ?)',
-				array(9999, $poller_id, $start_end, $start_end));
+				// Mark the poller done immediately due to lack of devices
+				$start_end = date('Y-m-d H:i:s');
+
+				db_execute_prepared('INSERT INTO poller_time
+					(pid, poller_id, start_time, end_time)
+					VALUES (?, ?, ?, ?)',
+					array(rand(), $poller_id, $start_end, $start_end), true, $poller_db_cnn_id);
+			}
 		}
 
 		// process poller commands
