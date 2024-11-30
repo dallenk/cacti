@@ -583,8 +583,7 @@ while ($poller_runs_completed < $poller_runs) {
 	$issues_check = ($poller_id == 1 || $config['connection'] == 'online');
 	$issues_param = array( $current_time, $poller_id, $poller_id );
 
-	$issues_sql = '
-		FROM poller_output AS po
+	$issues_sql = ' FROM poller_output AS po
 		LEFT JOIN data_local AS dl
 		ON po.local_data_id = dl.id
 		LEFT JOIN host AS h
@@ -600,7 +599,7 @@ while ($poller_runs_completed < $poller_runs) {
 	}
 
 	if (cacti_sizeof($issues)) {
-		$count  = db_fetch_cell_prepared('SELECT ' . SQL_NO_CACHE . '
+		$count = db_fetch_cell_prepared('SELECT ' . SQL_NO_CACHE . '
 			COUNT(*)' . $issues_sql,
 			$issues_param);
 
@@ -820,8 +819,15 @@ while ($poller_runs_completed < $poller_runs) {
 			if ($poller_id == 1) {
 				rrd_close($rrdtool_pipe);
 			}
-		}
+		} else {
+			// Mark the poller done immediately due to lack of devices
+			$start_end = date('Y-m-d H:i:s');
 
+			db_execute_prepared('INSERT INTO poller_time
+				(pid, poller_id, start_time, end_time)
+				VALUES (?, ?, ?, ?)',
+				array(9999, $poller_id, $start_end, $start_end));
+		}
 
 		// process poller commands
 		$commands = db_fetch_cell_prepared('SELECT ' . SQL_NO_CACHE . ' COUNT(*)
