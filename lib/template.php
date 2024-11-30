@@ -1761,13 +1761,13 @@ function create_complete_graph_from_template($graph_template_id, $host_id, $snmp
 								case 'index_type':
 									/* save the value to index on (ie. ifindex, ifip, etc) */
 									db_execute_prepared('REPLACE INTO data_input_data
-										(data_input_field_id, data_template_data_id, t_value, value)
+										(data_input_field_id, data_template_data_id, data_template_id, local_data_id, host_id, t_value, value)
 										VALUES (?, ?, ?, ?, ?, ?, ?)',
 										array(
 											$id,
 											$data_template_data_id,
 											$data_template['id'],
-											$cache_array['local_data_id'],
+											$cache_array['local_data_id'][$data_template['id']],
 											$host_id,
 											$checked,
 											$snmp_query_array['snmp_index_on']
@@ -1778,13 +1778,13 @@ function create_complete_graph_from_template($graph_template_id, $host_id, $snmp
 								case 'index_value':
 									/* save the actual value (ie. 3, 192.168.1.101, etc) */
 									db_execute_prepared('REPLACE INTO data_input_data
-										(data_input_field_id, data_template_data_id, t_value, value)
+										(data_input_field_id, data_template_data_id, data_template_id, local_data_id, host_id, t_value, value)
 										VALUES (?, ?, ?, ?, ?, ?, ?)',
 										array(
 											$id,
 											$data_template_data_id,
 											$data_template['id'],
-											$cache_array['local_data_id'],
+											$cache_array['local_data_id'][$data_template['id']],
 											$host_id,
 											$checked,
 											$snmp_cache_value
@@ -1795,13 +1795,13 @@ function create_complete_graph_from_template($graph_template_id, $host_id, $snmp
 								case 'output_type':
 									/* set the expected output type (ie. bytes, errors, packets) */
 									db_execute_prepared('REPLACE INTO data_input_data
-										(data_input_field_id, data_template_data_id, t_value, value)
+										(data_input_field_id, data_template_data_id, data_template_id, local_data_id, host_id, t_value, value)
 										VALUES (?, ?, ?, ?, ?, ?, ?)',
 										array(
 											$id,
 											$data_template_data_id,
 											$data_template['id'],
-											$cache_array['local_data_id'],
+											$cache_array['local_data_id'][$data_template['id']],
 											$host_id,
 											$checked,
 											$snmp_query_array['snmp_query_graph_id']
@@ -1857,7 +1857,7 @@ function create_complete_graph_from_template($graph_template_id, $host_id, $snmp
 								$data_input_field_id,
 								$data_template_data_id,
 								$data_template_id['id'],
-								$cache_array['local_data_id'],
+								$cache_array['local_data_id'][$data_template['id']],
 								$host_id,
 								$field_value
 							)
