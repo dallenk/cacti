@@ -259,6 +259,11 @@ if ($output !== false && $output != '' && strpos($output, 'image = ') !== false)
 		}
 	}
 
+	$replacement_legend = rrdtool_replacement_legend(get_request_var('local_graph_id'));
+
+	if (cacti_sizeof($replacement_legend) && isset($oarray['meta']['legend'])) {
+		$oarray['meta']['legend'] = $replacement_legend;
+	}
 } else {
 	/* image type now png */
 	$oarray['type'] = 'png';

@@ -4189,6 +4189,54 @@ function rrd_copy_rra($dom, $cf, $rra_parm) {
 	return $dom;
 }
 
+function rrdtool_replacement_legend($local_graph_id) {
+	$graph_data = db_fetch_assoc_prepared('SELECT gti.legend, dtr.data_source_name, gti.consolidation_function_id, c.hex, gti.alpha
+		FROM graph_templates_item AS gti
+		INNER JOIN data_template_rrd AS dtr
+		ON gti.task_item_id = dtr.id
+		LEFT JOIN colors AS c
+		ON gti.color_id = c.id
+		WHERE gti.local_graph_id = ?
+		AND graph_type_id IN (7,8,2,4,5,6,20)
+		ORDER BY gti.sequence',
+		array($local_graph_id));
+
+	$legend = array();
+
+	if (cacti_sizeof($graph_data)) {
+		foreach($graph_data as $g) {
+			if ($g['legend'] != '') {
+				$legend[] = array('legend' => $g['legend'], 'color' => '#' . $g['hex'] . $g['alpha']);
+			} else {
+				if ($g['data_source_name'] == '') {
+					$g['data_source_name'] = 'Unknown';
+				}
+
+				$g['data_source_name'] = ucwords(str_replace('_', ' ', $g['data_source_name']));
+
+				switch($g['consolidation_function_id']) {
+					case 1:
+						$g['data_source_name'] .= ' (AVG)';
+						break;
+					case 2:
+						$g['data_source_name'] .= ' (MIN)';
+						break;
+					case 3:
+						$g['data_source_name'] .= ' (MAX)';
+						break;
+					case 4:
+						$g['data_source_name'] .= ' (LAST)';
+						break;
+				}
+
+				$legend[] = array('legend' => $g['data_source_name'], 'color' => '#' . $g['hex'] . $g['alpha']);
+			}
+		}
+	}
+
+	return $legend;
+}
+
 function rrdtool_parse_error($string) {
 	global $config;
 
