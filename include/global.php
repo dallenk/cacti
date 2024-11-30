@@ -472,7 +472,11 @@ if ($config['poller_id'] > 1) {
 			WHERE id = ?',
 			array($config['poller_id']));
 
-		define('POLLER_LOG_LEVEL', $poller_log_level);
+		if ($poller_log_level > 0) {
+			define('POLLER_LOG_LEVEL', $poller_log_level);
+		} else {
+			define('POLLER_LOG_LEVEL', '-1');
+		}
 	} else {
 		define('POLLER_LOG_LEVEL', '-1');
 	}
