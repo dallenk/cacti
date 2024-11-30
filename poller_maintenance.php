@@ -126,7 +126,9 @@ logrotate_check($force);
 remove_aged_row_cache();
 
 // Update Object Totals Caches
-update_graphs_data_source_templates_totals($force);
+if ($config['poller_id'] == 1) {
+	update_graphs_data_source_templates_totals($force);
+}
 
 // Remove expired host value cache
 purge_host_value_cache();

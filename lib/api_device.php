@@ -937,8 +937,6 @@ function api_device_replicate_out($device_id, $poller_id = 1) {
 		replicate_table_to_poller($rcnn_id, $data, 'data_input_data', $poller_id);
 	}
 
-	api_plugin_hook_function('replicate_out', $poller_id);
-
 	$stats = db_fetch_row_prepared('SELECT
 		SUM(CASE WHEN action=0 THEN 1 ELSE 0 END) AS snmp,
 		SUM(CASE WHEN action=1 THEN 1 ELSE 0 END) AS script,
