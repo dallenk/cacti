@@ -491,8 +491,6 @@ function display_settings() {
 			// Need to set this for global snmpv3 functions to remain sane between edits
 			snmp_security_initialized = false;
 
-			setSNMP();
-
 			$('#snmp_version, #snmp_auth_protocol, #snmp_priv_protocol, #snmp_security_level').change(function() {
 				setSNMP();
 			});
@@ -501,6 +499,8 @@ function display_settings() {
 			$('#availability_method').change(function() {
 				initAvail();
 			});
+
+			setSNMP();
 		} else if (currentTab == 'authentication') {
 			initAuth();
 			initSearch();
@@ -630,8 +630,12 @@ function display_settings() {
 						$('#form_settings').find('#row_'+index).show();
 					}
 
+					var stripe = 'odd';
+
 					for (index of data.rows) {
-						$('#form_settings').find('#row_'+index).show();
+						$('#form_settings').find('#row_'+index).show().removeClass('odd').removeClass('even').addClass(stripe);
+
+						stripe = (stripe == 'odd' ? 'even':'odd');
 					}
 				} else {
 					$('#settings').find('nav').show();

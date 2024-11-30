@@ -5286,14 +5286,41 @@ function formValidate(formId, href) {
 }
 
 function toggleFields(fields, prefix = '#row_') {
+	var parents    = [];
+	var lastParent = '-1';
+	var curParent  = '';
+
 	Object.keys(fields).forEach(index => {
+		curParent = $(prefix + index).parent().attr('id');
+
+		if (typeof curParent != 'undefined' && curParent != lastParent) {
+			parents.push(curParent);
+		}
+
 		var value = fields[index];
+
 		if (value) {
 			$(prefix + index).show();
 		} else {
 			$(prefix + index).hide();
 		}
+
+		if (typeof curParent != 'undefined') {
+			lastParent = curParent;
+		}
 	});
+
+
+	parents.forEach(myParent => {
+		var stripe = 'odd';
+
+		$('#'+myParent+' > div.formRow').each(function () {
+			if ($(this).is(':visible')) {
+				$(this).removeClass('odd').removeClass('even').addClass(stripe);
+				stripe = (stripe == 'odd' ? 'even':'odd');
+			}
+		});
+	})
 }
 
 function executeFunctionByName(functionName, context /*, args */) {
