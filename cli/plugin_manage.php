@@ -170,7 +170,7 @@ if (cacti_sizeof($plugins)) {
 			if ($installed && $allperms) {
 				plugin_manage_install_allrealms($plugin);
 			}
-		} elseif ($uninstall || $disable) {
+		} elseif ($uninstall || $disable || $enable) {
 			if ($disable) {
 				print "NOTE: Disabling Plugin $plugin." . PHP_EOL;
 				api_plugin_disable($plugin);
@@ -179,6 +179,11 @@ if (cacti_sizeof($plugins)) {
 			if ($uninstall) {
 				print "NOTE: Uninstalling Plugin $plugin." . PHP_EOL;
 				api_plugin_uninstall($plugin);
+			}
+
+			if ($enable) {
+				print "NOTE: Enabling Plugin $plugin." . PHP_EOL;
+				api_plugin_enable($plugin);
 			}
 		}
 	}

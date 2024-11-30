@@ -146,6 +146,7 @@ Cacti CHANGELOG
 -issue#5870: CLI utility splice_rrd.php generates an error in PHP8+
 -issue#5874: IPV6 address colon format causes the snmp query to not work
 -issue#5884: Fix Fortigate and Aruba OSCX switch template, improve Clearpass template
+-issue#5927: Unable to re-enable a plugin using plugin_manage.php
 -issue#5932: When upgrading Cacti, the replicate_out() process runs repeatedly
 -feature#5921: Add HPE Nimble/Alletra template
 -feature#5933: Only attempt to change the table type and character encoding for built-in Cacti tables
