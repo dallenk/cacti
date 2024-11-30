@@ -450,7 +450,7 @@ if (cacti_sizeof($totals)) {
 }
 
 $devices = db_fetch_cell_prepared('SELECT COUNT(DISTINCT host_id)
-	FROM poller_item
+	FROM poller_item AS pi
 	WHERE pi.poller_id = ?',
 	array($poller_id));
 
