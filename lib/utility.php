@@ -926,9 +926,9 @@ function push_out_host($host_id, $local_data_id = 0, $data_template_id = 0) {
 								array(
 									$template_field['id'],
 									$data_source['id'],
-									$data_template_id,
-									$local_data_id,
-									$host_id,
+									$data_source['data_template_id'],
+									$data_source['local_data_id'],
+									$data_source['host_id'],
 									$host[$field]
 								)
 							);
