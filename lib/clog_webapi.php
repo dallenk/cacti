@@ -146,6 +146,10 @@ function clog_view_logfile() {
 			'filter'  => FILTER_VALIDATE_INT,
 			'default' => read_config_option('log_refresh_interval')
 		),
+		'expand' => array(
+			'filter'  => FILTER_VALIDATE_INT,
+			'default' => '0'
+		),
 		'reverse' => array(
 			'filter'  => FILTER_VALIDATE_INT,
 			'default' => '1'
@@ -247,7 +251,14 @@ function clog_view_logfile() {
 	/* read logfile into an array and display */
 	$total_rows      = 0;
 	$number_of_lines = get_request_var('tail_lines') < 0 ? read_config_option('max_display_rows') : get_request_var('tail_lines');
-	$should_expand   = read_config_option('log_expand') != LOG_EXPAND_NONE;
+
+	if (get_request_var('expand') == 2) {
+		$should_expand = false;
+	} elseif (get_request_var('expand') == 1) {
+		$should_expand = true;
+	} else {
+		$should_expand = read_config_option('log_expand') != LOG_EXPAND_NONE;
+	}
 
 	$logcontents = tail_file($logfile, $number_of_lines, get_request_var('message_type'), get_request_var('rfilter'), $page_nr, $total_rows, get_request_var('matches'), $should_expand);
 
@@ -491,26 +502,26 @@ function filter($clogAdmin, $selectedFile) {
 					</td>
 					<td>
 						<select id='filename' data-defaultLabel='<?php print __('File');?>'>
-						<?php
-						$logFileArray = clog_get_logfiles();
+							<?php
+							$logFileArray = clog_get_logfiles();
 
-	if (cacti_sizeof($logFileArray)) {
-		foreach ($logFileArray as $logFile) {
-			print "<option value='" . $logFile . "'";
+							if (cacti_sizeof($logFileArray)) {
+								foreach ($logFileArray as $logFile) {
+									print "<option value='" . $logFile . "'";
 
-			if ($selectedFile == $logFile) {
-				print ' selected';
-			}
+									if ($selectedFile == $logFile) {
+										print ' selected';
+									}
 
-			$logParts = explode('-', $logFile);
+									$logParts = explode('-', $logFile);
 
-			$logDate = cacti_count($logParts) < 2 ? '' : $logParts[1] . (isset($logParts[2]) ? '-' . $logParts[2]:'');
-			$logName = $logParts[0];
+									$logDate = cacti_count($logParts) < 2 ? '' : $logParts[1] . (isset($logParts[2]) ? '-' . $logParts[2]:'');
+									$logName = $logParts[0];
 
-			print '>' . $logName . ($logDate != '' ? ' [' . substr($logDate,4) . ']':'') . "</option>\n";
-		}
-	}
-	?>
+									print '>' . $logName . ($logDate != '' ? ' [' . substr($logDate,4) . ']':'') . "</option>\n";
+								}
+							}
+							?>
 						</select>
 					</td>
 					<td>
@@ -519,22 +530,27 @@ function filter($clogAdmin, $selectedFile) {
 					<td>
 						<select id='tail_lines' data-defaultLabel='<?php print(get_request_var('reverse') == 1 ? __('Tail Lines'):__('Head Lines'));?>'>
 							<?php
-		foreach ($log_tail_lines as $tail_lines => $display_text) {
-			print "<option value='" . $tail_lines . "'";
-
-			if (get_request_var('tail_lines') == $tail_lines) {
-				print ' selected';
-			}
-			print '>' . $display_text . "</option>\n";
-		}
-	?>
+							foreach ($log_tail_lines as $tail_lines => $display_text) {
+								print "<option value='" . $tail_lines . "'" . (get_request_var('tail_lines') == $tail_lines ? ' selected':'') . '>' . $display_text . '</option>';
+							}
+						?>
+						</select>
+					</td>
+					<td>
+						<?php print __('Expand Log');?>
+					</td>
+					<td>
+						<select id='expand' data-defaultLabel='<?php print __('Expand');?>'>
+							<option value='0'<?php if (get_request_var('expand') == '0') {?> selected<?php }?>><?php print __('System Default');?></option>
+							<option value='1'<?php if (get_request_var('expand') == '1') {?> selected<?php }?>><?php print __('Expand Log');?></option>
+							<option value='2'<?php if (get_request_var('expand') == '2') {?> selected<?php }?>><?php print __('Raw Log');?></option>
 						</select>
 					</td>
 					<td>
 						<span>
 							<input type='submit' class='ui-button ui-corner-all ui-widget' id='go' value='<?php print __esc('Go');?>'>
 							<input type='button' class='ui-button ui-corner-all ui-widget' id='clear' value='<?php print __esc('Clear');?>'>
-						<?php if ($clogAdmin) {?><input type='button' class='ui-button ui-corner-all ui-widget' id='purge' value='<?php print __esc('Purge');?>'><?php }?>
+							<?php if ($clogAdmin) {?><input type='button' class='ui-button ui-corner-all ui-widget' id='purge' value='<?php print __esc('Purge');?>'><?php }?>
 						</span>
 					</td>
 				</tr>
@@ -547,35 +563,30 @@ function filter($clogAdmin, $selectedFile) {
 					<td>
 						<select id='message_type' data-defaultLabel='<?php print __('Type');?>'>
 							<?php
-	$message_types = array(
-		'-1' => __('All'),
-		'1'  => __('Stats'),
-		'2'  => __('Warnings'),
-		'3'  => __('Warnings++'),
-		'4'  => __('Errors'),
-		'5'  => __('Errors++'),
-		'6'  => __('Debug'),
-		'7'  => __('SQL Calls'),
-		'8'  => __('AutoM8'),
-		'9'  => __('Non Stats'),
-		'10' => __('Boost'),
-		'11' => __('Device Up/Down'),
-		'12' => __('Recaches'),
-	);
+							$message_types = array(
+								'-1' => __('All'),
+								'1'  => __('Stats'),
+								'2'  => __('Warnings'),
+								'3'  => __('Warnings++'),
+								'4'  => __('Errors'),
+								'5'  => __('Errors++'),
+								'6'  => __('Debug'),
+								'7'  => __('SQL Calls'),
+								'8'  => __('AutoM8'),
+								'9'  => __('Non Stats'),
+								'10' => __('Boost'),
+								'11' => __('Device Up/Down'),
+								'12' => __('Recaches'),
+							);
 
-	if (api_plugin_is_enabled('thold')) {
-		$message_types['99'] = __('Threshold');
-	}
+							if (api_plugin_is_enabled('thold')) {
+								$message_types['99'] = __('Threshold');
+							}
 
-	foreach ($message_types as $index => $type) {
-		print "<option value='" . $index . "'";
-
-		if (get_request_var('message_type') == $index) {
-			print ' selected';
-		}
-		print '>' . $type . '</option>';
-	}
-	?>
+							foreach ($message_types as $index => $type) {
+								print "<option value='" . $index . "'" . (get_request_var('message_type') == $index ? ' selected':'') . '>' . $type . '</option>';
+							}
+							?>
 						</select>
 					</td>
 					<td>
@@ -593,15 +604,10 @@ function filter($clogAdmin, $selectedFile) {
 					<td>
 						<select id='refresh' data-defaultLabel='<?php print __('Refresh');?>'>
 							<?php
-	foreach ($page_refresh_interval as $seconds => $display_text) {
-		print "<option value='" . $seconds . "'";
-
-		if (get_request_var('refresh') == $seconds) {
-			print ' selected';
-		}
-		print '>' . $display_text . '</option>';
-	}
-	?>
+							foreach ($page_refresh_interval as $seconds => $display_text) {
+								print "<option value='" . $seconds . "'" . (get_request_var('refresh') == $seconds ? ' selected':'') . '>' . $display_text . '</option>';
+							}
+							?>
 						</select>
 					</td>
 				</tr>
@@ -626,7 +632,7 @@ function filter($clogAdmin, $selectedFile) {
 		<script type='text/javascript'>
 
 		$(function() {
-			$('#rfilter, #reverse, #refresh, #message_type, #filename, #tail_lines, #matches').unbind().change(function() {
+			$('#rfilter, #reverse, #refresh, #message_type, #filename, #tail_lines, #expand, #matches').unbind().change(function() {
 				applyFilter();
 			});
 
@@ -653,6 +659,7 @@ function filter($clogAdmin, $selectedFile) {
 				'?rfilter=' + base64_encode($('#rfilter').val())+
 				'&reverse='+$('#reverse').val()+
 				'&refresh='+$('#refresh').val()+
+				'&expand='+$('#expand').val()+
 				'&matches='+$('#matches').val()+
 				'&message_type='+$('#message_type').val()+
 				'&tail_lines='+$('#tail_lines').val()+
