@@ -921,9 +921,17 @@ function push_out_host($host_id, $local_data_id = 0, $data_template_id = 0) {
 							}
 
 							db_execute_prepared('REPLACE INTO data_input_data
-								(data_input_field_id, data_template_data_id, value)
-								VALUES (?, ?, ?)',
-								array($template_field['id'], $data_source['id'], $host[$field]));
+								(data_input_field_id, data_template_data_id, data_template_id, local_data_id, host_id, value)
+								VALUES (?, ?, ?, ?, ?, ?)',
+								array(
+									$template_field['id'],
+									$data_source['id'],
+									$data_template_id,
+									$local_data_id,
+									$host_id,
+									$host[$field]
+								)
+							);
 						}
 					}
 				}
