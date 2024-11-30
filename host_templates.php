@@ -693,7 +693,7 @@ function template() {
 							<?php
 							if (cacti_sizeof($device_classes)) {
 								foreach ($device_classes as $key => $value) {
-									print "<option value='" . $key . "'"; if (get_request_var('class') == $key) { print ' selected'; } print '>' . html_escape($value) . "</option>\n";
+									print "<option value='" . $key . "'" . (get_request_var('class') == $key ? ' selected':'') . '>' . html_escape($value) . '</option>';
 								}
 							}
 							?>
@@ -754,7 +754,13 @@ function template() {
 					</td>
 					<td>
 						<span>
-							<input type='button' class='ui-button ui-corner-all ui-widget' id='refresh' value='<?php print __esc('Go');?>' title='<?php print __esc('Set/Refresh Filters');?>'>
+							<input type='checkbox' id='has_hosts' <?php print (get_request_var('has_hosts') == 'true' ? 'checked':'');?>>
+							<label for='has_hosts'><?php print __('Has Devices');?></label>
+						</span>
+					</td>
+					<td>
+						<span>
+							<input type='submit' class='ui-button ui-corner-all ui-widget' id='refresh' value='<?php print __esc('Go');?>' title='<?php print __esc('Set/Refresh Filters');?>'>
 							<input type='button' class='ui-button ui-corner-all ui-widget' id='clear' value='<?php print __esc('Clear');?>' title='<?php print __esc('Clear Filters');?>'>
 						</span>
 					</td>
@@ -777,17 +783,11 @@ function template() {
 							<?php
 							if (cacti_sizeof($item_rows)) {
 								foreach ($item_rows as $key => $value) {
-									print "<option value='" . $key . "'"; if (get_request_var('rows') == $key) { print ' selected'; } print '>' . html_escape($value) . "</option>\n";
+									print "<option value='" . $key . "'" . (get_request_var('rows') == $key ? ' selected':'') . '>' . html_escape($value) . '</option>';
 								}
 							}
 							?>
 						</select>
-					</td>
-					<td>
-						<span>
-							<input type='checkbox' id='has_hosts' <?php print (get_request_var('has_hosts') == 'true' ? 'checked':'');?>>
-							<label for='has_hosts'><?php print __('Has Devices');?></label>
-						</span>
 					</td>
 				</tr>
 			</table>
@@ -818,7 +818,11 @@ function template() {
 				applyFilter();
 			});
 
-			$('#refresh, #has_hosts').click(function() {
+			$('#clear').click(function() {
+				clearFilter();
+			});
+
+			$('#has_hosts').click(function() {
 				applyFilter();
 			});
 		});
@@ -829,19 +833,24 @@ function template() {
 	html_end_box();
 
 	/* form the 'where' clause for our main sql query */
-	$sql_where = '';
-	$sql_join  = '';
+	$sql_where  = '';
+	$sql_params = array();
+	$sql_join   = '';
 
 	if (get_request_var('filter') != '') {
-		$sql_where .= ($sql_where != '' ? ' AND ':'WHERE ') . '(ht.name LIKE ' . db_qstr('%' . get_request_var('filter') . '%') . ')';
+		$sql_where .= ($sql_where != '' ? ' AND ':'WHERE ') . 'ht.name LIKE ?';
+		$sql_params[] = '%' . get_request_var('filter') . '%';
 	}
 
 	if (get_request_var('class') != '-1') {
-		$sql_where .= ($sql_where != '' ? ' AND ':'WHERE ') . '(ht.class = ' . db_qstr(get_request_var('class')) . ')';
+		$sql_where .= ($sql_where != '' ? ' AND ':'WHERE ') . 'ht.class = ?';
+		$sql_params[] = get_request_var('class');
 	}
 
 	if (get_request_var('graph_template') != '-1') {
-		$sql_where .= ($sql_where != '' ? ' AND ':'WHERE ') . '(gt_id = ' . get_request_var('graph_template') . ')';
+		$sql_where .= ($sql_where != '' ? ' AND ':'WHERE ') . 'gt_id = ?';
+		$sql_params[] = get_request_var('graph_template');
+
 		$sql_join   = "INNER JOIN (
 			SELECT DISTINCT host_template_id, id AS gt_id
 			FROM (
@@ -867,7 +876,7 @@ function template() {
 		$sql_having = '';
 	}
 
-	$total_rows = db_fetch_cell("SELECT COUNT(`rows`)
+	$total_rows = db_fetch_cell_prepared("SELECT COUNT(`rows`)
 		FROM (
 			SELECT
 			COUNT(ht.id) AS `rows`, COUNT(DISTINCT host.id) AS hosts
@@ -878,12 +887,13 @@ function template() {
 			$sql_where
 			GROUP BY ht.id
 			$sql_having
-		) AS rs");
+		) AS rs",
+		$sql_params);
 
 	$sql_order = get_order_string();
 	$sql_limit = ' LIMIT ' . ($rows * (get_request_var('page') - 1)) . ',' . $rows;
 
-	$template_list = db_fetch_assoc("SELECT
+	$template_list = db_fetch_assoc_prepared("SELECT
 		ht.id, ht.name, ht.class, COUNT(DISTINCT host.id) AS hosts
 		FROM host_template AS ht
 		$sql_join
@@ -893,7 +903,8 @@ function template() {
 		GROUP BY ht.id
 		$sql_having
 		$sql_order
-		$sql_limit");
+		$sql_limit",
+		$sql_params);
 
 	$display_text = array(
 		'name' => array(
