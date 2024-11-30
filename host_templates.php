@@ -306,7 +306,7 @@ function template_item_remove_gt_confirm() {
 			postUrl(options, data);
 		});
 	</script>
-<?php
+	<?php
 }
 
 function template_item_remove_gt() {
@@ -615,7 +615,7 @@ function template_edit() {
 			});
 		});
 	</script>
-<?php
+	<?php
 }
 
 function template() {
