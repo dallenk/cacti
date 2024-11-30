@@ -1900,6 +1900,7 @@ CREATE TABLE graph_templates_item (
   consolidation_function_id tinyint(3) unsigned NOT NULL default '0',
   textalign varchar(10) default NULL,
   text_format varchar(255) default NULL,
+  legend varchar(30) default NULL,
   value varchar(255) default NULL,
   hard_return char(2) default NULL,
   gprint_id mediumint(8) unsigned NOT NULL default '0',

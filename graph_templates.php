@@ -425,10 +425,16 @@ function form_save() {
 			$save['vdef_id']                   = form_input_validate(get_nfilter_request_var('vdef_id'), 'vdef_id', '^[0-9]+$', true, 3);
 			$save['shift']                     = form_input_validate((isset_request_var('shift') ? get_nfilter_request_var('shift') : ''), 'shift', '^((on)|)$', true, 3);
 			$save['consolidation_function_id'] = form_input_validate((isset($item['consolidation_function_id']) ? $item['consolidation_function_id'] : get_nfilter_request_var('consolidation_function_id')), 'consolidation_function_id', '^[0-9]+$', true, 3);
+
 			$save['textalign']                 = form_input_validate((isset_request_var('textalign') ? get_nfilter_request_var('textalign') : ''), 'textalign', '^[a-z]+$', true, 3);
+
 			$save['text_format']               = form_input_validate((isset($item['text_format']) ? $item['text_format'] : get_nfilter_request_var('text_format')), 'text_format', '', true, 3);
+			$save['legend']                    = form_input_validate((isset($item['legend']) ? $item['legend'] : get_nfilter_request_var('legend')), 'legend', '', true, 3);
+
 			$save['value']                     = form_input_validate(get_nfilter_request_var('value'), 'value', '', true, 3);
+
 			$save['hard_return']               = form_input_validate(((isset($item['hard_return']) ? $item['hard_return'] : (isset_request_var('hard_return') ? get_nfilter_request_var('hard_return') : ''))), 'hard_return', '', true, 3);
+
 			$save['gprint_id']                 = form_input_validate(get_nfilter_request_var('gprint_id'), 'gprint_id', '^[0-9]+$', true, 3);
 			$save['sequence']                  = $sequence;
 
@@ -844,6 +850,41 @@ function item_edit() {
 		}
 	}
 
+	if (cacti_sizeof($template_item) && $template_item['legend'] == '') {
+		switch ($template_item['graph_type_id']) {
+			case 7:
+			case 8:
+			case 2:
+			case 4:
+			case 5:
+			case 6:
+			case 20:
+				$data_source = db_fetch_cell_prepared('SELECT data_source_name
+					FROM data_template_rrd
+					WHERE id = ? AND local_data_id = 0',
+					array($template_item['task_item_id']));
+
+				if ($data_source != '') {
+					switch($template_item['consolidation_function_id']) {
+						case 1:
+							$data_source .= ' (AVG)';
+							break;
+						case 2:
+							$data_source .= ' (MIN)';
+							break;
+						case 3:
+							$data_source .= ' (MAX)';
+							break;
+						case 4:
+							$data_source .= ' (LAST)';
+							break;
+					}
+
+					$form_array['legend']['value'] = $data_source;
+				}
+		}
+	}
+
 	draw_edit_form(
 		array(
 			'config' => array('no_form_tag' => true),
@@ -933,6 +974,7 @@ function item_edit() {
 				value: graphType == 2 || graphType == 3 || graphType == 30,
 				gprint_id: graphType > 8 && graphType < 16,
 				text_format: graphType >= 1 && graphType != 10 && graphType != 15 && graphType != 40,
+				legend: (graphType > 1 && graphType < 9) || graphType == 20 || graphType == 30,
 				hard_return: graphType >= 1 && graphType != 10 && graphType != 15 && graphType != 40,
 			});
 
@@ -1387,6 +1429,11 @@ function template() {
 			'filter'  => FILTER_DEFAULT,
 			'pageset' => true,
 			'default' => ''
+		),
+		'class' => array(
+			'filter'  => FILTER_CALLBACK,
+			'default' => '-1',
+			'options' => array('options' => 'sanitize_search_string')
 		),
 		'sort_column' => array(
 			'filter'  => FILTER_CALLBACK,

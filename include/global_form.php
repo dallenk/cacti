@@ -1063,6 +1063,14 @@ $struct_graph_item = array(
 		'default'       => '',
 		'description'   => __('Text that will be displayed on the legend for this graph item.')
 	),
+	'legend' => array(
+		'friendly_name' => __('Legend for Export/Hover'),
+		'method'        => 'textbox',
+		'max_length'    => '30',
+		'size'          => '25',
+		'default'       => '',
+		'description'   => __('A Legend to be displayed when Hovering over the Graph and also used for Graph Export.  Hover requires RRDtool 1.9.1 and above.  It may work for RRDtool 1.8+, but not for Thold Legends.')
+	),
 	'hard_return' => array(
 		'friendly_name' => __('Insert Hard Return'),
 		'method'        => 'checkbox',

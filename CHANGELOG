@@ -122,6 +122,7 @@ Cacti CHANGELOG
 -feature#5892: Enable Authentication Cookies by Default in New Installs
 -feature#5907: Add Filter for Data Input Method on Data Templates
 -feature#5908: Add Searching of Notes and External ID when Searching for a Device
+-feature#5909: Add 'legend shorthand' for Graph Template Items
 -feature#5920: Remove the use of tables for alignment on graphs page and move to flex alignment
 -feature#5922: Add HPE Nimble/Alletra template
 -feature#5923: If RRDtool crashes due to a segmentation fault, report that and retry a few times

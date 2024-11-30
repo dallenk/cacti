@@ -36,6 +36,8 @@ function upgrade_to_1_3_0() {
 
 	db_install_add_column('host', array('name' => 'created', 'type' => 'timestamp', 'default' => 'CURRENT_TIMESTAMP'));
 
+	db_install_add_column('graph_templates_item', array('name' => 'legend', 'type' => 'varchar(30)', 'default' => '', 'after' => 'text_format'));
+
 	db_install_add_column('sites', array('name' => 'disabled', 'type' => 'char(2)', 'null' => false, 'default' => '', 'after' => 'name'));
 
 	db_install_add_column('user_domains_ldap', array('name' => 'tls_certificate', 'type' => 'tinyint(3)', 'unsigned' => true, 'null' => false, 'default' => '3'));
