@@ -1066,7 +1066,7 @@ function template() {
 						<?php print __('Method');?>
 					</td>
 					<td>
-						<select id='method' onChange='applyFilter()' data-defaultLabel='<?php print __('Method');?>'>
+						<select id='method' data-defaultLabel='<?php print __('Method');?>'>
 							<option value='-1'<?php print(get_request_var('method') == '-1' ? ' selected>':'>') . __('All');?></option>
 							<?php
 							$methods = array_rekey(db_fetch_assoc('SELECT id, name FROM data_input ORDER BY name'), 'id', 'name');
@@ -1083,7 +1083,7 @@ function template() {
 						<?php print __('Profile');?>
 					</td>
 					<td>
-						<select id='profile' onChange='applyFilter()' data-defaultLabel='<?php print __('Profile');?>'>
+						<select id='profile' data-defaultLabel='<?php print __('Profile');?>'>
 							<option value='-1'<?php print(get_request_var('profile') == '-1' ? ' selected>':'>') . __('All');?></option>
 							<?php
 							$profiles = array_rekey(db_fetch_assoc('SELECT id, name FROM data_source_profiles ORDER BY name'), 'id', 'name');
@@ -1100,7 +1100,7 @@ function template() {
 						<?php print __('Data Templates');?>
 					</td>
 					<td>
-						<select id='rows' name='rows' onChange='applyFilter()' data-defaultLabel='<?php print __('Data Templates');?>'>
+						<select id='rows' name='rows' data-defaultLabel='<?php print __('Data Templates');?>'>
 							<option value='-1'<?php print(get_request_var('rows') == '-1' ? ' selected>':'>') . __('Default');?></option>
 							<?php
 							if (cacti_sizeof($item_rows)) {
@@ -1119,7 +1119,7 @@ function template() {
 					</td>
 					<td>
 						<span>
-							<input type='button' class='ui-button ui-corner-all ui-widget' id='refresh' value='<?php print __esc('Go');?>' title='<?php print __esc('Set/Refresh Filters');?>'>
+							<input type='submit' class='ui-button ui-corner-all ui-widget' id='refresh' value='<?php print __esc('Go');?>' title='<?php print __esc('Set/Refresh Filters');?>'>
 							<input type='button' class='ui-button ui-corner-all ui-widget' id='clear' value='<?php print __esc('Clear');?>' title='<?php print __esc('Clear Filters');?>'>
 						</span>
 					</td>
@@ -1148,7 +1148,7 @@ function template() {
 				applyFilter();
 			});
 
-			$('#refresh').click(function() {
+			$('#rows, #method, #profile').change(function() {
 				applyFilter();
 			});
 
@@ -1169,26 +1169,29 @@ function template() {
 
 	/* form the 'where' clause for our main sql query */
 	$rows_where = '';
+	$sql_where  = '';
+	$sql_params = array();
 
 	if (get_request_var('filter') != '') {
-		$sql_where = ' WHERE (dt.name LIKE ' . db_qstr('%' . get_request_var('filter') . '%') . ')';
-	} else {
-		$sql_where = '';
+		$sql_where = ' WHERE dt.name LIKE ?';
+		$sql_params = '%' . get_request_var('filter') . '%';
 	}
 
 	if (get_request_var('profile') != '-1') {
-		$sql_where .= ($sql_where != '' ? ' AND ':'WHERE ') . ' dtd.data_source_profile_id=' . get_request_var('profile');
+		$sql_where .= ($sql_where != '' ? ' AND ':'WHERE ') . ' dtd.data_source_profile_id = ?';
+		$sql_params = get_request_var('profile');
 	}
 
 	if (get_request_var('method') != '-1') {
-		$sql_where .= ($sql_where != '' ? ' AND ':'WHERE ') . ' dtd.data_input_id=' . get_request_var('method');
+		$sql_where .= ($sql_where != '' ? ' AND ':'WHERE ') . ' dtd.data_input_id = ?';
+		$sql_params = get_request_var('method');
 	}
 
 	if (get_request_var('has_data') == 'true') {
 		$sql_where .= ($sql_where != '' ? ' AND ':'WHERE ') . ' dt.data_sources > 0';
 	}
 
-	$total_rows = db_fetch_cell("SELECT COUNT(*)
+	$total_rows = db_fetch_cell_prepared("SELECT COUNT(*)
 		FROM data_template AS dt
 		INNER JOIN data_template_data AS dtd
 		ON dt.id = dtd.data_template_id
@@ -1197,7 +1200,8 @@ function template() {
 		ON dtd.data_input_id = di.id
 		LEFT JOIN data_source_profiles AS dsp
 		ON dtd.data_source_profile_id = dsp.id
-		$sql_where");
+		$sql_where",
+		$sql_params);
 
 	$sql_order = get_order_string();
 	$sql_limit = ' LIMIT ' . ($rows * (get_request_var('page') - 1)) . ',' . $rows;
@@ -1216,7 +1220,7 @@ function template() {
 		$sql_order
 		$sql_limit";
 
-	$template_list = db_fetch_assoc($template_list_sql);
+	$template_list = db_fetch_assoc_prepared($template_list_sql, $sql_params);
 
 	$display_text = array(
 		'name' => array(
