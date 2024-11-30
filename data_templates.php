@@ -1173,18 +1173,18 @@ function template() {
 	$sql_params = array();
 
 	if (get_request_var('filter') != '') {
-		$sql_where = ' WHERE dt.name LIKE ?';
-		$sql_params = '%' . get_request_var('filter') . '%';
+		$sql_where    = ' WHERE dt.name LIKE ?';
+		$sql_params[] = '%' . get_request_var('filter') . '%';
 	}
 
 	if (get_request_var('profile') != '-1') {
-		$sql_where .= ($sql_where != '' ? ' AND ':'WHERE ') . ' dtd.data_source_profile_id = ?';
-		$sql_params = get_request_var('profile');
+		$sql_where   .= ($sql_where != '' ? ' AND ':'WHERE ') . ' dtd.data_source_profile_id = ?';
+		$sql_params[] = get_request_var('profile');
 	}
 
 	if (get_request_var('method') != '-1') {
-		$sql_where .= ($sql_where != '' ? ' AND ':'WHERE ') . ' dtd.data_input_id = ?';
-		$sql_params = get_request_var('method');
+		$sql_where   .= ($sql_where != '' ? ' AND ':'WHERE ') . ' dtd.data_input_id = ?';
+		$sql_params[] = get_request_var('method');
 	}
 
 	if (get_request_var('has_data') == 'true') {
