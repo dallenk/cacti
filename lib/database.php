@@ -2194,7 +2194,7 @@ function sql_save($array_items, $table_name, $key_cols = 'id', $autoinc = true, 
 			} elseif (is_numeric($value)) {
 				$array_items[$key] = $value;
 			} else {
-				cacti_log('ERROR: Column: ' . $key . ' contains and invald value: ' . $value, false, 'DBCALL');
+				cacti_log('ERROR: Column: ' . $key . ' contains and invalid value: ' . $value, false, 'DBCALL');
 				$array_items[$key] = 0;
 			}
 		} else {
