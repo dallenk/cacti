@@ -2681,7 +2681,7 @@ function handleAjaxResponse(html, options) {
 		pushState(myTitle, options);
 
 		if (html !== null && html.length > 0) {
-			$(elementId).empty().hide();
+			$(elementId).hide().empty().hide();
 			$(elementId).html(htmlContent);
 			$(elementId).show();
 		}
@@ -3447,7 +3447,7 @@ function setSelectMenus() {
 
 	$('select.colordropdown').dropcolor();
 
-	$('select').not('.colordropdown').not('.multi-select').each(function() {
+	$('select').not('.colordropdown').not('.multi-select').not('#user_language').each(function() {
 		if ($(this).prop('multiple') != true) {
 			$(this).each(function() {
 				let id = $(this).attr('id');
@@ -5309,7 +5309,6 @@ function toggleFields(fields, prefix = '#row_') {
 			lastParent = curParent;
 		}
 	});
-
 
 	parents.forEach(myParent => {
 		var stripe = 'odd';
