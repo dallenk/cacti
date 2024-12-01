@@ -365,6 +365,7 @@ function simple_checks() {
 			FROM data_input_data AS did
 			INNER JOIN data_template_data AS dtd
 			ON dtd.local_data_id = did.local_data_id
+			AND did.data_template_data_id = dtd.id
 			AND did.local_data_id > 0
 			AND data_input_field_id NOT IN (SELECT id FROM data_input_fields WHERE data_input_id = dtd.data_input_id)');
 
