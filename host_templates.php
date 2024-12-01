@@ -825,6 +825,11 @@ function template() {
 			$('#has_hosts').click(function() {
 				applyFilter();
 			});
+
+			$('#form_host_template').on('submit', function(event) {
+				event.preventDefault();
+				applyFilter();
+			});
 		});
 		</script>
 	</tr>
