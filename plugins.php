@@ -74,12 +74,12 @@ $status_names = array(
 	-4 => __('Disabled No INFO File'),
 	-5 => __('Disabled Directory Missing'),
 	0  => __('Loaded, Not Installed'),
-	1  => __('Installed and Active'),
+	1  => __('Installed/Active'),
 	2  => __('Configuration Issues'),
 	3  => __('Awaiting Upgrade'),
-	4  => __('Installed and Inactive'),
+	4  => __('Installed/Inactive'),
 	5  => __('Installed or Active'),
-	6  => __('Available for Install'),
+	6  => __('Installable'),
 	7  => __('Disabled by Error'),
 	8  => __('Archived'),
 );
@@ -1082,7 +1082,7 @@ function update_show_current() {
 					'tip'     => __('The author of this Plugin.')
 				),
 				'pa.compat' => array(
-					'display' => __('Cacti Requirements'),
+					'display' => __('Cacti'),
 					'align'   => 'left',
 					'sort'    => 'ASC',
 					'tip'     => __('The Cacti version ranges required to use this Plugin.')
@@ -1118,7 +1118,7 @@ function update_show_current() {
 					'tip'     => __('The date that this Plugin was Archived.')
 				),
 				'pi.last_updated' => array(
-					'display' => __('Last Installed/Upgraded'),
+					'display' => __('Installed/Upgraded'),
 					'align'   => 'right',
 					'sort'    => 'DESC',
 					'tip'     => __('The date that this Plugin was last Installed or Upgraded.')
@@ -1236,13 +1236,13 @@ function update_show_current() {
 					'tip'     => __('The author of this Plugin.')
 				),
 				'pa.compat' => array(
-					'display' => __('Cacti Requirements'),
+					'display' => __('Cacti'),
 					'align'   => 'left',
 					'sort'    => 'ASC',
 					'tip'     => __('The Cacti version ranges required to use this Plugin.')
 				),
 				'pi.requires' => array(
-					'display' => __('Plugin Requirements'),
+					'display' => __('Plugin Requires'),
 					'align'   => 'left',
 					'sort'    => 'ASC',
 					'tip'     => __('This Plugin requires the following Plugins be installed first.')
@@ -1254,7 +1254,7 @@ function update_show_current() {
 					'tip'     => __('The version of this Plugin.')
 				),
 				'pi.last_updated' => array(
-					'display' => __('Last Installed/Upgraded'),
+					'display' => __('Installed/Upgraded'),
 					'align'   => 'right',
 					'sort'    => 'ASC',
 					'tip'     => __('The date that this Plugin was last installed or upgraded.')
@@ -1375,7 +1375,7 @@ function format_plugin_row($plugin, $last_plugin, $include_ordering, $table) {
 	}
 
 	if ($newer > 0) {
-		$row .= ", <a class='pic deviceUp' href='" . html_escape('plugins.php?action=list&state=6&type=3&filter=' . $plugin['plugin']) . "'>" . __('Newer Version Available') . '</a>';
+		$row .= ", <a class='pic deviceUp' href='" . html_escape('plugins.php?action=list&state=6&type=3&filter=' . $plugin['plugin']) . "'>" . __('New Version') . '</a>';
 	}
 
 	if ($config['poller_id'] > 1) {
@@ -1415,11 +1415,11 @@ function format_plugin_row($plugin, $last_plugin, $include_ordering, $table) {
 
 	$plugin['compat'] = plugin_display_compat($plugin['compat']);
 
-	$row .= "<td class='nowrap'>" . filter_value($plugin['author'], get_request_var('filter')) . '</td>';
-	$row .= "<td class='left'>"   . html_escape($plugin['compat'])  . '</td>';
-	$row .= "<td class='nowrap'>" . html_escape($requires)          . '</td>';
-	$row .= "<td class='right'>"  . html_escape($plugin['version']) . '</td>';
-	$row .= "<td class='right'>"  . $last_updated                   . '</td>';
+	$row .= "<td class='prewrap'>" . filter_value($plugin['author'], get_request_var('filter')) . '</td>';
+	$row .= "<td class='left'>"    . html_escape($plugin['compat'])  . '</td>';
+	$row .= "<td class='nowrap'>"  . html_escape($requires)          . '</td>';
+	$row .= "<td class='right'>"   . html_escape($plugin['version']) . '</td>';
+	$row .= "<td class='right'>"   . $last_updated                   . '</td>';
 
 	if ($include_ordering) {
 		$row .= "<td class='nowrap right'>";
@@ -1534,8 +1534,8 @@ function format_available_plugin_row($plugin, $table) {
 
 	$plugin['avail_compat'] = plugin_display_compat($plugin['avail_compat']);
 
-	$row .= "<td class='nowrap'>" . filter_value($plugin['avail_author'], get_request_var('filter'))    . '</td>';
-	$row .= "<td class='nowrap'>" . html_escape($plugin['avail_compat'])    . '</td>';
+	$row .= "<td class='prewrap'>" . filter_value($plugin['avail_author'], get_request_var('filter'))    . '</td>';
+	$row .= "<td class='nowrap'>"  . html_escape($plugin['avail_compat'])    . '</td>';
 
 	if ($plugin['version'] == '') {
 		$row .= "<td class='right'>" . __esc('Not Loaded')             . '</td>';
@@ -1642,7 +1642,7 @@ function format_archive_plugin_row($plugin, $table) {
 
 	$plugin['archive_compat'] = plugin_display_compat($plugin['archive_compat']);
 
-	$row .= "<td class='nowrap'>" . filter_value($plugin['author'], get_request_var('filter')) . '</td>';
+	$row .= "<td class='prewrap'>" . filter_value($plugin['author'], get_request_var('filter')) . '</td>';
 	$row .= "<td class='left'>"   . html_escape($plugin['archive_compat'])                     . '</td>';
 
 	if ($plugin['version'] == '') {
