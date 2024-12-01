@@ -1291,11 +1291,14 @@
 		}
 
 		function zoomFormatNumToSI(num) {
-			if (num === 0) return '0';
-
-			const signPrefix = num < 0 ? '-' : '';
+			const signPrefix = num < 0 ? '-' : ' ';
 			let sig = Math.abs(num);
 			let exponent = 0;
+
+			if (num === 0) {
+				return ' ' + new Big(0).toFixed(2) + ' ' + si_prefixes[exponent];
+			}
+
 			while (sig >= 1000 && exponent < 24) {
 				sig /= 1000;
 				exponent += 3;

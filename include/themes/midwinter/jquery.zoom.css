@@ -239,7 +239,7 @@ div.zoom-menu-hover, div.inner_li>span.zoom-menu-hover{
 }
 
 .zoom-livedata {
-	min-width: 20rem;
+	min-width: 22rem;
 	padding: 0.5rem 1rem;
 }
 
@@ -275,6 +275,7 @@ div.zoom-menu-hover, div.inner_li>span.zoom-menu-hover{
 .zoom-livedata-title {
 	flex: 1;
 	text-align: left;
+	margin-right: 1rem;
 }
 
 .zoom-livedata-unit {
