@@ -1057,12 +1057,6 @@ function template() {
 			<table class='filterTable'>
 				<tr>
 					<td>
-						<?php print __('Search');?>
-					</td>
-					<td>
-						<input type='text' class='ui-state-default ui-corner-all' id='filter' name='filter' size='25' value='<?php print html_escape_request_var('filter');?>'>
-					</td>
-					<td>
 						<?php print __('Method');?>
 					</td>
 					<td>
@@ -1097,6 +1091,28 @@ function template() {
 						</select>
 					</td>
 					<td>
+						<span>
+							<input type='checkbox' id='has_data' <?php print(get_request_var('has_data') == 'true' ? 'checked':'');?>>
+							<label for='has_data'><?php print __('Has Data Sources');?></label>
+						</span>
+					</td>
+					<td>
+						<span>
+							<input type='submit' class='ui-button ui-corner-all ui-widget' id='refresh' value='<?php print __esc('Go');?>' title='<?php print __esc('Set/Refresh Filters');?>'>
+							<input type='button' class='ui-button ui-corner-all ui-widget' id='clear' value='<?php print __esc('Clear');?>' title='<?php print __esc('Clear Filters');?>'>
+						</span>
+					</td>
+				</tr>
+			</table>
+			<table class='filterTable'>
+				<tr>
+					<td>
+						<?php print __('Search');?>
+					</td>
+					<td>
+						<input type='text' class='ui-state-default ui-corner-all' id='filter' name='filter' size='25' value='<?php print html_escape_request_var('filter');?>'>
+					</td>
+					<td>
 						<?php print __('Data Templates');?>
 					</td>
 					<td>
@@ -1110,18 +1126,6 @@ function template() {
 							}
 							?>
 						</select>
-					</td>
-					<td>
-						<span>
-							<input type='checkbox' id='has_data' <?php print(get_request_var('has_data') == 'true' ? 'checked':'');?>>
-							<label for='has_data'><?php print __('Has Data Sources');?></label>
-						</span>
-					</td>
-					<td>
-						<span>
-							<input type='submit' class='ui-button ui-corner-all ui-widget' id='refresh' value='<?php print __esc('Go');?>' title='<?php print __esc('Set/Refresh Filters');?>'>
-							<input type='button' class='ui-button ui-corner-all ui-widget' id='clear' value='<?php print __esc('Clear');?>' title='<?php print __esc('Clear Filters');?>'>
-						</span>
 					</td>
 				</tr>
 			</table>
