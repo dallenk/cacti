@@ -1094,25 +1094,25 @@ function update_show_current() {
 					'tip'     => __('The version of this Plugin.')
 				),
 				'pa.version' => array(
-					'display' => __('Archived Version'),
+					'display' => __('Version'),
 					'align'   => 'right',
 					'sort'    => 'ASC',
 					'tip'     => __('The version of this Plugin.')
 				),
 				'pa.archive_length' => array(
-					'display' => __('Archived Size'),
+					'display' => __('Size'),
 					'align'   => 'right',
 					'sort'    => 'ASC',
 					'tip'     => __('The compressed size of this Plugin in bytes.')
 				),
 				'requires' => array(
-					'display' => __('Archived Requirements'),
+					'display' => __('Requires'),
 					'align'   => 'right',
 					'sort'    => 'ASC',
 					'tip'     => __('This Plugin requires the following Plugins be installed first.')
 				),
 				'pa.last_updated' => array(
-					'display' => __('Archived Date'),
+					'display' => __('Archive Date'),
 					'align'   => 'right',
 					'sort'    => 'DESC',
 					'tip'     => __('The date that this Plugin was Archived.')
@@ -1171,25 +1171,25 @@ function update_show_current() {
 					'tip'     => __('The currently installed version of this Plugin.')
 				),
 				'nosort2' => array(
-					'display' => __('Available Version'),
+					'display' => __('Version'),
 					'align'   => 'right',
 					'sort'    => 'ASC',
 					'tip'     => __('The Available version for install for this Plugin.')
 				),
 				'pa.archive_length' => array(
-					'display' => __('Available Size'),
+					'display' => __('Size'),
 					'align'   => 'right',
 					'sort'    => 'ASC',
 					'tip'     => __('The compressed size of this Plugin in bytes.')
 				),
 				'nosort3' => array(
-					'display' => __('Available Requirements'),
+					'display' => __('Requires'),
 					'align'   => 'right',
 					'sort'    => 'ASC',
 					'tip'     => __('This Plugin requires the following Plugins be installed first.')
 				),
 				'pa.published_at' => array(
-					'display' => __('Available Last Published'),
+					'display' => __('Last Published'),
 					'align'   => 'right',
 					'sort'    => 'DESC',
 					'tip'     => __('The date the release was published or develop was last pushed.')
