@@ -2345,9 +2345,8 @@ function tree() {
 			$('#tree2_child').attr('id', 'tree_ids');
 
 			<?php if (read_config_option('drag_and_drop') == 'on') { ?>
-			$('#tree_ids').find('tr:first').addClass('nodrag').addClass('nodrop');
 
-			$('#tree_ids').tableDnD({
+			$('form#chk').find('table').unbind().tableDnD({
 				onDrop: function(table, row) {
 					loadUrl({url:'tree.php?action=ajax_dnd&'+$.tableDnD.serialize()})
 				}

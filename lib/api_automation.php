@@ -1459,7 +1459,7 @@ function display_match_rule_items($title, $rule, $rule_type, $module) {
 
 			$url = $module . '?action=item_edit&id=' . $rule_id. '&item_id=' . $item['id'] . '&rule_type=' . $rule_type;
 
-			form_selectable_cell(filter_value(__('Item#%d', $i+1), '', $url), $i);
+			form_selectable_cell(filter_value(__('Item # %d', $i+1), '', $url), $i);
 			form_selectable_cell($item['sequence'], $i);
 			form_selectable_cell($operation, $i);
 			form_selectable_cell(html_escape($item['field']), $i);
@@ -1552,7 +1552,7 @@ function display_graph_rule_items($title, &$rule, $rule_type, $module) {
 
 			$url = $module . '?action=item_edit&id=' . $rule_id. '&item_id=' . $item['id'] . '&rule_type=' . $rule_type;
 
-			form_selectable_cell(filter_value(__('Item#%d', $i+1), '', $url), $i);
+			form_selectable_cell(filter_value(__('Item # %d', $i+1), '', $url), $i);
 			form_selectable_cell($item['sequence'], $i);
 			form_selectable_cell($operation, $i);
 			form_selectable_cell(html_escape($item['field']), $i);
@@ -1647,7 +1647,7 @@ function display_tree_rule_items($title, $rule, $item_type, $rule_type, $module)
 
 			$url = $module . '?action=item_edit&id=' . $rule_id. '&item_id=' . $item['id'] . '&rule_type=' . $rule_type;
 
-			form_selectable_cell(filter_value(__('Item#%d', $i+1), '', $url), $i);
+			form_selectable_cell(filter_value(__('Item # %d', $i+1), '', $url), $i);
 			form_selectable_cell($item['sequence'], $i);
 			form_selectable_cell($field_name, $i);
 			form_selectable_cell($tree_sort_types[$item['sort_type']], $i);

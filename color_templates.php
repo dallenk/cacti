@@ -127,7 +127,7 @@ function draw_color_template_items_list($item_list, $filename, $url_data, $disab
 	if (cacti_sizeof($item_list)) {
 		foreach ($item_list as $item) {
 			/* alternating row color */
-			form_alternate_row('line' . $item['color_template_item_id'], true, true);
+			form_alternate_row('line' . $item['color_template_item_id'], true);
 
 			print '<td>';
 
