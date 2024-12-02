@@ -113,6 +113,28 @@ define('POLLER_ENABLE', 3);
 define('POLLER_RESYNC', 4);
 define('POLLER_CLEAR_STATS', 5);
 
+/* common user interface actions */
+define('ACTION_ADD', 1);
+define('ACTION_DELETE', 2);
+define('ACTION_ENABLE', 3);
+define('ACTION_DISABLE', 4);
+define('ACTION_DUPLICATE', 5);
+define('ACTION_EXPORT', 6);
+define('ACTION_CANCEL', 7);
+define('ACTION_REAPPLY', 8);
+define('ACTION_PUBLISH', 9);
+define('ACTION_UNPUBLISH', 10);
+define('ACTION_LOCK', 11);
+define('ACTION_UNLOCK', 12);
+define('ACTION_ASSOCIATE', 13);
+define('ACTION_DISASSOCIATE', 14);
+define('ACTION_RUNNOW', 15);
+define('ACTION_CLEAR_STATS', 16);
+define('ACTION_SYNC', 17);
+define('ACTION_FULLSYNC', 18);
+define('ACTION_QUICKSYNC', 19);
+define('ACTION_CHANGE', 20);
+
 /* used both for polling and reindexing */
 define('POLLER_ACTION_SNMP', 0);
 define('POLLER_ACTION_SCRIPT', 1);
