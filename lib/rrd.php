@@ -2407,9 +2407,14 @@ function rrdtool_function_graph($local_graph_id, $rra_id, $graph_data_array, $rr
 				$graph_item_color_code .= $graph_item['alpha'];
 			}
 
-			if (!empty($graph_item['hex2']) && ($graph_item['graph_type_id'] == GRAPH_ITEM_TYPE_AREA || $graph_item['graph_type_id'] == GRAPH_ITEM_TYPE_STACK)) {
-				$graph_item_color_code2 = '#' . $graph_item['hex2'];
-				$graph_item_color_code2 .= $graph_item['alpha2'];
+
+			if (cacti_version_compare($rrdversion, '1.8', '>=')) {
+				if (!empty($graph_item['hex2']) && ($graph_item['graph_type_id'] == GRAPH_ITEM_TYPE_AREA || $graph_item['graph_type_id'] == GRAPH_ITEM_TYPE_STACK)) {
+					$graph_item_color_code2 = '#' . $graph_item['hex2'];
+					$graph_item_color_code2 .= $graph_item['alpha2'];
+				} else {
+					$graph_item_color_code2 = '';
+				}
 			} else {
 				$graph_item_color_code2 = '';
 			}
