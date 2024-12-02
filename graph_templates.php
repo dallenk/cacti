@@ -291,6 +291,8 @@ function form_save() {
 		get_filter_request_var('task_item_id');
 		get_filter_request_var('sequence');
 		get_filter_request_var('color_id');
+		get_filter_request_var('color2_id');
+		get_filter_request_var('gradheight');
 		get_filter_request_var('graph_template_item_id');
 		/* ==================================================== */
 
@@ -387,13 +389,17 @@ function form_save() {
 			$save['local_graph_id']    = 0;
 			$save['task_item_id']      = form_input_validate(get_request_var('task_item_id'), 'task_item_id', '^[0-9]+$', true, 3);
 			$save['color_id']          = form_input_validate((isset($item['color_id']) ? $item['color_id'] : get_request_var('color_id')), 'color_id', '', true, 3);
+			$save['color2_id']          = form_input_validate((isset($item['color2_id']) ? $item['color2_id'] : get_request_var('color2_id')), 'color2_id', '', true, 3);
 
 			/* if alpha is disabled, use invisible_alpha instead */
 			if (!isset_request_var('alpha')) {
 				set_request_var('alpha', get_nfilter_request_var('invisible_alpha'));
+				set_request_var('alpha2', get_nfilter_request_var('invisible_alpha'));
 			}
 
 			$save['alpha']             = form_input_validate((isset($item['alpha']) ? $item['alpha'] : get_nfilter_request_var('alpha')), 'alpha', '', true, 3);
+			$save['alpha2']            = form_input_validate((isset($item['alpha2']) ? $item['alpha2'] : get_nfilter_request_var('alpha2')), 'alpha2', '', true, 3);
+			$save['gradheight']        = form_input_validate((isset($item['gradheight']) ? $item['gradheight'] : get_nfilter_request_var('gradheight')), 'gradheight', '', true, 3);
 			$save['graph_type_id']     = form_input_validate((isset($item['graph_type_id']) ? $item['graph_type_id'] : get_filter_request_var('graph_type_id')), 'graph_type_id', '^[0-9]+$', true, 3);
 
 			if (isset_request_var('line_width') || isset($item['line_width'])) {
@@ -936,16 +942,18 @@ function item_edit() {
 		});
 
 		/**
-		 * columns - task_item_id color_id alpha graph_type_id consolidation_function_id cdef_id value gprint_id text_format hard_return
+		 * columns - task_item_id color_id alpha color2_id alpha2graph_type_id consolidation_function_id cdef_id value gprint_id text_format hard_return
 		 *
 		 * graph_type_ids - 1 - Comment 2 - HRule 3 - Vrule 4 - Line1 5 - Line2 6 - Line3 7 - Area 8 - Stack 9 - Gprint 10 - Legend
 		 */
 
 		function changeColorId() {
 			$('#alpha').prop('disabled', true);
+
 			if ($('#color_id').val() != 0) {
 				$('#alpha').prop('disabled', false);
 			}
+
 			switch ($('#graph_type_id').val()) {
 				case '4':
 				case '5':
@@ -956,12 +964,29 @@ function item_edit() {
 			}
 		}
 
+		function changeColor2Id() {
+			$('#alpha2').prop('disabled', true);
+
+			if ($('#color2_id').val() != 0) {
+				$('#alpha2').prop('disabled', false);
+			}
+
+			switch ($('#graph_type_id').val()) {
+				case '7':
+				case '8':
+					$('#alpha2').prop('disabled', false);
+			}
+		}
+
 		function setRowVisibility() {
 			var graphType = $('#graph_type_id').val();
 			toggleFields({
 				data_template_id: graphType != 3 && graphType != 40,
 				task_item_id: graphType != 3 && graphType != 40,
 				color_id: (graphType > 1 && graphType < 9) || graphType == 20 || graphType == 30,
+				color2_id: graphType == 7 || graphType == 8,
+				alpha2: graphType == 7 || graphType == 8,
+				gradheight: graphType == 7 || graphType == 8,
 				line_width: (graphType > 3 && graphType < 7) || graphType == 20,
 				dashes: (graphType > 1 && graphType < 7) || graphType == 20,
 				dash_offset: (graphType > 1 && graphType < 7) || graphType == 20,
@@ -979,6 +1004,7 @@ function item_edit() {
 			});
 
 			changeColorId();
+			changeColor2Id();
 		}
 	</script>
 	<?php
@@ -1234,9 +1260,9 @@ function item() {
 			LEFT JOIN vdef
 			ON vdef_id=vdef.id
 			LEFT JOIN colors
-			ON color_id=colors.id
+			ON color_id = colors.id
 			WHERE gti.graph_template_id = ?
-			AND gti.local_graph_id=0
+			AND gti.local_graph_id = 0
 			ORDER BY gti.sequence",
 			array(get_request_var('id')));
 

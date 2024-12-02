@@ -116,10 +116,10 @@ function graph_template_to_xml($graph_template_id) {
 
 							break;
 						case 'color_id':
+						case 'color2_id':
 							$xml_text .= "\t\t\t<$field_name>" . db_fetch_cell_prepared('SELECT hex FROM colors WHERE id = ?', array($item[$field_name])) . "</$field_name>\n";
 
 							break;
-
 						default:
 							$xml_text .= "\t\t\t<$field_name>" . xml_character_encode($item[$field_name]) . "</$field_name>\n";
 

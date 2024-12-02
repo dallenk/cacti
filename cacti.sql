@@ -56,6 +56,7 @@ CREATE TABLE `aggregate_graph_templates` (
 --
 -- Table structure for table `aggregate_graph_templates_graph`
 --
+
 CREATE TABLE `aggregate_graph_templates_graph` (
   `aggregate_template_id` int(10) unsigned NOT NULL,
   `t_image_format_id` char(2) default '',
@@ -1890,6 +1891,9 @@ CREATE TABLE graph_templates_item (
   task_item_id int(10) unsigned NOT NULL default '0',
   color_id mediumint(8) unsigned NOT NULL default '0',
   alpha char(2) default 'FF',
+  color2_id mediumint(8) unsigned NOT NULL default '0',
+  alpha2 char(2) default 'FF',
+  gradheight tinyint(4) NOT NULL default '50',
   graph_type_id tinyint(3) unsigned NOT NULL default '0',
   line_width DECIMAL(4,2) default 0,
   dashes varchar(20) default NULL,

@@ -1244,7 +1244,10 @@ function update_graph_template_items($graph_template_id, $graph_template_item_id
 				foreach ($template_item as $column => $value) {
 					switch($column) {
 						case 'color_id':
+						case 'color2_id':
 						case 'alpha':
+						case 'alpha2':
+						case 'gradheight':
 						case 'graph_type_id':
 						case 'line_width':
 						case 'dashes':

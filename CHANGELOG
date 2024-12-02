@@ -91,6 +91,7 @@ Cacti CHANGELOG
 -feature#5163: DSSTATS - Add Additional Data Source Statics to Cacti
 -feature#5165: DSSTATS - Change data_source_stats_hourly_cache from Memory to INNODB
 -feature#5178: DSSTATS - Allow Retention of Daily, Weekly, Monthly and Yearly data for varying periods
+-feature#5212: Gradient Support drops Alpha translparency values from Areas and Does not Support Stack
 -feature#5215: DSSTATS - Cache the RRDtool Logic in a table to speed calculation of the staticis gathering
 -feature#5222: Allow Cacti Log to be Displayed in 'Raw Log' Format
 -feature#5225: When your Database server has TB of memory, memory calculation returns incorrect data in Cacti

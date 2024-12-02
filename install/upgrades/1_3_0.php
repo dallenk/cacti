@@ -38,6 +38,9 @@ function upgrade_to_1_3_0() {
 	db_install_add_column('host', array('name' => 'created', 'type' => 'timestamp', 'default' => 'CURRENT_TIMESTAMP'));
 
 	db_install_add_column('graph_templates_item', array('name' => 'legend', 'type' => 'varchar(30)', 'default' => '', 'after' => 'text_format'));
+	db_install_add_column('graph_templates_item', array('name' => 'color2_id', 'type' => 'mediumint(8)', 'unsigned' => true, 'default' => '0', 'after' => 'alpha'));
+	db_install_add_column('graph_templates_item', array('name' => 'alpha2', 'type' => 'char(2)', 'default' => 'FF', 'after' => 'color2_id'));
+	db_install_add_column('graph_templates_item', array('name' => 'gradheight', 'type' => 'tinyint(4)', 'default' => '50', 'after' => 'alpha2'));
 
 	db_install_add_column('sites', array('name' => 'disabled', 'type' => 'char(2)', 'null' => false, 'default' => '', 'after' => 'name'));
 
