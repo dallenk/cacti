@@ -389,17 +389,21 @@ function form_save() {
 			$save['local_graph_id']    = 0;
 			$save['task_item_id']      = form_input_validate(get_request_var('task_item_id'), 'task_item_id', '^[0-9]+$', true, 3);
 			$save['color_id']          = form_input_validate((isset($item['color_id']) ? $item['color_id'] : get_request_var('color_id')), 'color_id', '', true, 3);
-			$save['color2_id']          = form_input_validate((isset($item['color2_id']) ? $item['color2_id'] : get_request_var('color2_id')), 'color2_id', '', true, 3);
+			$save['color2_id']         = form_input_validate((isset($item['color2_id']) ? $item['color2_id'] : get_request_var('color2_id')), 'color2_id', '', true, 3);
 
 			/* if alpha is disabled, use invisible_alpha instead */
 			if (!isset_request_var('alpha')) {
 				set_request_var('alpha', get_nfilter_request_var('invisible_alpha'));
+			}
+
+			if (!isset_request_var('alpha2')) {
 				set_request_var('alpha2', get_nfilter_request_var('invisible_alpha'));
 			}
 
 			$save['alpha']             = form_input_validate((isset($item['alpha']) ? $item['alpha'] : get_nfilter_request_var('alpha')), 'alpha', '', true, 3);
 			$save['alpha2']            = form_input_validate((isset($item['alpha2']) ? $item['alpha2'] : get_nfilter_request_var('alpha2')), 'alpha2', '', true, 3);
 			$save['gradheight']        = form_input_validate((isset($item['gradheight']) ? $item['gradheight'] : get_nfilter_request_var('gradheight')), 'gradheight', '', true, 3);
+
 			$save['graph_type_id']     = form_input_validate((isset($item['graph_type_id']) ? $item['graph_type_id'] : get_filter_request_var('graph_type_id')), 'graph_type_id', '^[0-9]+$', true, 3);
 
 			if (isset_request_var('line_width') || isset($item['line_width'])) {

@@ -581,13 +581,21 @@ function form_save() {
 			$save['local_graph_id']               = get_nfilter_request_var('local_graph_id');
 			$save['task_item_id']                 = form_input_validate(get_nfilter_request_var('task_item_id'), 'task_item_id', '^[0-9]+$', true, 3);
 			$save['color_id']                     = form_input_validate((isset($item['color_id']) ? $item['color_id'] : get_nfilter_request_var('color_id')), 'color_id', '^[0-9]+$', true, 3);
+			$save['color2_id']                    = form_input_validate((isset($item['color2_id']) ? $item['color2_id'] : get_nfilter_request_var('color2_id')), 'color2_id', '^[0-9]+$', true, 3);
 
 			/* if alpha is disabled, use invisible_alpha instead */
 			if (!isset_request_var('alpha')) {
 				set_request_var('alpha', get_nfilter_request_var('invisible_alpha'));
 			}
 
+			if (!isset_request_var('alpha2')) {
+				set_request_var('alpha2', get_nfilter_request_var('invisible_alpha'));
+			}
+
 			$save['alpha']          = form_input_validate((isset($item['alpha']) ? $item['alpha'] : get_nfilter_request_var('alpha')), 'alpha', '', true, 3);
+			$save['alpha2']         = form_input_validate((isset($item['alpha2']) ? $item['alpha2'] : get_nfilter_request_var('alpha2')), 'alpha2', '', true, 3);
+			$save['gradheight']     = form_input_validate((isset($item['gradheight']) ? $item['gradheight'] : get_nfilter_request_var('gradheight')), 'gradheight', '', true, 3);
+
 			$save['graph_type_id']  = form_input_validate((isset($item['graph_type_id']) ? $item['graph_type_id'] : get_nfilter_request_var('graph_type_id')), 'graph_type_id', '^[0-9]+$', true, 3);
 
 			if (isset_request_var('line_width') || isset($item['line_width'])) {
@@ -620,6 +628,8 @@ function form_save() {
 			$save['consolidation_function_id'] = form_input_validate((isset($item['consolidation_function_id']) ? $item['consolidation_function_id'] : get_nfilter_request_var('consolidation_function_id')), 'consolidation_function_id', '^[0-9]+$', true, 3);
 			$save['textalign']                 = form_input_validate((isset_request_var('textalign') ? get_nfilter_request_var('textalign') : ''), 'textalign', '^[a-z]+$', true, 3);
 			$save['text_format']               = form_input_validate((isset($item['text_format']) ? $item['text_format'] : get_nfilter_request_var('text_format')), 'text_format', '', true, 3);
+			$save['legend']                    = form_input_validate((isset($item['legend']) ? $item['legend'] : get_nfilter_request_var('legend')), 'legend', '', true, 3);
+
 			$save['value']                     = form_input_validate(get_nfilter_request_var('value'), 'value', '', true, 3);
 			$save['hard_return']               = form_input_validate(((isset($item['hard_return']) ? $item['hard_return'] : (isset_request_var('hard_return') ? get_nfilter_request_var('hard_return') : ''))), 'hard_return', '', true, 3);
 			$save['gprint_id']                 = form_input_validate(get_nfilter_request_var('gprint_id'), 'gprint_id', '^[0-9]+$', true, 3);
@@ -1024,6 +1034,20 @@ function item_edit() {
 			}
 		}
 
+		function changeColor2Id() {
+			$('#alpha2').prop('disabled', true);
+
+			if ($('#color2_id').val() != 0) {
+				$('#alpha2').prop('disabled', false);
+			}
+
+			switch ($('#graph_type_id').val()) {
+				case '7':
+				case '8':
+					$('#alpha2').prop('disabled', false);
+			}
+		}
+
 		function cdefAlignment() {
 			if ($('#task_item_id').val() == '0') {
 				$('#cdef_id option').each(function() {
@@ -1056,27 +1080,33 @@ function item_edit() {
 			})
 		}
 
+		var graphType = $('#graph_type_id').val();
 		function setRowVisibility() {
 			toggleFields({
 				data_template_id: graphType != 3 && graphType != 40,
 				task_item_id: graphType != 3 && graphType != 40,
 				color_id: (graphType > 1 && graphType < 9) || graphType == 20 || graphType == 30,
+				color2_id: (graphType == 7 || graphType == 8,
 				line_width: (graphType > 3 && graphType < 7) || graphType == 20,
 				dashes: (graphType > 1 && graphType < 7) || graphType == 20,
 				dash_offset: (graphType > 1 && graphType < 7) || graphType == 20,
 				textalign: graphType == 40,
 				shift: (graphType > 3 && graphType < 9) || graphType == 20,
 				alpha: (graphType > 3 && graphType < 9) || graphType == 20 || graphType == 40,
+				alpha2: (graphType == 7 || graphType == 8,
+				gradheight: (graphType == 7 || graphType == 8,
 				consolidation_function_id: graphType > 3 && graphType != 10 && graphType != 15 && graphType != 30 && graphType != 40,
 				cdef_id: graphType > 3 && graphType != 40,
 				vdef_id: graphType > 3 && graphType != 40,
 				value: graphType == 2 || graphType == 3 || graphType == 30,
 				gprint_id: graphType > 8 && graphType < 16,
 				text_format: graphType >= 1 && graphType != 10 && graphType != 15 && graphType != 40,
+				legend: (graphType > 1 && graphType < 9) || graphType == 20 || graphType == 30,
 				hard_return: graphType >= 1 && graphType != 10 && graphType != 15 && graphType != 40,
 			});
 
 			changeColorId();
+			changeColor2Id();
 			cdefAlignment();
 		}
 	</script>
