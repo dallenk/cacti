@@ -96,6 +96,7 @@ Cacti CHANGELOG
 -feature#5222: Allow Cacti Log to be Displayed in 'Raw Log' Format
 -feature#5225: When your Database server has TB of memory, memory calculation returns incorrect data in Cacti
 -feature#5231: When editing a Device show in state/uptime as a date in the header
+-feature#5267: Gradient Support does not work correctly on Aggregate Graphs
 -feature#5273: Add support for RRD --left-axis-format Options
 -feature#5278: Enhance Cacti's ping to use fping if it's installed to take advantage of sub-second timeouts
 -feature#5294: Allow Ignored Errors to be Logged such as 'No Route to host'
