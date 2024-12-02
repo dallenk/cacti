@@ -1218,7 +1218,9 @@ $graph_template_classes = array(
 	'qos'             => __('QOS Stats'),
 	'swap'            => __('Swap Stats'),
 	'syslog'          => __('Syslog Stats'),
-	'system'          => __('System Stats')
+	'system'          => __('System Stats'),
+	'unassigned'      => __('Unassigned'),
+	'unspecified'     => __('Unspecified')
 );
 
 if ((isset($_SESSION[SESS_USER_ID]))) {
