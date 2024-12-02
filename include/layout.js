@@ -4407,6 +4407,40 @@ function initializeGraphs(disable_cache) {
 	});
 }
 
+$.widget('ui.tooltip', $.ui.tooltip, {
+	_create: function() {
+		this._on( {
+			mouseover: "open",
+			focusin: "open"
+		} );
+
+		// IDs of generated tooltips, needed for destroy
+		this.tooltips = {};
+
+		// IDs of parent tooltips where we removed the title attribute
+		this.parents = {};
+
+		// Append the aria-live region so tooltips announce correctly,
+		// but only once !
+		let liveRegion = $("[role=log].ui-helper-hidden-accessible");
+		if ( liveRegion.length === 0 ) {
+			this.liveRegion = $( "<div>" )
+				.attr( {
+					role: "log",
+					"aria-live": "assertive",
+					"aria-relevant": "additions"
+				} )
+				.appendTo( this.document[ 0 ].body );
+			this._addClass( this.liveRegion, null, "ui-helper-hidden-accessible" );
+		}else{
+			this.liveRegion = liveRegion;
+		}
+		this.disabledTitles = $( [] );
+	},
+})
+
+
+
 $.widget('custom.languageselect', $.ui.selectmenu, {
 	_renderItem: function (ul, item) {
 		var li = $('<li>');
