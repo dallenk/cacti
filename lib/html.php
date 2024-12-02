@@ -1305,18 +1305,55 @@ function draw_graph_items_list($item_list, $filename, $url_data, $disable_contro
 
 	include(CACTI_PATH_INCLUDE . '/global_arrays.php');
 
-	print "<tr class='tableHeader'>";
-	DrawMatrixHeaderItem(__('Graph Item'),'',1);
-	DrawMatrixHeaderItem(__('#'), '', 1);
-	DrawMatrixHeaderItem(__('Data Source'),'',1);
-	DrawMatrixHeaderItem(__('Graph Item Type'),'',1);
-	DrawMatrixHeaderItem(__('CF Type'),'',1);
-	DrawMatrixHeaderItem(__('GPrint'),'',1);
-	DrawMatrixHeaderItem(__('CDEF'),'',1);
-	DrawMatrixHeaderItem(__('VDEF'),'',1);
-	DrawMatrixHeaderItem(__('Alpha %'),'',1);
-	DrawMatrixHeaderItem(__('Item Color'),'',4);
-	print '</tr>';
+	$display_text = array(
+		array(
+			'display' => __('Data Source'),
+			'align'   => 'left'
+		),
+		array(
+			'display' => __('Seq#'),
+			'align'   => 'center'
+		),
+		array(
+			'display' => __('Type'),
+			'align'   => 'left'
+		),
+		array(
+			'display' => __('Consolidation'),
+			'align'   => 'left'
+		),
+		array(
+			'display' => __('Legend'),
+			'tip'     => __('When exporting or showing the values while hovering over the Graph, what legend to you want displayed?  If empty, it will default to data_source_name (consolidation function).  This does not work for some Cacti items such as TOTAL_ALL_DATA_SOURCES for example.'),
+			'align'   => 'left'
+		),
+		array(
+			'display' => __('GPrint'),
+			'align'   => 'left'
+		),
+		array(
+			'display' => __('CDEF'),
+			'align'   => 'left'
+		),
+		array(
+			'display' => __('VDEF'),
+			'align'   => 'left'
+		),
+		array(
+			'display' => __('Primary Color'),
+			'align'   => 'left'
+		),
+		array(
+			'display' => __('Gradient Color'),
+			'align'   => 'left'
+		),
+		array(
+			'display' => __('Actions'),
+			'align'   => 'right'
+		)
+	);
+
+	html_header($display_text);
 
 	$group_counter    = 0;
 	$_graph_type_name = '';
@@ -1332,7 +1369,7 @@ function draw_graph_items_list($item_list, $filename, $url_data, $disable_contro
 			if (!preg_match('/(GPRINT|TEXTALIGN|HRULE|VRULE|TICK)/', $graph_item_types[$item['graph_type_id']])) {
 				$this_row_style      = 'font-weight: bold;';
 				$use_custom_class    = true;
-				$item['gprint_name'] = __('N/A');
+				$item['gprint_name'] = '-';
 
 				if ($group_counter % 2 == 0) {
 					$customClass = 'graphItem';
@@ -1351,19 +1388,6 @@ function draw_graph_items_list($item_list, $filename, $url_data, $disable_contro
 			} else {
 				print "<tr class='tableRowGraph $customClass'>";
 			}
-
-			print '<td>';
-
-			if ($disable_controls == false) {
-				print "<a class='linkEditMain' href='" . html_escape("$filename?action=item_edit&id=" . $item['id'] . "&$url_data") . "'>";
-			}
-			print __('Item # %d', ($i + 1));
-
-			if ($disable_controls == false) {
-				print '</a>';
-			}
-			print '</td>';
-			print '<td>' . $item['sequence'] . '</td>';
 
 			if (empty($item['data_source_name'])) {
 				$item['data_source_name'] = __('No Source');
@@ -1402,41 +1426,106 @@ function draw_graph_items_list($item_list, $filename, $url_data, $disable_contro
 				$hard_return = "<span style='font-weight:bold;color:#FF0000;'>&lt;HR&gt;</span>";
 			}
 
-			/* data source */
-			print "<td style='$this_row_style'>" . html_escape($matrix_title) . $hard_return . '</td>';
+			if ($disable_controls == false) {
+				$display = "<a class='linkEditMain' href='" . html_escape("$filename?action=item_edit&id=" . $item['id'] . "&$url_data") . "'>" . html_escape($matrix_title) . '</a>';
+			} else {
+				$display = html_escape($matric_title);
+			}
 
-			/* graph item type */
+			/* data source display */
+			print "<td style='$this_row_style'>" . $display . $hard_return . '</td>';
+
+			/* sequence number */
+			print "<td class='center' style='$this_row_style'>" . $item['sequence'] . '</td>';
+
+			/* graph item type display */
 			print "<td style='$this_row_style'>" . $graph_item_types[$item['graph_type_id']] . '</td>';
 
+			/* consolidation function display */
 			if (!preg_match('/(TICK|TEXTALIGN|HRULE|VRULE)/', $_graph_type_name)) {
 				print "<td style='$this_row_style'>" . $consolidation_functions[$item['consolidation_function_id']] . '</td>';
 			} else {
-				print '<td>' . __('N/A') . '</td>';
+				print '<td>-</td>';
 			}
 
-			print "<td style='$this_row_style'>";
-			print $item['gprint_name'];
-			print '</td>';
-
-			print "<td style='$this_row_style'>";
-			print $item['cdef_name'];
-			print '</td>';
-
-			print "<td style='$this_row_style'>";
-			print $item['vdef_name'];
-			print '</td>';
-
-			/* alpha type */
-			if (preg_match('/(AREA|STACK|TICK|LINE[123])/', $_graph_type_name)) {
-				print "<td style='$this_row_style'>" . round((hexdec($item['alpha']) / 255) * 100) . '%</td>';
+			/* export/hover legend */
+			if ($item['legend'] != '') {
+				print "<td style='$this_row_style'>" . html_escape($item['legend']) . '</td>';
 			} else {
-				print "<td style='$this_row_style'></td>";
+				print '<td>-</td>';
 			}
 
-			/* color name */
+			/* grpint display */
+			print "<td class='prewrap' style='$this_row_style'>";
+			if ($item['gprint_name'] != '') {
+				print html_escape($item['gprint_name']);
+			} else {
+				print '-';
+			}
+			print '</td>';
+
+			/* cdef display */
+			print "<td class='prewrap' style='$this_row_style'>";
+			if ($item['cdef_name'] != '') {
+				print $item['cdef_name'];
+			} else {
+				print '-';
+			}
+			print '</td>';
+
+			/* vdef display */
+			print "<td class='prewrap' style='$this_row_style'>";
+			if ($item['vdef_name'] != '') {
+				print $item['vdef_name'];
+			} else {
+				print '-';
+			}
+			print '</td>';
+
+			/* color display */
+			if (preg_match('/(AREA|STACK|TICK|LINE[123])/', $_graph_type_name)) {
+				if (preg_match('/(AREA|STACK)/', $_graph_type_name)) {
+					if ($item['hex'] != '') {
+						$color1 = $item['hex']  . $item['alpha'];
+
+						if ($item['hex2'] != '') {
+							$color2 = $item['hex2'] . ($item['hex2'] != '' ? $item['alpha2']:'');
+						} else {
+							$color2 = '';
+						}
+					} else {
+						$color1 = $color2 = '';
+					}
+				} else {
+					$color1 = $item['hex'] . $item['alpha'];
+				}
+			} else {
+				$color1 = '';
+			}
+
 			if (!preg_match('/(TEXTALIGN)/', $_graph_type_name)) {
-				print "<td style='width:1%;" . ((!empty($item['hex'])) ? 'background-color:#' . $item['hex'] . ";'" : "'") . '></td>';
-				print "<td style='$this_row_style'>" . $item['hex'] . '</td>';
+				if (preg_match('/(AREA|STACK)/', $_graph_type_name)) {
+					/* color1 */
+					print "<td class='nowrap'>";
+					print "<div style='display:table-cell;min-width:16px;background-color:#{$color1}'></div>";
+					print "<div style='display:table-cell;padding-left:5px;'>{$color1}</div>";
+					print "</td>";
+
+					/* color2 */
+					print "<td class='nowrap'>";
+					print "<div style='display:table-cell;min-width:16px;background-color:#{$color2}'></div>";
+					print "<div style='display:table-cell;padding-left:5px;'>{$color2}</div>";
+					print "</td>";
+				} else {
+					/* color 1 */
+					print "<td class='nowrap'>";
+					print "<div style='display:table-cell;min-width:16px;background-color:#{$color1}'></div>";
+					print "<div style='display:table-cell;padding-left:5px;'>{$color1}</div>";
+					print "</td>";
+
+					/* color2 */
+					print "<td></td>";
+				}
 			} else {
 				print '<td></td><td></td>';
 			}
@@ -1456,10 +1545,6 @@ function draw_graph_items_list($item_list, $filename, $url_data, $disable_contro
 					print "<span class='moveArrowNone'></span>";
 				}
 
-				print '</td>';
-
-				print "<td style='width:1%' class='right'>";
-
 				print "<a class='deleteMarker fa fa-times' title='" . __esc('Delete') . "' href='" . html_escape("$filename?action=item_remove&id=" . $item['id'] . "&nostate=true&$url_data") . "'></a>";
 
 				print '</td>';
@@ -1470,7 +1555,7 @@ function draw_graph_items_list($item_list, $filename, $url_data, $disable_contro
 			$i++;
 		}
 	} else {
-		print "<tr class='tableRow'><td colspan='7'><em>" . __('No Items') . '</em></td></tr>';
+		print "<tr class='tableRow'><td colspan='" . cacti_sizeof($display_text) . "'><em>" . __('No Items') . '</em></td></tr>';
 	}
 }
 
