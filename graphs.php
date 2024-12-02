@@ -137,6 +137,26 @@ switch (get_request_var('action')) {
 		get_allowed_ajax_graph_items(true, $sql_where);
 
 		break;
+	case 'ajax_dnd':
+		$local_graph_id = get_filter_request_var('id');
+		$sequences      = get_nfilter_request_var('item_ids');
+
+		if (cacti_sizeof($sequences)) {
+			foreach($sequences as $index => $s) {
+				$new_seq = $index++;
+
+				db_execute_prepared('UPDATE graph_templates_item
+					SET sequence = ?
+					WHERE id = ?
+					AND local_graph_id = ?
+					AND graph_template_id = 0',
+					array($new_seq, $s, $local_graph_id));
+			}
+		}
+
+		header('Location: graphs.php?action=graph_edit&id=' . get_filter_request_var('id'));
+
+		break;
 	case 'item_remove':
 		get_filter_request_var('local_graph_id');
 
@@ -570,11 +590,16 @@ function form_save() {
 
 		$sequence = get_nfilter_request_var('sequence');
 
+		if (empty($sequence)) {
+			$sequence = 0;
+		}
+
 		foreach ($items as $item) {
 			/* generate a new sequence if needed */
 			if (empty($sequence)) {
 				$sequence = get_sequence($sequence, 'sequence', 'graph_templates_item', 'local_graph_id=' . get_nfilter_request_var('local_graph_id'));
 			}
+
 			$save['id']                           = get_nfilter_request_var('graph_template_item_id');
 			$save['graph_template_id']            = get_nfilter_request_var('graph_template_id');
 			$save['local_graph_template_item_id'] = get_nfilter_request_var('local_graph_template_item_id');
@@ -2084,6 +2109,14 @@ function item() {
 		$('.deleteMarker, .moveArrow').unbind().click(function(event) {
 			event.preventDefault();
 			loadUrl({url:$(this).attr('href')})
+		});
+
+		$('#graphs_graph_edit2_child').attr('id', 'item_ids');
+		$('#item_ids').find('tr:first').addClass('nodrag').addClass('nodrop');
+		$('#item_ids').tableDnD({
+			onDrop: function(table, row) {
+				loadUrl({url:'graphs.php?action=ajax_dnd&id=<?php isset_request_var('id') ? print get_request_var('id') : print 0;?>&'+$.tableDnD.serialize()});
+			}
 		});
 	});
 	</script>

@@ -1361,12 +1361,14 @@ function draw_graph_items_list($item_list, $filename, $url_data, $disable_contro
 
 	if (cacti_sizeof($item_list)) {
 		foreach ($item_list as $item) {
+			$_graph_type_name = $graph_item_types[$item['graph_type_id']];
+
 			/* graph grouping display logic */
 			$this_row_style   = '';
 			$use_custom_class = false;
 			$hard_return      = '';
 
-			if (!preg_match('/(GPRINT|TEXTALIGN|HRULE|VRULE|TICK)/', $graph_item_types[$item['graph_type_id']])) {
+			if (!preg_match('/(GPRINT|TEXTALIGN|HRULE|VRULE|TICK)/', $_graph_type_name)) {
 				$this_row_style      = 'font-weight: bold;';
 				$use_custom_class    = true;
 				$item['gprint_name'] = '-';
@@ -1380,13 +1382,12 @@ function draw_graph_items_list($item_list, $filename, $url_data, $disable_contro
 				$group_counter++;
 			}
 
-			$_graph_type_name = $graph_item_types[$item['graph_type_id']];
 
 			/* alternating row color */
 			if ($use_custom_class == false) {
-				print "<tr class='tableRowGraph'>";
+				print "<tr id='{$item['id']}' class='tableRowGraph'>";
 			} else {
-				print "<tr class='tableRowGraph $customClass'>";
+				print "<tr id='{$item['id']}' class='tableRowGraph $customClass'>";
 			}
 
 			if (empty($item['data_source_name'])) {
@@ -1509,19 +1510,19 @@ function draw_graph_items_list($item_list, $filename, $url_data, $disable_contro
 					print "<td class='nowrap'>";
 					print "<div style='display:table-cell;min-width:16px;background-color:#{$color1}'></div>";
 					print "<div style='display:table-cell;padding-left:5px;'>{$color1}</div>";
-					print "</td>";
+					print '</td>';
 
 					/* color2 */
 					print "<td class='nowrap'>";
 					print "<div style='display:table-cell;min-width:16px;background-color:#{$color2}'></div>";
 					print "<div style='display:table-cell;padding-left:5px;'>{$color2}</div>";
-					print "</td>";
+					print '</td>';
 				} else {
 					/* color 1 */
 					print "<td class='nowrap'>";
 					print "<div style='display:table-cell;min-width:16px;background-color:#{$color1}'></div>";
 					print "<div style='display:table-cell;padding-left:5px;'>{$color1}</div>";
-					print "</td>";
+					print '</td>';
 
 					/* color2 */
 					print "<td></td>";
@@ -2992,7 +2993,7 @@ function html_common_header($title, $selectedTheme = '') {
 	print get_md5_include_js('include/js/jstree.js');
 	print get_md5_include_js('include/js/jquery.toast.js');
 	print get_md5_include_js('include/js/jquery.hotkeys.js', true);
-	print get_md5_include_js('include/js/jquery.tablednd.js', true);
+	print get_md5_include_js('include/js/jquery.tablednd.js');
 	print get_md5_include_js('include/js/jquery.zoom.js', true);
 	print get_md5_include_js('include/js/jquery.multiselect.js');
 	print get_md5_include_js('include/js/jquery.multiselect.filter.js');
