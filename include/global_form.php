@@ -1017,6 +1017,14 @@ $struct_graph_item = array(
 		'array'         => $graph_color_alpha,
 		'description'   => __('The opacity of the gradient color.')
 	),
+	'gradheight' => array(
+		'friendly_name' => __('Gradient Height'),
+		'method'        => 'textbox',
+		'max_length'    => '5',
+		'size'          => '5',
+		'default'       => '',
+		'description'   => __('The Gradient Height parameter can create three different behaviors. If it is > 0, then the gradient is a fixed height, starting at the line going down. If it is < 0, then the gradient starts at a fixed height above the x-axis, going down to the x-axis. If it is == 0, then the gradient goes from the top of the area fill to x-axis.')
+	),
 	'consolidation_function_id' => array(
 		'friendly_name' => __('Consolidation Function'),
 		'method'        => 'drop_array',
