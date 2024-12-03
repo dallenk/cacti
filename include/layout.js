@@ -1362,9 +1362,9 @@ function finalizeAuthProfileData(options, data) {
 }
 
 function makeFiltersResponsive() {
-	storage = Storages.sessionStorage;
+	var storage = Storages.sessionStorage;
 
-	filterNum = 0;
+	var filterNum = 0;
 
 	if ($('div.cactiTableButton').closest('.cactiTable').not('#dqdebug').find('.filterTable').length) {
 		$('div.cactiTableButton').closest('.cactiTable').not('#dqdebug').each(function () {
@@ -1496,7 +1496,7 @@ function makeFiltersResponsive() {
 }
 
 function toggleFilterAndIcon(id, child, initial) {
-	storage = Storages.sessionStorage;
+	var storage = Storages.sessionStorage;
 
 	if (storage.isSet('filterVisibility')) {
 		state = storage.get('filterVisibility');
@@ -2167,6 +2167,7 @@ function tuneFilter(object, width) {
 
 function handleUserMenu(toggle) {
 	var storage = Storages.sessionStorage;
+
 	var windowWidth = $(window).width();
 
 	/* set the navigation id is not set */
