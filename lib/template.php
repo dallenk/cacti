@@ -1240,6 +1240,9 @@ function update_graph_template_items($graph_template_id, $graph_template_item_id
 
 	if (!$task_item_changed) {
 		if (cacti_sizeof($template_items_list)) {
+			$sql        = 'UPDATE graph_templates_item ';
+			$sql_params = array();
+
 			foreach ($template_items_list as $template_item) {
 				foreach ($template_item as $column => $value) {
 					switch($column) {
@@ -1262,17 +1265,21 @@ function update_graph_template_items($graph_template_id, $graph_template_item_id
 						case 'value':
 						case 'hard_return':
 						case 'gprint_id':
-							db_execute_prepared("UPDATE graph_templates_item
-								SET $column = ?
-								WHERE local_graph_template_item_id = ?",
-								array($value, $graph_template_item_id));
+							$sql .= (cacti_sizeof($sql_params) ? ', ':'SET ') . "`$column` = ?";
+							$sql_params[] = $value;
 
 							break;
-
 						default:
 							break;
 					}
 				}
+			}
+
+			if (cacti_sizeof($sql_params)) {
+				$sql .= ' WHERE local_graph_template_item_id = ?';
+				$sql_params[] = $graph_template_item_id;
+
+				db_execute_prepared($sql, $sql_params);
 			}
 		}
 	} else {
