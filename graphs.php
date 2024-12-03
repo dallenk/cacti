@@ -222,7 +222,7 @@ function get_ajax_graph_items() {
 		$sql_params[] = $host_id;
 	}
 
-	if (get_request_var('term') != '') {
+	if (get_nfilter_request_var('term') != '') {
 		$sql_where .= ' HAVING name LIKE ?';
 		$sql_params[] = '%' . get_nfilter_request_var('term') . '%';
 	}
