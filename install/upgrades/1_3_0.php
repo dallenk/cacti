@@ -70,6 +70,8 @@ function upgrade_to_1_3_0() {
 	db_add_index('data_input_data', 'INDEX', 'local_data_id', array('local_data_id'));
 	db_add_index('data_input_data', 'INDEX', 'host_id', array('host_id'));
 
+	db_add_index('poller_output_boost', 'INDEX', 'time', array('time'));
+
 	db_install_execute("UPDATE data_input_data AS did
 		INNER JOIN data_template_data AS dtd
 		ON did.data_template_data_id = dtd.id
