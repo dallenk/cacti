@@ -4835,7 +4835,10 @@ function makeCallbacks() {
 
 		$(dcWrap).on('mouseenter', function() {
 			$(this).addClass('ui-state-hover');
-			$('input#' + id + '_input').addClass('ui-state-hover');
+
+			if ($('input#' + id + '_input').length) {
+				$('input#' + id + '_input').addClass('ui-state-hover');
+			}
 		}).on('mouseleave', function() {
 			$(this).removeClass('ui-state-hover');
 			$(dcInputFields).removeClass('ui-state-hover');
