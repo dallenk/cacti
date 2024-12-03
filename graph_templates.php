@@ -1025,7 +1025,7 @@ function item_edit() {
 				textalign: graphType == 40,
 				shift: (graphType > 3 && graphType < 9) || graphType == 20,
 				alpha: (graphType > 3 && graphType < 9) || graphType == 20 || graphType == 40,
-				consolidation_function_id: graphType > 3 && graphType != 10 && graphType != 15 && graphType != 30 && graphType != 40,
+				consolidation_function_id: graphType == 1 || (graphType > 3 && graphType != 10 && graphType != 15 && graphType != 30 && graphType != 40),
 				cdef_id: graphType > 3 && graphType != 40,
 				vdef_id: graphType > 3 && graphType != 40,
 				value: graphType == 2 || graphType == 3 || graphType == 30,
