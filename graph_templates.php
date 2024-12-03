@@ -1043,7 +1043,7 @@ function item_edit() {
 }
 
 function form_actions() {
-	global $actions, $config, $image_types;
+	global $actions, $config, $image_types, $graph_template_classes;
 
 	/* ================= input validation ================= */
 	get_filter_request_var('drp_action', FILTER_VALIDATE_REGEXP, array('options' => array('regexp' => '/^([a-zA-Z0-9_]+)$/')));
@@ -1127,10 +1127,22 @@ function form_actions() {
 					db_execute_prepared('UPDATE graph_templates_graph
 						SET width = ?, height = ?, image_format_id = ?
 						WHERE graph_template_id = ?',
-						array(get_request_var('graph_width'),
-						get_request_var('graph_height'),
-						get_request_var('image_format_id'),
-						$selected_items[$i]));
+						array(
+							get_request_var('graph_width'),
+							get_request_var('graph_height'),
+							get_request_var('image_format_id'),
+							$selected_items[$i]
+						)
+					);
+
+					db_execute_prepared('UPDATE graph_templates
+						SET class = ?
+						WHERE id = ?',
+						array(
+							get_request_var('class'),
+							$selected_items[$i]
+						)
+					);
 				}
 			} elseif (get_request_var('drp_action') == '4') { // retemplate
 				for ($i=0;($i < cacti_count($selected_items));$i++) {
@@ -1219,6 +1231,12 @@ function form_actions() {
 					'scont'    => __('Resize Graph Template'),
 					'pcont'    => __('Resize Graph Templates'),
 					'extra'    => array(
+						'class' => array(
+							'method'  => 'drop_array',
+							'title'   => __('Template Class:'),
+							'default' => 'unspecified',
+							'array'   => $graph_template_classes
+						),
 						'graph_height' => array(
 							'method'  => 'textbox',
 							'title'   => __('Graph Height:'),
