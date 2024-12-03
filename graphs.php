@@ -213,14 +213,18 @@ function get_ajax_graph_items() {
 	$rrd_id  = get_filter_request_var('rrd_id');
 	$host_id = get_filter_request_var('host_id');
 
+	$sql_where    = '';
+	$sql_params   = array();
+	$sql_params[] = $rra_id;
+
 	if ($host_id > 0) {
-		$sql_where = ' AND data_local.host_id=' . $host_id;
-	} else {
-		$sql_where = '';
+		$sql_where = ' AND data_local.host_id = ?';
+		$sql_params[] = $host_id;
 	}
 
 	if (get_request_var('term') != '') {
-		$sql_where .= ' HAVING name LIKE "%' . trim(db_qstr(get_request_var('term')),"'") . '%"';
+		$sql_where .= ' HAVING name LIKE ?';
+		$sql_params[] = '%' . get_nfilter_request_var('term') . '%';
 	}
 
 	$items  = db_fetch_assoc_prepared("SELECT *
@@ -254,7 +258,7 @@ function get_ajax_graph_items() {
 			ORDER BY name
 		) AS b
 		LIMIT " . read_config_option('autocomplete_rows'),
-		array($rrd_id));
+		$sql_params);
 
 	foreach ($items as $key => $item) {
 		$items[$key]['label'] = $item['name'];
@@ -590,8 +594,8 @@ function form_save() {
 
 		$sequence = get_nfilter_request_var('sequence');
 
-		if (empty($sequence)) {
-			$sequence = 0;
+		if (empty($sequence) || !is_numeric($sequence)) {
+			$sequence = 1;
 		}
 
 		foreach ($items as $item) {
