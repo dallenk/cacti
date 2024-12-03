@@ -4218,7 +4218,8 @@ function rrd_copy_rra($dom, $cf, $rra_parm) {
 }
 
 function rrdtool_replacement_legend($local_graph_id) {
-	$graph_data = db_fetch_assoc_prepared('SELECT gti.legend, dtr.data_source_name, gti.consolidation_function_id, c.hex, gti.alpha
+	$graph_data = db_fetch_assoc_prepared('SELECT gti.legend, dtr.data_source_name,
+		gti.consolidation_function_id, c.hex, gti.alpha, gti.text_format
 		FROM graph_templates_item AS gti
 		INNER JOIN data_template_rrd AS dtr
 		ON gti.task_item_id = dtr.id
@@ -4229,12 +4230,23 @@ function rrdtool_replacement_legend($local_graph_id) {
 		ORDER BY gti.sequence',
 		array($local_graph_id));
 
+	$is_agg = db_fetch_cell_prepared('SELECT COUNT(*)
+		FROM aggregate_graphs
+		WHERE local_graph_id = ?',
+		array($local_graph_id));
+
 	$legend = array();
 
 	if (cacti_sizeof($graph_data)) {
 		foreach($graph_data as $g) {
+			if ($is_agg && $g['text_format'] != '') {
+				$agg_prefix = $g['text_format'] . ' - ';
+			} else {
+				$agg_prefix = '';
+			}
+
 			if ($g['legend'] != '') {
-				$legend[] = array('legend' => $g['legend'], 'color' => '#' . $g['hex'] . $g['alpha']);
+				$legend[] = array('legend' => $agg_prefix . $g['legend'], 'color' => '#' . $g['hex'] . $g['alpha']);
 			} else {
 				if ($g['data_source_name'] == '') {
 					$g['data_source_name'] = 'Unknown';
@@ -4257,7 +4269,7 @@ function rrdtool_replacement_legend($local_graph_id) {
 						break;
 				}
 
-				$legend[] = array('legend' => $g['data_source_name'], 'color' => '#' . $g['hex'] . $g['alpha']);
+				$legend[] = array('legend' => $agg_prefix . $g['data_source_name'], 'color' => '#' . $g['hex'] . $g['alpha']);
 			}
 		}
 	}
