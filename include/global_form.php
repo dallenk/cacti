@@ -990,18 +990,32 @@ $struct_graph_item = array(
 		'description' => __('The data source to use for this graph item.')
 	),
 	'color_id' => array(
-		'friendly_name' => __('Color'),
+		'friendly_name' => __('Primary Color'),
 		'method'        => 'drop_color',
 		'default'       => '0',
 		'on_change'     => 'changeColorId()',
-		'description'   => __('The color to use for the legend.')
+		'description'   => __('The color to use for the canvas item and legend.')
 	),
 	'alpha' => array(
-		'friendly_name' => __('Opacity/Alpha Channel'),
+		'friendly_name' => __('Primary Opacity'),
 		'method'        => 'drop_array',
 		'default'       => 'FF',
 		'array'         => $graph_color_alpha,
-		'description'   => __('The opacity/alpha channel of the color.')
+		'description'   => __('The opacity of the primary color.')
+	),
+	'color2_id' => array(
+		'friendly_name' => __('Gradient Color'),
+		'method'        => 'drop_color',
+		'default'       => '0',
+		'on_change'     => 'changeColorId()',
+		'description'   => __('The gradient color to use for the canvas item.')
+	),
+	'alpha2' => array(
+		'friendly_name' => __('Gradient Opacity'),
+		'method'        => 'drop_array',
+		'default'       => 'FF',
+		'array'         => $graph_color_alpha,
+		'description'   => __('The opacity of the gradient color.')
 	),
 	'consolidation_function_id' => array(
 		'friendly_name' => __('Consolidation Function'),
