@@ -245,7 +245,7 @@ $settings['path'] = array(
 		'description'   => __('This is the Log file where Boost will write its information to.  It much be located in the same directory as the Cacti Log file.'),
 		'method'        => 'filepath',
 		'file_type'     => 'ascii',
-		'default'       => '',
+		'default'       => CACTI_PATH_LOG . '/boost.log',
 		'max_length'    => '255'
 	),
 	'pollerpaths_header' => array(
