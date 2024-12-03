@@ -1552,9 +1552,10 @@ function boost_poller_bottom() {
 		boost_update_snmp_statistics();
 
 		$boost_log     = read_config_option('path_boost_log');
+		$boost_debug   = read_config_option('boost_debug_enabled') == 'on' ? true:false;
 		$boost_logdir  = dirname($boost_log);
 
-		if ($boost_log != '') {
+		if ($boost_debug && $boost_log != '') {
 			if (!is_writable($boost_log) || !is_dir($boost_logdir) || !is_writable($boost_logdir)) {
 				boost_debug("WARNING: Boost log '$boost_log' does not exist or is not writable!");
 
@@ -1566,7 +1567,7 @@ function boost_poller_bottom() {
 
 		$command_string = read_config_option('path_php_binary');
 
-		if ($boost_log != '') {
+		if ($boost_debug && $boost_log != '') {
 			if ($config['cacti_server_os'] == 'unix') {
 				$extra_args    = '-q '  . CACTI_PATH_BASE . '/poller_boost.php --debug';
 				$redirect_args =  '>> ' . $boost_log . ' 2>&1';

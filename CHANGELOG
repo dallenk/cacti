@@ -113,6 +113,7 @@ Cacti CHANGELOG
 -feature#5588: When upgrading Cacti deprecated/removed libraries and files still exist
 -feature#5596: Add template Aruba OSCX switch 6x00
 -feature#5601: Order Graph Item Inputs Naturally (MariaDB 10.7++, no MySQL support)
+-feature#5640: Boost log file visibility and rotation not as expected
 -feature#5681: Add poller information to graph-variables
 -feature#5717: Add Aruba Clearpass template
 -feature#5804: Remove the Classic Theme in Cacti

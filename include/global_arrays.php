@@ -1220,7 +1220,7 @@ $graph_template_classes = array(
 	'syslog'          => __('Syslog Stats'),
 	'system'          => __('System Stats'),
 	'unassigned'      => __('Unassigned'),
-	'unspecified'     => __('Unspecified')
+	'unspecified'     => __('Unspecified'),
 );
 
 if ((isset($_SESSION[SESS_USER_ID]))) {

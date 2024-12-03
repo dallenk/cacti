@@ -390,6 +390,12 @@ function logrotate_rotatenow() {
 		$logs['Cacti StdErr'] = $log;
 	}
 
+	$log = read_config_option('path_boost_log');
+
+	if (!empty($log)) {
+		$logs['Cacti Boost'] = $log;
+	}
+
 	$run_time = time();
 	set_config_option('logrotate_lastrun', $run_time);
 
@@ -419,6 +425,7 @@ function logrotate_rotatenow() {
 	/* record the start time */
 	$poller_end = microtime(true);
 	$string     = sprintf('LOGMAINT STATS: Time:%4.4f, Rotated:%d, Removed:%d, Days Retained:%d', ($poller_end - $poller_start), $rotated, $cleaned, $days);
+
 	cacti_log($string, true, 'SYSTEM');
 }
 
