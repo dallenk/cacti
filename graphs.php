@@ -868,8 +868,7 @@ function item_edit() {
 	}
 
 	if (!isempty_request_var('id')) {
-		$template_item = db_fetch_row_prepared(
-			'SELECT *
+		$template_item = db_fetch_row_prepared('SELECT *
 			FROM graph_templates_item
 			WHERE id = ?',
 			array(get_request_var('id'))

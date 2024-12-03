@@ -2731,8 +2731,7 @@ function automation_execute_graph_template($host_id, $graph_template_id) {
 		array($graph_template_id, $host_id));
 
 	if ($existsAlready > 0) {
-		$dataSourceId  = db_fetch_cell_prepared('SELECT
-			data_template_rrd.local_data_id
+		$dataSourceId  = db_fetch_cell_prepared('SELECT data_template_rrd.local_data_id
 			FROM graph_templates_item, data_template_rrd
 			WHERE graph_templates_item.local_graph_id = ?
 			AND graph_templates_item.task_item_id = data_template_rrd.id
@@ -3104,8 +3103,7 @@ function create_dq_graphs($host_id, $snmp_query_id, $rule) {
 						array_key_exists('local_graph_id', $return_array) &&
 						array_key_exists('local_data_id', $return_array)) {
 
-						$data_source_id = db_fetch_cell_prepared('SELECT
-							data_template_rrd.local_data_id
+						$data_source_id = db_fetch_cell_prepared('SELECT data_template_rrd.local_data_id
 							FROM graph_templates_item, data_template_rrd
 							WHERE graph_templates_item.local_graph_id = ?
 							AND graph_templates_item.task_item_id = data_template_rrd.id

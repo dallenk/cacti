@@ -8982,8 +8982,7 @@ function text_regex_datasource($matches, $link = false) {
 		foreach ($ds_ids as $ds) {
 			if (!isset($gr_cache[$ds])) {
 				$gr_cache[$ds] = array_rekey(
-					db_fetch_assoc_prepared(
-						'SELECT DISTINCT
+					db_fetch_assoc_prepared('SELECT DISTINCT
 						gti.local_graph_id AS id
 						FROM graph_templates_item AS gti
 						INNER JOIN data_template_rrd AS dtr
@@ -8992,8 +8991,7 @@ function text_regex_datasource($matches, $link = false) {
 						AND dtr.local_data_id = ?',
 						array($ds)
 					),
-					'id',
-					'id'
+					'id', 'id'
 				);
 			}
 

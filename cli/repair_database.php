@@ -408,7 +408,7 @@ function detailed_checks() {
 		if ($force) {
 			db_execute('DELETE FROM graph_templates_item
 				WHERE gprint_id NOT IN (SELECT id FROM graph_templates_gprint)
-				AND gprint_id>0');
+				AND gprint_id > 0');
 
 			$fixes = db_affected_rows();
 

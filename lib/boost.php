@@ -385,8 +385,7 @@ function boost_graph_cache_check($local_graph_id, $rra_id, $rrdtool_pipe = null,
 	/* get the information to populate into the rrd files */
 	if (boost_check_correct_enabled()) {
 		/* before we make a graph, we need to check for rrd updates and perform them. */
-		$local_data_ids = db_fetch_assoc_prepared('SELECT DISTINCT
-			data_template_rrd.local_data_id
+		$local_data_ids = db_fetch_assoc_prepared('SELECT DISTINCT data_template_rrd.local_data_id
 			FROM graph_templates_item
 			INNER JOIN data_template_rrd
 			ON (graph_templates_item.task_item_id = data_template_rrd.id)

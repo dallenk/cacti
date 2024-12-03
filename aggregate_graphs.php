@@ -222,7 +222,7 @@ function form_save() {
 				$graph_templates_items = array_rekey(
 					db_fetch_assoc_prepared('SELECT id, sequence
 						FROM graph_templates_item
-						WHERE local_graph_id=0
+						WHERE local_graph_id = 0
 						AND graph_template_id = ?
 						ORDER BY sequence', array($graph_template_id)),
 					'id',
@@ -2200,10 +2200,12 @@ function purge_old_graphs() {
 
 	if (cacti_sizeof($old_aggregates)) {
 		db_execute('DELETE FROM graph_templates_item
-			WHERE local_graph_id IN (' . implode(',', $old_aggregates) . ')');
+			WHERE local_graph_id IN (' . implode(',', $old_aggregates) . ')
+			AND local_graph_id > 0');
 
 		db_execute('DELETE FROM graph_templates_graph
-			WHERE local_graph_id IN (' . implode(',', $old_aggregates) . ')');
+			WHERE local_graph_id IN (' . implode(',', $old_aggregates) . ')
+			AND local_graph_id > 0');
 
 		db_execute('DELETE FROM aggregate_graphs
 			WHERE local_graph_id IN (' . implode(',', $old_aggregates) . ')');
