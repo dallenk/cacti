@@ -182,6 +182,31 @@ function prune_deprecated_files() {
 			}
 		}
 	}
+
+	$remove_plugins = array(
+		'aggregate',
+		'autom8',
+		'clog',
+		'discovery',
+		'domains',
+		'dsstats',
+		'nectar',
+		'realtime',
+		'rrdclean',
+		'settings',
+		'snmpagent',
+		'spikekill',
+		'superlinks',
+		'ugroup'
+	);
+
+	foreach($remove_plugins as $pi) {
+		$full_path = CACTI_PATH_BASE . '/plugins/' . $pi;
+
+		if (file_exists($full_path) && is_dir($full_path)) {
+			install_rmdir_recursive("plugins/$pi", true);
+		}
+	}
 }
 
 function prime_default_settings() {
@@ -245,11 +270,14 @@ function install_create_csrf_secret($file) {
 }
 
 function install_unlink($file) {
-	if (file_exists(CACTI_PATH_BASE . '/' . $file) && is_writable(CACTI_PATH_BASE . '/' . $file)) {
-		log_install_high('file', "Unlinking file: $file");
+	$full_file = CACTI_PATH_BASE . '/' . $file;
+
+	if (file_exists($full_file) && is_writable($full_file)) {
+		log_install_high('file', "Unlinking file: $full_file");
+
 		unlink(CACTI_PATH_BASE . '/' . $file);
 	} else {
-		log_install_high('file', "Unlinking file: $file failed due to permission errors.");
+		log_install_high('file', "Unlinking file: $full_file failed due to permission errors.");
 	}
 }
 
@@ -273,7 +301,7 @@ function install_rmdir($directory) {
  * @return nill       - Nothing is returned
  */
 function install_rmdir_recursive($directory, $delete_parent = null) {
-	$files = glob($directory . '/{,.}[!.,!..]*',GLOB_MARK|GLOB_BRACE);
+	$files = glob(CACTI_PATH_BASE . '/' . $directory . '/{,.}[!.,!..]*',GLOB_MARK|GLOB_BRACE);
 
 	foreach ($files as $file) {
 		if (is_dir($file)) {
