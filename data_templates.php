@@ -455,7 +455,12 @@ function form_actions() {
 			}
 		}
 
-		$available_profiles = db_fetch_assoc('SELECT id, name FROM data_source_profiles ORDER BY name');
+		$available_profiles = array_rekey(
+			db_fetch_assoc('SELECT id, name
+				FROM data_source_profiles
+				ORDER BY name'),
+			'id', 'name'
+		);
 
 		$form_data = array(
 			'general' => array(
@@ -497,8 +502,7 @@ function form_actions() {
 							'method'  => 'drop_array',
 							'title'   => __('New Data Source Profile:'),
 							'array'   => $available_profiles,
-							'variable' => 'name',
-							'id'       => 'id'
+							'default' => ''
 						)
 					),
 				)
