@@ -500,7 +500,7 @@ function form_actions() {
 					'extra'    => array(
 						'data_source_profile_id' => array(
 							'method'  => 'drop_array',
-							'title'   => __('New Data Source Profile:'),
+							'title'   => __('New Data Source Profile'),
 							'array'   => $available_profiles,
 							'default' => ''
 						)
