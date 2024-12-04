@@ -1118,31 +1118,37 @@ function form_actions() {
 				for ($i=0;($i < cacti_count($selected_items));$i++) {
 					api_duplicate_graph(0, $selected_items[$i], get_nfilter_request_var('title_format'));
 				}
-			} elseif (get_request_var('drp_action') == '3') { // resize
+			} elseif (get_request_var('drp_action') == '3') { // change settings
 				get_filter_request_var('graph_width');
 				get_filter_request_var('graph_height');
 				get_filter_request_var('image_format_id');
 
-				for ($i=0;($i < cacti_count($selected_items));$i++) {
-					db_execute_prepared('UPDATE graph_templates_graph
-						SET width = ?, height = ?, image_format_id = ?
-						WHERE graph_template_id = ?',
-						array(
-							get_request_var('graph_width'),
-							get_request_var('graph_height'),
-							get_request_var('image_format_id'),
-							$selected_items[$i]
-						)
-					);
+				foreach($selected_items as $graph_template_id) {
+					$variables = array('height', 'width', 'image_format_id');
 
-					db_execute_prepared('UPDATE graph_templates
-						SET class = ?
-						WHERE id = ?',
-						array(
-							get_request_var('class'),
-							$selected_items[$i]
-						)
-					);
+					foreach($variables as $v) {
+						if (isset_request_var($v) && isset_request_var("t_$v")) {
+							db_execute_prepared("UPDATE graph_templates_graph
+								SET $v = ?
+								WHERE graph_template_id = ?",
+								array(
+									get_nfilter_request_var($v),
+									$graph_template_id
+								)
+							);
+						}
+					}
+
+					if (isset_request_var('class') && isset_request_var('t_class')) {
+						db_execute_prepared('UPDATE graph_templates
+							SET class = ?
+							WHERE id = ?',
+							array(
+								get_nfilter_request_var('class'),
+								$graph_template_id
+							)
+						);
+					}
 				}
 			} elseif (get_request_var('drp_action') == '4') { // retemplate
 				for ($i=0;($i < cacti_count($selected_items));$i++) {
@@ -1219,7 +1225,7 @@ function form_actions() {
 					'extra'    => array(
 						'title_format' => array(
 							'method'  => 'textbox',
-							'title'   => __('Title Format:'),
+							'title'   => __('Title Format'),
 							'default' => '<template_title> (1)',
 							'width'   => 45
 						)
@@ -1233,29 +1239,33 @@ function form_actions() {
 					'extra'    => array(
 						'class' => array(
 							'method'  => 'drop_array',
-							'title'   => __('Template Class:'),
+							'title'   => __('Template Class'),
 							'default' => 'unspecified',
-							'array'   => $graph_template_classes
+							'array'   => $graph_template_classes,
+							'confirm' => true
 						),
-						'graph_height' => array(
+						'height' => array(
 							'method'  => 'textbox',
-							'title'   => __('Graph Height:'),
+							'title'   => __('Graph Height'),
 							'default' => read_config_option('default_graph_height'),
 							'width'   => 5,
-							'size'    => 5
+							'size'    => 5,
+							'confirm' => true
 						),
-						'graph_width' => array(
+						'width' => array(
 							'method'  => 'textbox',
-							'title'   => __('Graph Width:'),
+							'title'   => __('Graph Width'),
 							'default' => read_config_option('default_graph_width'),
 							'width'   => 5,
-							'size'    => 5
+							'size'    => 5,
+							'confirm' => true
 						),
 						'image_format_id' => array(
 							'method'   => 'drop_array',
-							'title'    => __('Image Format:'),
+							'title'    => __('Image Format'),
 							'array'    => $image_types,
-							'default'  => read_config_option('default_image_format')
+							'default'  => read_config_option('default_image_format'),
+							'confirm' => true
 						)
 					)
 				),

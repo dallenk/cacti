@@ -915,6 +915,8 @@ function applySkin() {
 
 	makeCallbacks();
 
+	setupObjectChange();
+
 	$('.helpPage').off('click').on('click', function (event) {
 		event.stopPropagation();
 		getCactiHelp($(this).attr('data-page'));
@@ -3511,6 +3513,50 @@ function setSelectMenus() {
 		} else {
 			$(this).addClass('ui-state-default ui-corner-all');
 		}
+	});
+}
+
+function setupObjectChange() {
+	function disableField(id) {
+		$('#' + id).prop('disabled', true).addClass('ui-state-disabled');
+
+		if (id == 'location') {
+			$('#location_wrap').prop('disabled', true).addClass('ui-selectmenu-disabled ui-state-disabled');
+		}
+
+		if ($('#' + id).button('instance')) {
+			$('#' + id).button('disable');
+		} else if ($('#' + id).selectmenu('instance')) {
+                $('#' + id).selectmenu('disable');
+		}
+	}
+
+	function enableField(id) {
+		$('#' + id).prop('disabled', false).removeClass('ui-state-disabled');
+
+		if (id == 'location') {
+			$('#location_wrap').prop('disabled', false).removeClass('ui-selectmenu-disabled ui-state-disabled');
+		}
+
+		if ($('#' + id).button('instance')) {
+			$('#' + id).button('enable');
+		} else if ($('#' + id).selectmenu('instance')) {
+			$('#' + id).selectmenu('enable');
+		}
+	}
+
+	$('.confirm_actions').find('input[id^="t_"]').click(function() {
+		var id = $(this).attr('id').substring(2);
+		if ($(this).is(':checked')) {
+			enableField(id);
+		} else {
+			disableField(id);
+		}
+	});
+
+	$('.confirm_actions').find('input[id^="t_"]').each(function() {
+		var id = $(this).attr('id').substring(2);
+		disableField(id);
 	});
 }
 

@@ -141,6 +141,7 @@ Cacti CHANGELOG
 -feature#5942: Improve Speed of Graph Template Editing Through Bulk Updates
 -feature#5948: Allow Graph Template Classes to be changed enmass
 -feature#5952: Create a new form dropdown type called drop_icon
+-feature#5954: Add Check boxes to Graph Templates Change Page
 -feature: Allow messages to be popup notifications
 -feature: Upgrade billboard.js to version 3.14.1
 -feature: Upgrade jQueryUI to 1.14.1
