@@ -1215,7 +1215,7 @@ function html_create_list($form_data, $column_display, $column_id, $form_previou
 					print "<option value='" . html_escape($key) . "'";
 				}
 			} else {
-				print "<option value='" . html_escape($row) . "'";
+				print "<option value='" . html_escape($key) . "'";
 			}
 
 			if ($column_id != '' && isset($row[$column_id]) && $form_previous_value == $row[$column_id]) {
