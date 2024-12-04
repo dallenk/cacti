@@ -1785,7 +1785,7 @@ function form_actions() {
 					'extra'    => array(
 						'graph_template_id' => array(
 							'method' => 'drop_array',
-							'title'  => __('New Graph Template:'),
+							'title'  => __('New Graph Template'),
 							'default' => '',
 							'array' => $gtarray
 						)
@@ -1799,7 +1799,7 @@ function form_actions() {
 					'extra'    => array(
 						'title_format' => array(
 							'method'  => 'textbox',
-							'title'   => __('Title Format:'),
+							'title'   => __('Title Format'),
 							'default' => '<graph_title> (1)',
 							'width'   => 255,
 							'size'    => 30
@@ -1814,7 +1814,7 @@ function form_actions() {
 					'extra'    => array(
 						'title_format' => array(
 							'method'  => 'textbox',
-							'title'   => __('Title Format:'),
+							'title'   => __('Title Format'),
 							'default' => '<graph_title> Template',
 							'width'   => 255,
 							'size'    => 30
@@ -1829,7 +1829,7 @@ function form_actions() {
 					'extra'    => array(
 						'host_id' => array(
 							'method' => 'drop_array',
-							'title'  => __('New Device:'),
+							'title'  => __('New Device'),
 							'default' => '',
 							'array' => $devices
 						)
@@ -1867,7 +1867,7 @@ function form_actions() {
 					'extra'    => array(
 						'aggregate_template_id' => array(
 							'method'  => 'drop_array',
-							'title'   => __('Aggregate Template:'),
+							'title'   => __('Aggregate Template'),
 							'default' => '',
 							'array'   => $atemplates,
 						)
@@ -1881,19 +1881,19 @@ function form_actions() {
 					'extra'    => array(
 						'report_id' => array(
                             'method'  => 'drop_array',
-                            'title'   => __('Report Name:'),
+                            'title'   => __('Report Name'),
                             'array'   => $reports,
                             'default' => array_key_first($reports)
 						),
 						'timespan' => array(
                             'method'  => 'drop_array',
-                            'title'   => __('Timespan:'),
+                            'title'   => __('Timespan'),
                             'array'   => $graph_timespans,
                             'default' => read_user_setting('default_timespan')
 						),
 						'align' => array(
                             'method'  => 'drop_array',
-                            'title'   => __('Align:'),
+                            'title'   => __('Align'),
                             'array'   => $alignment,
                             'default' => REPORTS_ALIGN_CENTER
 						)

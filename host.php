@@ -533,19 +533,19 @@ function form_actions() {
 					'extra'    => array(
 						'report_id' => array(
 							'method'  => 'drop_array',
-							'title'   => __('Report Name:'),
+							'title'   => __('Report Name'),
 							'array'   => $reports,
 							'default' => array_key_first($reports)
 						),
 						'timespan' => array(
 							'method'  => 'drop_array',
-							'title'   => __('Timespan:'),
+							'title'   => __('Timespan'),
 							'array'   => $graph_timespans,
 							'default' => read_user_setting('default_timespan')
 						),
 						'align' => array(
 							'method'  => 'drop_array',
-							'title'   => __('Align:'),
+							'title'   => __('Align'),
 							'array'   => $alignment,
 							'default' => REPORTS_ALIGN_CENTER
 						)
@@ -566,7 +566,7 @@ function form_actions() {
 					'extra'    => array(
 						'tree_item_id' => array(
 							'method'  => 'drop_branch',
-							'title'   => __('Destination Branch:'),
+							'title'   => __('Destination Branch'),
 							'id'      => $tree['id']
 						)
 					),
