@@ -419,18 +419,33 @@ function form_actions() {
 
 				if (!empty($step)) {
 					for ($i=0;($i < cacti_count($selected_items));$i++) {
-						db_execute_prepared('UPDATE data_template_data
+						$push_out = false;
+						if (isset_request_var('update_data_sources') && get_nfilter_request_var('update_data_sources') == 'on') {
+							$sql_where = ' AND local_data_id >= 0';
+							$push_out = true;
+						} else {
+							$sql_where = ' AND local_data_id = 0';
+						}
+
+						db_execute_prepared("UPDATE data_template_data
 							SET data_source_profile_id = ?,
 							rrd_step = ?
 							WHERE data_template_id = ?
-							AND local_data_id = 0',
+							$sql_where",
 							array(get_filter_request_var('data_source_profile_id'), $step, $selected_items[$i]));
 
-						db_execute_prepared('UPDATE data_template_rrd
+						db_execute_prepared("UPDATE data_template_rrd
 							SET rrd_heartbeat = ?
 							WHERE data_template_id = ?
-							AND local_data_id = 0',
+							$sql_where",
 							array($heartbeat, $selected_items[$i]));
+
+						if ($push_out) {
+							$php_binary = read_config_option('path_php_binary');
+							exec_background($php_binary, CACTI_PATH_CLI . '/rebuild_poller_cache.php --data-template-id=' . $selected_items[$i]);
+
+							raise_message('repopulate_' . $i, __('The Poller Cache operation has been launched in background for Data Template ID %d.', $selected_items[$i]), MESSAGE_LEVEL_INFO);
+						}
 					}
 				}
 			}
@@ -502,6 +517,12 @@ function form_actions() {
 							'method'  => 'drop_array',
 							'title'   => __('New Data Source Profile'),
 							'array'   => $available_profiles,
+							'default' => ''
+						),
+						'update_data_sources' => array(
+							'method'  => 'checkbox',
+							'title'   => __('Update database for existing Data Sources?'),
+							'description' => __('WARNING: This change will not change either the step or the heartbeat of existing RRDfiles.  After this change, a Rebuild Poller Cache operation will take place in background to update the data collection cycle for the impacted Data Sources.  It is strongly suggested that you either delete all the impacted RRDfiles afterwards, or use the splice_rrd.php CLI script to preserve old data and repopulate the new RRDfiles with the legacy data.  Otherwise, this change will have no on the data and may in fact lead to a loss of fidelity if you are increasing the time between data collection cycles.'),
 							'default' => ''
 						)
 					),
