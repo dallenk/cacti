@@ -1165,12 +1165,40 @@ function html_header_checkbox($header_items, $include_form = true, $form_action 
 /**
  * html_create_list - draws the items for a html dropdown given an array of data
  *
- * @param  $form_data - an array containing data for this dropdown. it can be formatted
- *   in one of two ways:
- *   $array["id"] = "value";
+ * @param  $form_data - an array containing data for this dropdown. it can be
+ *   formatted in one of three ways:
+ *
+ *   $dropdown_array = array(
+ *     'id'  => 'name1'
+ *     'id2' => 'name2',
+ *     ...
+ *   );
+ *
  *   -- or --
- *   $array[0]["id"] = 43;
- *   $array[0]["name"] = "Red";
+ *
+ *   $dropdown_array = array(
+ *       array(
+ *         'id'   => 'id1',
+ *         'name' => 'name1',
+ *       ),
+ *       array(
+ *         'id'   => 'id2',
+ *         'name' => 'name2'
+ *       ),
+ *       ...
+ *   );
+ *
+ *   -- or for custom rendering of icons --
+ *
+ *   $dropdown_array = array(
+ *     'server' => array(
+ *        'display' => __('Some Value'),
+ *        'class'   => 'fa fa-server',
+ *        'style'   => 'width:30px;...'
+ *     ),
+ *     ...
+ *   );
+ *
  * @param  $column_display - used to identify the key to be used for display data. this
  *   is only applicable if the array is formatted using the second method above
  * @param  $column_id - used to identify the key to be used for id data. this
@@ -1178,32 +1206,40 @@ function html_header_checkbox($header_items, $include_form = true, $form_action 
  * @param  $form_previous_value - the current value of this form element
  */
 function html_create_list($form_data, $column_display, $column_id, $form_previous_value) {
-	if (empty($column_display)) {
-		if (cacti_sizeof($form_data)) {
-			foreach (array_keys($form_data) as $id) {
-				print '<option value="' . html_escape($id) . '"';
-
-				if ($form_previous_value == $id) {
-					print ' selected';
-				}
-
-				print '>' . html_escape(null_out_substitutions($form_data[$id])) . '</option>';
-			}
-		}
-	} else {
-		if (cacti_sizeof($form_data)) {
-			foreach ($form_data as $row) {
-				print "<option value='" . html_escape($row[$column_id]) . "'";
-
-				if ($form_previous_value == $row[$column_id]) {
-					print ' selected';
-				}
-
-				if (isset($row['host_id'])) {
-					print '>' . html_escape($row[$column_display]) . '</option>';
+	if (cacti_sizeof($form_data)) {
+		foreach ($form_data as $key => $row) {
+			if (is_array($row)) {
+				if ($column_id != '') {
+					print "<option value='" . html_escape($row[$column_id]) . "'";
 				} else {
-					print '>' . html_escape(null_out_substitutions($row[$column_display])) . '</option>';
+					print "<option value='" . html_escape($key) . "'";
 				}
+			} else {
+				print "<option value='" . html_escape($row) . "'";
+			}
+
+			if ($column_id != '' && isset($row[$column_id]) && $form_previous_value == $row[$column_id]) {
+				print ' selected';
+			} elseif ($key == $form_previous_value) {
+				print ' selected';
+			}
+
+			if (isset($row['class'])) {
+				print " data-class='" . $row['class'] . "'";
+			}
+
+			if (isset($row['style'])) {
+				print " data-style='" . $row['style'] . "'";
+			}
+
+			if (!is_array($row)) {
+				print '>' . html_escape($row) . '</option>';
+			} elseif (isset($row['host_id'])) {
+				print '>' . html_escape($row[$column_display]) . '</option>';
+			} elseif (isset($row['display'])) {
+				print '>' . html_escape($row['display']) . '</option>';
+			} else {
+				print '>' . html_escape(null_out_substitutions($row[$column_display])) . '</option>';
 			}
 		}
 	}

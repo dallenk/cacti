@@ -3446,9 +3446,38 @@ function setSelectMenus() {
 		}
 	});
 
+	$.widget('custom.dropicon', $.ui.selectmenu, {
+		_renderItem: function( ul, item ) {
+			var li = $('<li>');
+			var wrapper = $('<div>', {text: item.label});
+
+			if (item.disabled) {
+				li.addClass('ui-state-disabled');
+			}
+
+			if (item.element.attr('data-style') != '') {
+				var style = item.element.attr('data-style')+';background:transparent;min-width:20px;';
+			} else {
+				var style = 'background:transparent;min-width:20px;';
+			}
+
+			var iclass = item.element.attr('data-class');
+
+			$('<i>', {
+				style: style,
+				'class': iclass
+			})
+			.prependTo(wrapper);
+
+			return li.append(wrapper).appendTo(ul);
+		}
+	});
+
+	$('select.drop-icon').dropicon();
+
 	$('select.colordropdown').dropcolor();
 
-	$('select').not('.colordropdown').not('.multi-select').not('#user_language').each(function() {
+	$('select').not('.colordropdown').not('.drop-icon').not('.multi-select').not('#user_language').each(function() {
 		if ($(this).prop('multiple') != true) {
 			$(this).each(function() {
 				let id = $(this).attr('id');
