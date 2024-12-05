@@ -1948,11 +1948,26 @@ function replicate_out_table($conn, &$data, $table, $remote_poller_id, $truncate
 
 		replicate_log('INFO: Table ' . $table . ' Replicated to Remote Poller ' . $remote_poller_id . ' With ' . $rows_done . ' Rows Updated', $level);
 	} else {
-		if (db_table_exists($table, true, $conn)) {
+		if (!db_table_exists($table, false, $conn)) {
+			replicate_log('NOTE: Replicate Out Detected a missing remote table for ' . $table, $level);
+
+			$create = db_fetch_row('SHOW CREATE TABLE ' . $table);
+
+			if (isset($create["CREATE TABLE `$table`"]) || isset($create['Create Table'])) {
+				replicate_log('NOTE: Replication Creating Remote Table Structure for ' . $table, $level);
+				db_execute('DROP TABLE IF EXISTS ' . $table, true, $conn);
+
+				if (isset($create["CREATE TABLE `$table`"])) {
+					db_execute($create["CREATE TABLE `$table`"], true, $conn);
+				} else {
+					db_execute($create['Create Table'], true, $conn);
+				}
+			}
+		} else {
+			replicate_log('INFO: Table ' . $table . ' Not Replicated to Remote Poller ' . $remote_poller_id . ' Due to No Rows Found', $level);
+
 			db_execute("TRUNCATE TABLE $table", true, $conn);
 		}
-
-		replicate_log('INFO: Table ' . $table . ' Not Replicated to Remote Poller ' . $remote_poller_id . ' Due to No Rows Found', $level);
 	}
 }
 
