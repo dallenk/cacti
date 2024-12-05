@@ -949,7 +949,7 @@ if (function_exists('ldap_connect')) {
 }
 
 $domain_types = array(
-	DOMAIN_TYPE_LDAP => __('LDAP'),-
+	DOMAIN_TYPE_LDAP => __('LDAP'),
 	DOMAIN_TYPE_AD   => __('Active Directory')
 );
 
