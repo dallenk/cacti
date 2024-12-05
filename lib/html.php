@@ -1520,6 +1520,8 @@ function draw_graph_items_list($item_list, $filename, $url_data, $disable_contro
 			print '</td>';
 
 			/* color display */
+			$blank = '-';
+
 			if (preg_match('/(AREA|STACK|TICK|LINE[123])/', $_graph_type_name)) {
 				if (preg_match('/(AREA|STACK)/', $_graph_type_name)) {
 					if ($item['hex'] != '') {
@@ -1528,16 +1530,21 @@ function draw_graph_items_list($item_list, $filename, $url_data, $disable_contro
 						if ($item['hex2'] != '') {
 							$color2 = $item['hex2'] . ($item['hex2'] != '' ? $item['alpha2']:'');
 						} else {
-							$color2 = '';
+							$color2 = $blank;
 						}
 					} else {
-						$color1 = $color2 = '';
+						$color1 = $color2 = $blank;
 					}
 				} else {
-					$color1 = $item['hex'] . $item['alpha'];
+					if ($item['hex'] != '') {
+						$color1 = $item['hex'] . $item['alpha'];
+					} else {
+						$color1 = $blank;
+					}
+					$color2 = $blank;
 				}
 			} else {
-				$color1 = '';
+				$color1 = $color2 = $blank;
 			}
 
 			if (!preg_match('/(TEXTALIGN)/', $_graph_type_name)) {
@@ -1550,18 +1557,27 @@ function draw_graph_items_list($item_list, $filename, $url_data, $disable_contro
 
 					/* color2 */
 					print "<td class='nowrap'>";
-					print "<div style='display:table-cell;min-width:16px;background-color:#{$color2}'></div>";
-					print "<div style='display:table-cell;padding-left:5px;'>{$color2}</div>";
+
+					if ($color2 != $blank) {
+						print "<div style='display:table-cell;min-width:16px;background-color:#{$color2}'></div>";
+						print "<div style='display:table-cell;padding-left:5px;'>{$color2}</div>";
+					} else {
+						print $color2;
+					}
 					print '</td>';
 				} else {
 					/* color 1 */
 					print "<td class='nowrap'>";
-					print "<div style='display:table-cell;min-width:16px;background-color:#{$color1}'></div>";
-					print "<div style='display:table-cell;padding-left:5px;'>{$color1}</div>";
+					if ($color1 != $blank) {
+						print "<div style='display:table-cell;min-width:16px;background-color:#{$color1}'></div>";
+						print "<div style='display:table-cell;padding-left:5px;'>{$color1}</div>";
+					} else {
+						print $color1;
+					}
 					print '</td>';
 
 					/* color2 */
-					print "<td></td>";
+					print "<td>{$color2}</td>";
 				}
 			} else {
 				print '<td></td><td></td>';
