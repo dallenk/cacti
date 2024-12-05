@@ -3009,6 +3009,8 @@ function html_common_header($title, $selectedTheme = '') {
 		var zoom_i18n_zoom_out = '<?php print __esc('Zoom Out');?>';
 		var zoom_i18n_zoom_out_factor = '<?php print __esc('Zoom Out Factor');?>';
 		var zoom_i18n_zoom_out_positioning = '<?php print __esc('Zoom Out Positioning');?>';
+		var zoom_outOfRangeTitle='<?php print __esc('Zoom Window Out of Range');?>';
+		var zoom_outOfRangeMessage='<?php print __esc('Zoom Dates before January 1, 1993 are not supported in Cacti!  Pick a more recent date.');?>';
 	</script>
 	<?php
 	/* Global icons */
@@ -3224,3 +3226,4 @@ function html_auth_footer($section, $error = '', $html = '') {
 </html>
 <?php
 }
+
