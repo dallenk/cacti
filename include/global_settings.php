@@ -1497,6 +1497,13 @@ $settings['poller'] = array(
 		'max_length'    => '10',
 		'size'          => '5'
 	),
+	'poller_output_debounce' => array(
+		'friendly_name' => __('Poller Output Not Empty Debouncing'),
+		'description'   => __('If you are having issues with some data sources, your Email could be flooded with \'Poller Output Not Empty\' warnings.  If this is happening, you can debounce the setting based upon this interval.'),
+		'method'        => 'drop_array',
+		'default'       => 3600,
+		'array'         => $poller_sync_intervals,
+	),
 	'reindex_header' => array(
 		'friendly_name' => __('Periodic All Device Re-Index'),
 		'collapsible'   => 'true',

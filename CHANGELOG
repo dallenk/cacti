@@ -143,6 +143,7 @@ Cacti CHANGELOG
 -feature#5952: Create a new form dropdown type called drop_icon
 -feature#5954: Add Check boxes to Graph Templates Change Page
 -feature#5955: When Changing a Profile Update Other Data
+-feature#5959: Debounce the Poller Output Not Empty Warning
 -feature: Allow messages to be popup notifications
 -feature: Upgrade billboard.js to version 3.14.1
 -feature: Upgrade jQueryUI to 1.14.1
