@@ -28,6 +28,7 @@ Cacti CHANGELOG
 -issue#5899: Tooltip remain on page after page is refreshed
 -issue#5900: Please add the ability to select compiled RRDtool v1.9+
 -issue#5936: If a Remote Data Collector has not devices, poller.php does not properly register any collectors
+-issue#5964: Graph Timespans too far into the past generate RRDtool crashes
 -feature#412: Import Export for Graph and Tree rules
 -feature#1214: Move Tree Create/Remove/Modify Functions to lib/api_tree.php
 -feature#1361: UI should update alternate row colors

@@ -110,6 +110,49 @@ function process_html_variables() {
 /* when a span time preselection has been defined update the span time fields */
 /* someone hit a button and not a dropdown */
 function process_user_input(&$timespan, $timeshift) {
+	/**
+	 * perform cursory time checks to invalidate dates before 1993.  I picked
+	 * 1993 as that is the year that my son was born.
+	 */
+	if (isset_request_var('date1') || isset_request_var('date2')) {
+		$early_date = strtotime(date('1993-01-01'));
+		$date1 = get_nfilter_request_var('date1');
+		$date2 = get_nfilter_request_var('date2');
+		if (!is_numeric($date1)) {
+			$date1 = strtotime($date1);
+		}
+
+		if (!is_numeric($date2)) {
+			$date2 = strtotime($date2);
+		}
+
+		$errors = 0;
+
+		if ($date1 < $early_date) {
+			raise_message('start_too_early', __('Your Start Date \'%s\' is less than 1993.  Please pick a more recent Start Date.', date('Y-m-d H:i:s', $date1)), MESSAGE_LEVEL_WARN);
+			$errors++;
+		}
+
+		if ($date2 < $early_date) {
+			raise_message('start_too_early', __('Your End Date \'%s\' is less than 1993.  Please pick a more recent End Date.', date('Y-m-d H:i:s', $date2)), MESSAGE_LEVEL_WARN);
+			$errors++;
+		}
+
+		if ($errors) {
+			if (isset($_SESSION['sess_current_date1'])) {
+				set_request_var('date1', $_SESSION['sess_current_date1']);
+			} else {
+				set_request_var('date1', date('Y-m-d H:i:s', time()-86400));
+			}
+
+			if (isset($_SESSION['sess_current_date2'])) {
+				set_request_var('date2', $_SESSION['sess_current_date2']);
+			} else {
+				set_request_var('date2', date('Y-m-d H:i:s', time()));
+			}
+		}
+	}
+
 	/* catch the case where the session is not set for some reason */
 	if (isset($_SESSION['sess_current_date1']) && isset($_SESSION['sess_current_date2'])) {
 		if (isset_request_var('date1')) {
