@@ -2411,7 +2411,7 @@ function object_cache_get_totals($class, $object_ids, $diff = false) {
 				GROUP BY host_id');
 
 			if (cacti_sizeof($data)) {
-				$variable['host_graphs'] = array_rekey($data, 'id', 'total');
+				$variable['host_graphs'] = array_rekey($data, 'id', 'totals');
 			}
 
 			$data = db_fetch_assoc('SELECT graph_template_id AS id, COUNT(*) AS totals

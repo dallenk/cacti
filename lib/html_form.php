@@ -1497,6 +1497,29 @@ function form_continue_confirmation($form_data, $plugin_hook = '', $save = array
 		print '</div>';
 	}
 
+	if (isset($data['flist'])) {
+		if (cacti_sizeof($iarray) > 1) {
+			if (isset($data['pfmessage'])) {
+				$message = $data['pfmessage'];
+			} elseif (isset($data['fmessage'])) {
+				$message = $data['fmessage'];
+			}
+		} else {
+			if (isset($data['sfmessage'])) {
+				$message = $data['sfmessage'];
+			} elseif (isset($data['fmessage'])) {
+				$message = $data['fmessage'];
+			}
+		}
+
+		print "<div class='textArea left' colspan='3'>";
+		print "<p>$message</p>";
+		print '</div>';
+		print "<div class='textArea left' colspan='3'>";
+		print "<div class='itemlist'><ul>{$data['flist']}</ul></div>";
+		print '</div>';
+	}
+
 	if (isset($data['extra'])) {
 		/* prepend checkboxes for this form */
 		$form_array = array();
@@ -1507,7 +1530,9 @@ function form_continue_confirmation($form_data, $plugin_hook = '', $save = array
 			$form_array[$field_name]['value'] = '';
 
 			/* two form overrides */
-			$form_array[$field_name]['friendly_name'] = $field_array['title'];
+			if (isset($field_array['title'])) {
+				$form_array[$field_name]['friendly_name'] = $field_array['title'];
+			}
 
 			if (isset($field_array['width'])) {
 				$form_array[$field_name]['max_length']    = $field_array['width'];
@@ -1538,29 +1563,6 @@ function form_continue_confirmation($form_data, $plugin_hook = '', $save = array
 			)
 		);
 
-		print '</div>';
-	}
-
-	if (isset($data['flist'])) {
-		if (cacti_sizeof($iarray) > 1) {
-			if (isset($data['pfmessage'])) {
-				$message = $data['pfmessage'];
-			} elseif (isset($data['fmessage'])) {
-				$message = $data['fmessage'];
-			}
-		} else {
-			if (isset($data['sfmessage'])) {
-				$message = $data['sfmessage'];
-			} elseif (isset($data['fmessage'])) {
-				$message = $data['fmessage'];
-			}
-		}
-
-		print "<div class='textArea left' colspan='3'>";
-		print "<p>$message</p>";
-		print '</div>';
-		print "<div class='textArea left' colspan='3'>";
-		print "<div class='itemlist'><ul>{$data['flist']}</ul></div>";
 		print '</div>';
 	}
 

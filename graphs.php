@@ -1762,17 +1762,19 @@ function form_actions() {
 					'flist'     => $flist,
 					'sfmessage' => __n('The following Data Source is used by this Graph.', 'The following Data Sources are used by this Graph.', cacti_sizeof($data_sources)),
 					'pfmessage' => __n('The following Data Source is used by these Graphs.', 'The following Data Sources are used by these Graphs.', cacti_sizeof($iarray)),
-					'extra'    => array(
+					'extra'     => array(
 						'delete_type' => array(
-							'method' => 'radio_button',
-							'options' => array(
-								$rbutton1 => array(
-									'default' => 2,
-									'title' => __n('Delete the Data Sources referenced by this Graph', 'Delete the Data Sources reference by these Graphs.', cacti_sizeof($iarray))
+							'method' => 'radio',
+							'title' => __('Delete Method'),
+							'default' => 1,
+							'items' => array(
+								0 => array(
+									'radio_value' => '1',
+									'radio_caption' => __n('Delete the Data Sources referenced by this Graph', 'Delete the Data Sources reference by these Graphs.', cacti_sizeof($iarray))
 								),
-								$rbutton2 => array(
-									'default' => 2,
-									'title' => __n('Leave the Data Source untouched.', 'Leave the Data Sources untouched', cacti_sizeof($data_sources))
+								1 => array(
+									'radio_value' => '2',
+									'radio_caption' => __n('Leave the Data Source untouched.', 'Leave the Data Sources untouched', cacti_sizeof($data_sources))
 								)
 							)
 						)
@@ -1781,7 +1783,7 @@ function form_actions() {
 				2 => array(
 					'smessage' => __('Choose a Graph Template and click \'Continue\' to Change the Graph Template for the following Graph.  Note that only compatible Graph Templates will be displayed.  Compatible is identified by those having identical Data Sources.'),
 					'pmessage' => __('Choose a Graph Template and click \'Continue\' to Change the Graph Template for the following Graphs.  Note that only compatible Graph Templates will be displayed.  Compatible is identified by those having identical Data Sources.'),
-					'cont'    => __('Change Graph Template'),
+					'cont'     => __('Change Graph Template'),
 					'extra'    => array(
 						'graph_template_id' => array(
 							'method' => 'drop_array',
@@ -1914,7 +1916,7 @@ function form_actions() {
 					'extra'    => array(
 						'tree_item_id' => array(
 							'method'  => 'drop_branch',
-							'title'   => __('Destination Branch:'),
+							'title'   => __('Destination Branch'),
 							'id'      => $tree['id']
 						)
 					),
