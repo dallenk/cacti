@@ -1842,6 +1842,10 @@ function determine_display_log_entry($message_type, $line, $filter, $matches = t
 			}
 
 			break;
+		case 13: /* SECURITY */
+			$display = (strpos($line, 'SECURITY') !== false);
+
+			break;
 		case -1: /* all */
 			$display = true;
 

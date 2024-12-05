@@ -590,6 +590,7 @@ function filter($clogAdmin, $selectedFile) {
 								'10' => __('Boost'),
 								'11' => __('Device Up/Down'),
 								'12' => __('Recaches'),
+								'13' => __('Security Issues'),
 							);
 
 							if (api_plugin_is_enabled('thold')) {
