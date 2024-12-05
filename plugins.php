@@ -1409,8 +1409,10 @@ function format_plugin_row($plugin, $last_plugin, $include_ordering, $table) {
 
 	if ($plugin['last_updated'] == '0000-00-00 00:00:00') {
 		$last_updated = __('N/A');
-	} else {
+	} elseif (isset($plugin['last_updated'])) {
 		$last_updated = substr($plugin['last_updated'], 0, 16);
+	} else {
+		$last_updated = __('N/A');
 	}
 
 	$plugin['compat'] = plugin_display_compat($plugin['compat']);
