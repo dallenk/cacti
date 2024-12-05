@@ -1761,12 +1761,19 @@ function template() {
 
 	$template_list = db_fetch_assoc_prepared("SELECT gt.id, gt.name, gt.graphs,
 		IF(gt.version = '', '$cacti_version', gt.version) AS version,
-		IF(gt.class = '', 'unassigned', gt.class) AS class,
+		IF(gt.class = '', 'unassigned', gt.class) AS class, graph_items,
 		CONCAT(gtg.height, 'x', gtg.width) AS size, gtg.vertical_label, gtg.image_format_id
 		FROM graph_templates AS gt
 		INNER JOIN graph_templates_graph AS gtg
 		ON gtg.graph_template_id = gt.id
 		AND gtg.local_graph_id = 0
+		LEFT JOIN (
+			SELECT graph_template_id, COUNT(*) AS graph_items
+			FROM graph_templates_item
+			WHERE local_graph_id = 0
+			GROUP BY graph_template_id
+		) AS items
+		ON gt.id = items.graph_template_id
 		$sql_where
 		$sql_order
 		$sql_limit",
@@ -1801,6 +1808,12 @@ function template() {
 			'display' => __('Deletable'),
 			'align'   => 'right',
 			'tip'     => __('Graph Templates that are in use cannot be Deleted.  In use is defined as being referenced by a Graph.')
+		),
+		'graph_items' => array(
+			'display' => __('Graph Items'),
+			'align'   => 'right',
+			'sort'    => 'DESC',
+			'tip'     => __('The number of Graph Items in this Graph Template.')
 		),
 		'graphs' => array(
 			'display' => __('Graphs Using'),
@@ -1855,6 +1868,7 @@ function template() {
 			form_selectable_cell($graph_template_classes[$template['class']], $template['id'], '', 'right');
 			form_selectable_cell($template['version'], $template['id'], '', 'right');
 			form_selectable_cell($disabled ? __('No'):__('Yes'), $template['id'], '', 'right');
+			form_selectable_cell(number_format_i18n($template['graph_items'], '-1'), $template['id'], '', 'right');
 			form_selectable_cell(number_format_i18n($template['graphs'], '-1'), $template['id'], '', 'right');
 			form_selectable_cell($image_types[$template['image_format_id']], $template['id'], '', 'right');
 			form_selectable_ecell($template['size'], $template['id'], '', 'right');
