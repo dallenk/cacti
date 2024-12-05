@@ -13,6 +13,8 @@ Cacti CHANGELOG
 -issue#5884: Fix Fortigate and Aruba OSCX switch template, improve Clearpass template
 -issue#5927: Unable to re-enable a plugin using plugin_manage.php
 -issue#5932: When upgrading Cacti, the replicate_out() process runs repeatedly
+-issue#5961: Issues with Replication of Tables and Misleading Full Sync Time
+-issue#5963: Cacti caching for db_table_exists() and db_column_exists() is not connection aware and replication does not replicate empty table structures
 -feature#5921: Add HPE Nimble/Alletra template
 -feature#5933: Only attempt to change the table type and character encoding for built-in Cacti tables
 
