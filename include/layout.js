@@ -3205,8 +3205,13 @@ function setupPageTimeout() {
 				}
 
 				/* fix coner case with tree refresh */
-				refreshPage = correctUrlParameters(refreshPage);
-				loadUrl({ url: refreshPage });
+				if (refreshFunction == '') {
+					refreshPage = correctUrlParameters(refreshPage);
+					loadUrl({ url: refreshPage });
+				} else {
+					eval(refreshFunction);
+					setupPageTimeout();
+				}
 			}
 		}, refreshMSeconds);
 	}
@@ -4232,6 +4237,19 @@ function finalizeGraphRedraw(options, data) {
 	}
 }
 
+function refreshGraphs() {
+	var post = {
+		'predefined_timespan': $('#predefined_timespan').val(),
+		__csrf_magic: csrfMagicToken
+	};
+
+	$.post(document.location.pathname + '?action=update_timespan', post, function(data) {
+		$('#date1').val(data.date1);
+		$('#date2').val(data.date2);
+		initializeGraphs();
+	}, 'json');
+}
+
 function initializeGraphs(disable_cache) {
 	disable_cache = (typeof disable_cache == 'undefined') ? false : true;
 
@@ -4259,6 +4277,13 @@ function initializeGraphs(disable_cache) {
 	var timestampDate1 = getTimestampFromDate($('#date1').val());
 	var timestampDate2 = getTimestampFromDate($('#date2').val());
 
+	graph_start = timestampDate1;
+	graph_end   = timestampDate2;
+
+	if (timestampDate1 <= 0) {
+		return false;
+	}
+
 	$('a[id$="_csv"]').each(function () {
 		var graph_id = $(this).attr('id').replace('graph_', '').replace('_csv', '');
 
@@ -4272,8 +4297,8 @@ function initializeGraphs(disable_cache) {
 			'?local_graph_id=' + graph_id +
 			'&rra_id=0' +
 			'&view_type=tree' +
-			'&graph_start=' + timestampDate1 +
-			'&graph_end=' + timestampDate2;
+			'&graph_start=' + graph_start +
+			'&graph_end=' + graph_end;
 
 		$(this).attr('href', url);
 
@@ -4290,8 +4315,8 @@ function initializeGraphs(disable_cache) {
 				'?local_graph_id=' + graph_id +
 				'&rra_id=0' +
 				'&view_type=tree' +
-				'&graph_start=' + timestampDate1 +
-				'&graph_end=' + timestampDate2;
+				'&graph_start=' + graph_start +
+				'&graph_end=' + graph_end;
 
 			Pace.stop();
 		});

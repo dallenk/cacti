@@ -1248,8 +1248,9 @@ function display_output_messages() {
 			}
 
 			if (!empty($current_message['message'])) {
-				$current_message['title']   = get_message_title($current_message);
-				$final_messages[]           = array(
+				$current_message['title'] = get_message_title($current_message);
+
+				$final_messages[] = array(
 					'id'      => $current_message_id,
 					'level'   => $current_message['level'],
 					'message' => $current_message['message'],

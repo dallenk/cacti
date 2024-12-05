@@ -75,6 +75,8 @@ function process_html_variables() {
 				set_request_var('predefined_timespan', read_user_setting('default_timespan'));
 				$_SESSION['sess_current_timespan'] = read_user_setting('default_timespan');
 			}
+		} else {
+			$_SESSION['sess_current_timespan'] = get_request_var('predefined_timespan');
 		}
 	} else {
 		if (isset($_SESSION['sess_current_timespan'])) {
@@ -84,6 +86,7 @@ function process_html_variables() {
 			$_SESSION['sess_current_timespan'] = read_user_setting('default_timespan');
 		}
 	}
+
 	load_current_session_value('predefined_timespan', 'sess_current_timespan', read_user_setting('default_timespan'));
 
 	# process timeshift
@@ -104,6 +107,7 @@ function process_html_variables() {
 			$_SESSION['sess_current_timeshift'] = read_user_setting('default_timeshift');
 		}
 	}
+
 	load_current_session_value('predefined_timeshift', 'sess_current_timeshift', read_user_setting('default_timeshift'));
 }
 
@@ -171,8 +175,8 @@ function process_user_input(&$timespan, $timeshift) {
 				/* the default button wasn't pushed */
 				$timespan['current_value_date1'] = sanitize_search_string(get_nfilter_request_var('date1'));
 				$timespan['current_value_date2'] = sanitize_search_string(get_nfilter_request_var('date2'));
-				$timespan['begin_now']           = $_SESSION['sess_current_timespan_begin_now'];
-				$timespan['end_now']             = $_SESSION['sess_current_timespan_end_now'];
+				$timespan['begin_now']           = intval($_SESSION['sess_current_timespan_begin_now']);
+				$timespan['end_now']             = intval($_SESSION['sess_current_timespan_end_now']);
 
 				/* time shifter: shift left                                           */
 				if (isset_request_var('move_left_x')) {
@@ -203,8 +207,8 @@ function process_user_input(&$timespan, $timeshift) {
 			$timespan['current_value_date1'] = $_SESSION['sess_current_date1'];
 			$timespan['current_value_date2'] = $_SESSION['sess_current_date2'];
 
-			$timespan['begin_now'] = $_SESSION['sess_current_timespan_begin_now'];
-			$timespan['end_now']   = $_SESSION['sess_current_timespan_end_now'];
+			$timespan['begin_now'] = intval($_SESSION['sess_current_timespan_begin_now']);
+			$timespan['end_now']   = intval($_SESSION['sess_current_timespan_end_now']);
 
 			/* custom display refresh */
 			if ($_SESSION['custom']) {
@@ -277,8 +281,8 @@ function finalize_timespan(&$timespan) {
 		$timespan['current_value_date2'] = date('Y-m-d H:i', $timespan['end_now']);
 	}
 
-	$_SESSION['sess_current_timespan_end_now']   = $timespan['end_now'];
-	$_SESSION['sess_current_timespan_begin_now'] = $timespan['begin_now'];
+	$_SESSION['sess_current_timespan_end_now']   = intval($timespan['end_now']);
+	$_SESSION['sess_current_timespan_begin_now'] = intval($timespan['begin_now']);
 	$_SESSION['sess_current_date1']              = $timespan['current_value_date1'];
 	$_SESSION['sess_current_date2']              = $timespan['current_value_date2'];
 
