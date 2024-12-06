@@ -8720,19 +8720,35 @@ function cacti_time_zone_set($gmt_offset) {
 }
 
 function debounce_run_notification($id, $frequency = 7200) {
-	$full = 'debounce_' . $id;
-	$key   = substr($full, 0, 50);
-
-	if ($full !== $key) {
-		cacti_debug_backtrace("ERROR: debounce key was truncated from $full to $key");
-	}
+	$key = 'debounce_' . md5($id);
 
 	/* debounce admin emails */
 	$last = read_config_option($key);
 	$now  = time();
 
-	if (empty($last) || $now - $last > $frequency) {
-		set_config_option($key, $now);
+	/* default to unset */
+	$last_timestamp = '';
+
+	if ($last != '' && is_numeric($last)) {
+		$last_timestamp = $last;
+	} elseif ($last != '') {
+		$last = json_decode($last, true);
+
+		if (isset($last['timestamp'])) {
+			$last_timestamp = $last['timestamp'];
+		} else {
+			$last_timestamp = '';
+		}
+	}
+
+	if (empty($last_timestamp) || $now - $last_timestamp > $frequency) {
+		$current = array(
+			'timestamp' => $now,
+			'id'        => $id
+		);
+
+		set_config_option($key, json_encode($current));
+
 		return true;
 	}
 

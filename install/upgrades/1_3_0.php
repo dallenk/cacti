@@ -85,6 +85,9 @@ function upgrade_to_1_3_0() {
 		INNER JOIN data_local AS dl ON dl.id = dtd.local_data_id
 		SET did.host_id = dl.host_id");
 
+	/* remove all the legacy debounce entries */
+	db_install_execute('DELETE FROM settings WHERE name LIKE "debounce_%" AND value > 0');
+
 	/* temporary workaround till project finished */
 	db_install_execute("CREATE TABLE IF NOT EXISTS `plugin_available` (
 		`plugin` varchar(32) NOT NULL DEFAULT '',
