@@ -1,5 +1,5 @@
 msgid ""
-msgstr "Project-Id-Version: Cacti Russian Language File\nReport-Msgid-Bugs-To: developers@cacti.net\nPOT-Creation-Date: 2024-04-20 18:16-0400\nPO-Revision-Date: 2024-12-01 02:16+0000\nLast-Translator: Anton Zhuravlev <baka109g@gmail.com>\nLanguage-Team: Russian <http://translate.cacti.net/projects/cacti/core-v1-2-x/ru/>\nLanguage: ru-RU\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\nX-Generator: Weblate 4.8.1\n"
+msgstr "Project-Id-Version: Cacti Russian Language File\nReport-Msgid-Bugs-To: developers@cacti.net\nPOT-Creation-Date: 2024-04-20 18:16-0400\nPO-Revision-Date: 2024-12-06 19:24+0000\nLast-Translator: Anton Zhuravlev <baka109g@gmail.com>\nLanguage-Team: Russian <http://translate.cacti.net/projects/cacti/core-v1-2-x/ru/>\nLanguage: ru-RU\nMIME-Version: 1.0\nContent-Type: text/plain; charset=UTF-8\nContent-Transfer-Encoding: 8bit\nPlural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\nX-Generator: Weblate 4.8.1\n"
 
 #: about.php:29 include/global_arrays.php:2630 lib/html.php:2543
 msgid "About Cacti"
@@ -1715,7 +1715,7 @@ msgstr "%d Час"
 #: include/global_settings.php:2888
 #, php-format
 msgid "%d Hours"
-msgstr "%d Часа(ов)"
+msgstr "%d Часов"
 
 #: automation_networks.php:534
 msgid "Enable this Network Range."
@@ -3847,7 +3847,7 @@ msgstr "%d День"
 #: include/global_settings.php:1609
 #, php-format
 msgid "%d Days"
-msgstr "%d Дня(ей)"
+msgstr "%d Дней"
 
 #: data_source_profiles.php:850 include/global_arrays.php:720
 #: include/global_arrays.php:1528 include/global_arrays.php:1549
@@ -5576,7 +5576,7 @@ msgstr "Экспорт устройств"
 
 #: host.php:1678 lib/api_automation.php:171 lib/api_automation.php:1097
 msgid "Not Up"
-msgstr "Вверх"
+msgstr "Упал"
 
 #: host.php:1681 lib/api_automation.php:174 lib/api_automation.php:1100
 #: lib/html.php:81 lib/html_utility.php:952 pollers.php:49
@@ -12571,7 +12571,7 @@ msgstr "Работает:"
 
 #: lib/api_device.php:1582
 msgid "Hostname:"
-msgstr "Имя хоста:"
+msgstr "Имя хоста: "
 
 #: lib/api_device.php:1583
 msgid "Location:"
@@ -14566,7 +14566,7 @@ msgstr ", Используя регулярное выражение: \"%s\""
 #: lib/html_reports.php:1691
 #, php-format
 msgid "Tree: %s"
-msgstr "Поместить в дерево (%s)"
+msgstr "Дерево: %s"
 
 #: lib/html_reports.php:1699
 #, php-format
@@ -17609,17 +17609,17 @@ msgstr "Авг"
 #: rrdcheck.php:236 rrdcheck.php:237 rrdcheck.php:238
 #, php-format
 msgid "%d hours"
-msgstr "%d Часа(ов)"
+msgstr "%d Часов"
 
 #: rrdcheck.php:239
 #, php-format
 msgid "%d day"
-msgstr "%d день"
+msgstr "%d День"
 
 #: rrdcheck.php:240 rrdcheck.php:241
 #, php-format
 msgid "%d days"
-msgstr "%d дней"
+msgstr "%d Дней"
 
 #: rrdcheck.php:245
 msgid "Messages"
@@ -19780,7 +19780,7 @@ msgstr "Последняя продолжительность пробега:"
 #: utilities.php:2739
 #, php-format
 msgid "%d minutes"
-msgstr "%d минут"
+msgstr "%d Минут"
 
 #: utilities.php:2739
 #, php-format
