@@ -2484,6 +2484,9 @@ function loadUrl(options) {
 	statePushed = false;
 	cont = false;
 
+	/* get rid of old selectmenu's */
+	$('.ui-selectmenu-menu').empty();
+
 	if (typeof options.noState == 'undefined' || options.noState == false) {
 		/* close all toasts */
 		$.toast().reset('all');
