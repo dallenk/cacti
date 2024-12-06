@@ -937,6 +937,21 @@ $settings['snmp'] = array(
 		'default'       => AVAIL_SNMP,
 		'array'         => $availability_options,
 	),
+	'snmp_options' => array(
+		'friendly_name' => __('Downed Device SNMP Recovery Options Set'),
+		'description'   => __('If a Device goes down, use this SNMP Option Set to attempt to re-establish communication with the device and update the devices settings based upon the first matching SNMP Options Set.'),
+		'method'        => 'drop_sql',
+		'default'       => '',
+		'sql'           => 'SELECT id, name FROM automation_snmp ORDER BY name',
+		'none_value'    => __('Disabled')
+	),
+	'snmp_options_retry_interval' => array(
+		'friendly_name' => __('Downed Device SNMP Recovery Options Retry Frequency'),
+		'description'   => __('When a Device is Down, and has an SNMP Recovery Options Set established, how often do you wish to try to reciver the Device using the SNMP Options Set specified?'),
+		'method'        => 'drop_array',
+		'default'       => 3600,
+		'array'         => $poller_sync_intervals,
+	),
 	'ping_method' => array(
 		'friendly_name' => __('Ping Type'),
 		'description'   => __('Default Ping type for all new Devices.</i>'),

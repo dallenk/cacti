@@ -308,7 +308,8 @@ function form_save() {
 				get_nfilter_request_var('site_id'),
 				get_nfilter_request_var('external_id'),
 				get_nfilter_request_var('location'),
-				get_nfilter_request_var('bulk_walk_size')
+				get_nfilter_request_var('bulk_walk_size'),
+				get_nfilter_request_var('smmp_options')
 			);
 
 			if ($host_id !== false) {

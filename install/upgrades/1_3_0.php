@@ -36,6 +36,8 @@ function upgrade_to_1_3_0() {
 	db_install_add_column('poller', array('name' => 'dbsslverifyservercert', 'type' => 'char(3)', 'after' => 'dbsslcapath', 'default' => 'on'));
 
 	db_install_add_column('host', array('name' => 'created', 'type' => 'timestamp', 'default' => 'CURRENT_TIMESTAMP'));
+	db_install_add_column('host', array('name' => 'snmp_options', 'type' => 'tinyint(3)', 'unsigned' => true, 'NULL' => false, 'default' => '0', 'after' => 'external_id'));
+	db_install_add_column('host', array('name' => 'status_options_date', 'type' => 'timestamp', 'NULL' => false, 'default' => '0000-00-00', 'after' => 'status_rec_date'));
 
 	db_install_add_column('graph_templates_item', array('name' => 'legend', 'type' => 'varchar(30)', 'default' => '', 'after' => 'text_format'));
 	db_install_add_column('graph_templates_item', array('name' => 'color2_id', 'type' => 'mediumint(8)', 'unsigned' => true, 'default' => '0', 'after' => 'alpha'));

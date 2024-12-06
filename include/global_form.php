@@ -1321,6 +1321,16 @@ $fields_host_edit = array(
 		'default'       => read_config_option('availability_method'),
 		'array'         => $availability_options
 	),
+	'snmp_options' => array(
+		'friendly_name' => __('Downed Device SNMP Recovery Options Set'),
+		'description'   => __('If a Device goes down, use this SNMP Option Set to attempt to re-establish communication with the device and update the devices settings based upon the first matching SNMP Options Set.'),
+		'on_change'     => 'changeHostForm()',
+		'value'         => '|arg1:snmp_options|',
+		'method'        => 'drop_sql',
+		'default'       => read_config_option('snmp_options'),
+		'sql'           => 'SELECT id, name FROM automation_snmp ORDER BY name',
+		'none_value'    => __('Disabled')
+	),
 	'ping_method' => array(
 		'friendly_name' => __('Ping Method'),
 		'description'   => __('The type of ping packet to sent.  <br><i>NOTE: ICMP on Linux/UNIX requires root privileges.</i>  <br><i>NOTE: TCP Ping Closed - Even if the tcp ping is not successful, the device can be considered UP.</i>'),
