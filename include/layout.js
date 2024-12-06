@@ -2479,6 +2479,8 @@ function loadPage(href, force) {
 function loadUrl(options) {
 	setCactiTabCookie();
 
+	clearAllTimeouts();
+
 	statePushed = false;
 	cont = false;
 
