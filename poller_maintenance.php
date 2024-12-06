@@ -31,6 +31,7 @@ include_once(CACTI_PATH_LIBRARY . '/poller.php');
 require_once(CACTI_PATH_LIBRARY . '/rrd.php');
 require_once(CACTI_PATH_LIBRARY . '/utility.php');
 require_once(CACTI_PATH_LIBRARY . '/ping.php');
+require_once(CACTI_PATH_LIBRARY . '/snmp.php');
 
 /* let PHP run just as long as it has to */
 ini_set('max_execution_time', '0');
@@ -185,12 +186,11 @@ function device_recovery_sweep() {
 		'snmp_version',
 		'snmp_community',
 		'snmp_timeout',
-		'snmp_retries',
 		'snmp_username',
 		'snmp_password',
 		'snmp_auth_protocol',
 		'snmp_priv_protocol',
-		'snmp_prive_passphrase',
+		'snmp_priv_passphrase',
 		'snmp_context',
 		'snmp_engine_id'
 	);
@@ -201,7 +201,7 @@ function device_recovery_sweep() {
 	if (cacti_sizeof($devices)) {
 		maint_debug(sprintf('Found %s Devices to Recover', cacti_sizeof($devices)));
 
-		$options = db_fetch_assoc('SELECT * FROM automation_snmp_options ORDER BY sequence');
+		$options = db_fetch_assoc('SELECT * FROM automation_snmp_items ORDER BY sequence');
 		$names   = array_rekey(db_fetch_assoc('SELECT * FROM automation_snmp'), 'id', 'name');
 
 		if (cacti_sizeof($options)) {
@@ -225,10 +225,10 @@ function device_recovery_sweep() {
 					}
 
 					$ping->host = $thost;
-					$ping->port = $host['ping_port'];
+					$ping->port = $thost['ping_port'];
 
 					if ($ping->ping($thost['availability_method'], $thost['ping_method'], $thost['ping_timeout'], $thost['ping_retries'])) {
-						cacti_log(sprintf("Device[%s] STATUS: Device '%s' brought UP with Options Set [%s]", $thost['id'], $thost['hostname'], $name[$o['snmp_id']]), false, 'RECOVERY');
+						cacti_log(sprintf("Device[%s] STATUS: Device '%s' brought UP with Options Set [%s]", $thost['id'], $thost['hostname'], $names[$o['snmp_id']]), true, 'RECOVERY');
 
 						$sql        = 'UPDATE host SET ';
 						$sql_params = array();
@@ -241,7 +241,7 @@ function device_recovery_sweep() {
 						$sql .= ', status = 3, status_rec_date = NOW() WHERE id = ?';
 						$sql_params[] = $thost['id'];
 
-						db_execute_prepared($sql_prefix, $sql_params);
+						db_execute_prepared($sql, $sql_params);
 
 						$device_up = true;
 						$recovered++;
@@ -251,7 +251,7 @@ function device_recovery_sweep() {
 				}
 
 				if (!$device_up) {
-					cacti_log("Device[" . $thost['id'] ."] STATUS: Device '" . $thost['hostname'] . "' remains Down. No matching Options Sets.", false, 'RECOVERY');
+					cacti_log("Device[" . $thost['id'] ."] STATUS: Device '" . $thost['hostname'] . "' remains Down. No matching Options Sets.", true, 'RECOVERY');
 					db_execute_prepared('UPDATE host SET status_options_date = NOW() WHERE id = ?', array($thost['id']));
 				}
 			}

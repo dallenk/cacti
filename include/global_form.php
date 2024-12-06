@@ -1328,8 +1328,7 @@ $fields_host_edit = array(
 		'value'         => '|arg1:snmp_options|',
 		'method'        => 'drop_sql',
 		'default'       => read_config_option('snmp_options'),
-		'sql'           => 'SELECT id, name FROM automation_snmp ORDER BY name',
-		'none_value'    => __('Disabled')
+		'sql'           => 'SELECT "0" AS id, "' . __esc('Disabled') . '" AS name UNION SELECT id, name FROM automation_snmp ORDER BY id'
 	),
 	'ping_method' => array(
 		'friendly_name' => __('Ping Method'),
