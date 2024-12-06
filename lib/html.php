@@ -1222,7 +1222,7 @@ function html_create_list($form_data, $column_display, $column_id, $form_previou
 
 			if ($column_id != '' && isset($row[$column_id]) && $form_previous_value == $row[$column_id]) {
 				print ' selected';
-			} elseif ($key == $form_previous_value) {
+			} elseif ($column_id == '' && $key == $form_previous_value) {
 				print ' selected';
 			}
 
