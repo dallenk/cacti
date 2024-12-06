@@ -1339,7 +1339,7 @@ class Installer implements JsonSerializable {
 	 *         passed that is not expected */
 	private function setTemplates($param_templates = array()) {
 		if (is_array($param_templates)) {
-			db_execute('DELETE FROM settings WHERE name like \'install_tp_%\'');
+			db_execute("DELETE FROM settings WHERE name LIKE 'install_tp_%'");
 
 			$known_templates = install_setup_get_templates();
 
@@ -2984,7 +2984,8 @@ class Installer implements JsonSerializable {
 
 		$topts = db_fetch_assoc('SELECT *
 			FROM settings
-			WHERE name LIKE "install_tp_%"');
+			WHERE name LIKE "install_tp_%"
+			AND value != ""');
 
 		$taopts = db_fetch_assoc('SELECT *
 			FROM settings
@@ -3001,14 +3002,14 @@ class Installer implements JsonSerializable {
 
 		$output .= Installer::sectionNormal('<b>' . __('Default Poller Interval') . '</b>: ' . html_escape($profile));
 
-		if ($opt['install_has_templates'] == 1) {
-			$output .= Installer::sectionNormal('<b>' . __('Device Packages') . '</b>: ' . __('%d To be Installed', cacti_sizeof($topts)));
+		if (cacti_sizeof($topts)) {
+			$output .= Installer::sectionNormal('<b>' . __('Device Packages') . '</b>: ' . __('%d Device Packages to be Installed', cacti_sizeof($topts)));
 		} else {
-			$output .= Installer::sectionNormal('<b>' . __('Device Packages') . '</b>: ' . __('None to be Installed') . '</b>');
+			$output .= Installer::sectionNormal('<b>' . __('Device Packages') . '</b>: ' . __('No Device Packages to be Installed') . '</b>');
 		}
 
 		if ($opt['install_has_tables'] == 1) {
-			$output .= Installer::sectionNormal('<b>' . __('Table Upgrades') . '</b>: ' . __('%d Tables to Upgraded', cacti_sizeof($taopts)));
+			$output .= Installer::sectionNormal('<b>' . __('Table Upgrades') . '</b>: ' . __('%d Tables to be Upgraded', cacti_sizeof($taopts)));
 		} else {
 			$output .= Installer::sectionNormal('<b>' . __('Table Upgrades') . '</b>: ' . __('No Tables to be Upgraded') . '</b>');
 		}
