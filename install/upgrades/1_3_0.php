@@ -39,6 +39,12 @@ function upgrade_to_1_3_0() {
 	db_install_add_column('host', array('name' => 'snmp_options', 'type' => 'tinyint(3)', 'unsigned' => true, 'NULL' => false, 'default' => '0', 'after' => 'external_id'));
 	db_install_add_column('host', array('name' => 'status_options_date', 'type' => 'timestamp', 'NULL' => false, 'default' => '0000-00-00', 'after' => 'status_rec_date'));
 
+	db_install_add_column('host', array('name' => 'snmp_retries', 'type' => 'tinyint(3) unsigned', 'NULL' => false, 'default' => '3', 'after' => 'snmp_timeout'));
+	db_install_add_column('poller_item', array('name' => 'snmp_retries', 'type' => 'tinyint(3) unsigned', 'NULL' => false, 'default' => '3', 'after' => 'snmp_timeout'));
+
+	db_execute_prepared('UPDATE host SET snmp_retries = ?', array(read_config_option('snmp_retries')));
+	db_execute_prepared('UPDATE poller_item SET snmp_retries = ?', array(read_config_option('snmp_retries')));
+
 	db_install_add_column('graph_templates_item', array('name' => 'legend', 'type' => 'varchar(30)', 'default' => '', 'after' => 'text_format'));
 	db_install_add_column('graph_templates_item', array('name' => 'color2_id', 'type' => 'mediumint(8)', 'unsigned' => true, 'default' => '0', 'after' => 'alpha'));
 	db_install_add_column('graph_templates_item', array('name' => 'alpha2', 'type' => 'char(2)', 'default' => 'FF', 'after' => 'color2_id'));

@@ -23,7 +23,7 @@
 */
 
 if (!defined('VALID_HOST_FIELDS')) {
-	$string = api_plugin_hook_function('valid_host_fields', '(hostname|host_id|location|snmp_community|snmp_username|snmp_password|snmp_auth_protocol|snmp_priv_passphrase|snmp_priv_protocol|snmp_context|snmp_engine_id|snmp_version|snmp_port|snmp_timeout|external_id)');
+	$string = api_plugin_hook_function('valid_host_fields', '(hostname|host_id|location|snmp_community|snmp_username|snmp_password|snmp_auth_protocol|snmp_priv_passphrase|snmp_priv_protocol|snmp_context|snmp_engine_id|snmp_version|snmp_port|snmp_timeout|snmp_retries|external_id)');
 	define('VALID_HOST_FIELDS', $string);
 }
 $valid_host_fields = VALID_HOST_FIELDS;
@@ -139,6 +139,15 @@ $fields_snmp_item = array(
 		'default'       => read_config_option('snmp_timeout'),
 		'size'          => '12'
 	),
+	'snmp_retries' => array(
+		'method'        => 'textbox',
+		'friendly_name' => __('SNMP Retries'),
+		'description'   => __('The maximum number of times SNMP will attempt to contact the remote device before giving up.'),
+		'value'         => '|arg1:snmp_retries|',
+		'max_length'    => '4',
+		'default'       => read_config_option('snmp_retries'),
+		'size'          => '4'
+	)
 );
 
 $fields_snmp_item_with_oids = $fields_snmp_item + array(

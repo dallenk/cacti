@@ -992,6 +992,7 @@ function api_device_replicate_out($device_id, $poller_id = 1) {
  * @param  (string) A location attribute such as rack and enclosure, closet location within a site.
  * @param  (int)    A variable that tells cacti to find detect the optimal bulk walk size for the device
  * @param  (int)    A variable that tells Cacti what SNMP options it should try to recover a device
+ * @param  (int)    The number of times to communicate with an snmp device
  *
  * @return (int)    The id of the device
  */
@@ -1000,7 +1001,7 @@ function api_device_save($id, $device_template_id, $description, $hostname, $snm
 	$availability_method, $ping_method, $ping_port, $ping_timeout, $ping_retries,
 	$notes, $snmp_auth_protocol, $snmp_priv_passphrase, $snmp_priv_protocol, $snmp_context, $snmp_engine_id,
 	$max_oids = 5, $device_threads = 1, $poller_id = 1, $site_id = 1, $external_id = '', $location = '', $bulk_walk_size = -1,
-	$snmp_options = 0) {
+	$snmp_options = 0, $snmp_retries = 3) {
 	global $config;
 
 	include_once(CACTI_PATH_LIBRARY . '/utility.php');
@@ -1077,6 +1078,7 @@ function api_device_save($id, $device_template_id, $description, $hostname, $snm
 
 	$save['snmp_port']            = form_input_validate($snmp_port, 'snmp_port', '^[0-9]+$', false, 3);
 	$save['snmp_timeout']         = form_input_validate($snmp_timeout, 'snmp_timeout', '^[0-9]+$', false, 3);
+	$save['snmp_retries']         = form_input_validate($snmp_retries, 'snmp_retries', '^[0-9]+$', false, 3);
 
 	/* disabled = 'on'   => regexp '^on$'
 	 * not disabled = '' => no regexp, but allow nulls */

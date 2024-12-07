@@ -186,6 +186,7 @@ function device_recovery_sweep() {
 		'snmp_version',
 		'snmp_community',
 		'snmp_timeout',
+		'snmp_retries',
 		'snmp_username',
 		'snmp_password',
 		'snmp_auth_protocol',
@@ -208,6 +209,8 @@ function device_recovery_sweep() {
 			foreach($devices as $d) {
 				$device_up = false;
 
+				$start = microtime(true);
+
 				foreach($options as $o) {
 					$ping = new Net_Ping;
 
@@ -228,7 +231,7 @@ function device_recovery_sweep() {
 					$ping->port = $thost['ping_port'];
 
 					if ($ping->ping($thost['availability_method'], $thost['ping_method'], $thost['ping_timeout'], $thost['ping_retries'])) {
-						cacti_log(sprintf("Device[%s] STATUS: Device '%s' brought UP with Options Set [%s]", $thost['id'], $thost['hostname'], $names[$o['snmp_id']]), true, 'RECOVERY');
+						cacti_log(sprintf('RECOVERY STATS: Time:%0.2f Device[%s] STATUS: Device \'%s\' brought UP with Options Set [%s]', microtime(true) - $start, $thost['id'], $thost['hostname'], $names[$o['snmp_id']]), true, 'SYSTEM');
 
 						$sql        = 'UPDATE host SET ';
 						$sql_params = array();
@@ -251,7 +254,7 @@ function device_recovery_sweep() {
 				}
 
 				if (!$device_up) {
-					cacti_log("Device[" . $thost['id'] ."] STATUS: Device '" . $thost['hostname'] . "' remains Down. No matching Options Sets.", true, 'RECOVERY');
+					cacti_log(sprintf('RECOVERY STATS: Time:%0.2f Device[%s] STATUS: Device \'%s\' remains Down. No matching Options Sets.', microtime(true)-$start, $thost['id'], $thost['hostname']), true, 'SYSTEM');
 					db_execute_prepared('UPDATE host SET status_options_date = NOW() WHERE id = ?', array($thost['id']));
 				}
 			}

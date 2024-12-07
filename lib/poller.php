@@ -317,7 +317,7 @@ function update_reindex_cache($host_id, $data_query_id) {
 					$session = cacti_snmp_session($host['hostname'], $host['snmp_community'], $host['snmp_version'],
 						$host['snmp_username'], $host['snmp_password'], $host['snmp_auth_protocol'], $host['snmp_priv_passphrase'],
 						$host['snmp_priv_protocol'], $host['snmp_context'], $host['snmp_engine_id'], $host['snmp_port'],
-						$host['snmp_timeout'], $host['ping_retries'], $host['max_oids']);
+						$host['snmp_timeout'], $host['snmp_retries'], $host['max_oids']);
 
 					if ($session !== false) {
 						if ($oid_uptime == '.1.3.6.1.2.1.1.3.0') {
