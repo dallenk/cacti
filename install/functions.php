@@ -38,6 +38,7 @@ function prune_deprecated_files() {
 		'include/constants.php',
 		'include/treeview',
 		'include/js/jquery',
+		'include/js/dygraph-combined.js',
 		'install/0_8_1_to_0_8_2.php',
 		'install/0_8_2a_to_0_8_3.php',
 		'install/0_8_2_to_0_8_2a.php',
