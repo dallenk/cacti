@@ -398,10 +398,6 @@ function settings() {
 		);
 	}
 
-	if (read_config_option('client_timezone_support') == 0) {
-		unset($settings_user['client_timezone_support']);
-	}
-
 	draw_edit_form(
 		array(
 			'config' => array('no_form_tag' => true),
@@ -412,6 +408,10 @@ function settings() {
 	html_end_box(true, true);
 
 	if (is_view_allowed('graph_settings') == true) {
+		if (read_config_option('client_timezone_support') == 0) {
+			unset($settings_user['general']['client_timezone_support']);
+		}
+
 		if (read_config_option('auth_method') != AUTH_METHOD_NONE) {
 			$settings_user['tree']['default_tree_id']['sql'] = get_allowed_trees(false, true);
 		}
