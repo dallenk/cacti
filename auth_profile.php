@@ -108,17 +108,17 @@ switch (get_request_var('action')) {
 			$i = 0;
 
 			/* draw the tabs */
-			print "<div class='tabs'><nav><ul role='tablist'>\n";
+			print "<div class='tabs'><nav><ul role='tablist'>";
 
 			foreach ($tabs as $tab_short_name => $attribs) {
 				print "<li class='subTab'><a class='tab" . (($tab_short_name == $current_tab) ? " selected'" : "'") .
 					" href='" . html_escape($attribs['url']) .
-					"'>" . $attribs['display'] . "</a></li>\n";
+					"'>" . $attribs['display'] . "</a></li>";
 
 				$i++;
 			}
 
-			print "</ul></nav></div>\n";
+			print "</ul></nav></div>";
 		}
 
 		if ($current_tab == 'general') {
@@ -398,6 +398,10 @@ function settings() {
 		);
 	}
 
+	if (read_config_option('client_timezone_support') == 0) {
+		unset($settings_user['client_timezone_support']);
+	}
+
 	draw_edit_form(
 		array(
 			'config' => array('no_form_tag' => true),
@@ -417,7 +421,7 @@ function settings() {
 		foreach ($settings_user as $tab_short_name => $tab_fields) {
 			$collapsible = true;
 
-			print "<div class='spacer formHeader" . ($collapsible ? ' collapsible' : '') . "' id='row_$tab_short_name'><div class='formHeaderText'>" . $tabs_graphs[$tab_short_name] . ($collapsible ? "<div style='float:right;padding-right:4px;'><i class='fa fa-angle-double-up'></i></div>" : '') . "</div></div>\n";
+			print "<div class='spacer formHeader" . ($collapsible ? ' collapsible' : '') . "' id='row_$tab_short_name'><div class='formHeaderText'>" . $tabs_graphs[$tab_short_name] . ($collapsible ? "<div style='float:right;padding-right:4px;'><i class='fa fa-angle-double-up'></i></div>" : '') . "</div></div>";
 
 			$form_array = array();
 
@@ -469,7 +473,7 @@ function settings() {
 			);
 		}
 
-		print "</td></tr>\n";
+		print "</td></tr>";
 
 		html_end_box(true, true);
 	}
