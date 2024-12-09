@@ -23,7 +23,7 @@
  +-------------------------------------------------------------------------+
 */
 
-include('../include/cli_check.php');
+require(__DIR__ . '/../include/cli_check.php');
 
 /* process calling arguments */
 $parms = $_SERVER['argv'];

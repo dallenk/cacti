@@ -23,9 +23,9 @@
  +-------------------------------------------------------------------------+
 */
 
-include('../include/cli_check.php');
-include_once('./lib/xml.php');
-include_once('./lib/import.php');
+require(__DIR__ . '/../include/cli_check.php');
+require_once(CACTI_PATH_LIBRARY . '/xml.php');
+require_once(CACTI_PATH_LIBRARY . '/import.php');
 
 global $debug;
 
