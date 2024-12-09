@@ -2188,12 +2188,13 @@ CREATE TABLE host_template_snmp_query (
 
 CREATE TABLE `package_public_keys` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `md5sum` varchar(32) NOT NULL DEFAULT '',
   `author` varchar(40) NOT NULL DEFAULT '',
   `homepage` varchar(128) NOT NULL DEFAULT '',
   `email_address` varchar(60) NOT NULL DEFAULT '',
   `public_key` varchar(1024) DEFAULT '',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `public_key` (`public_key`) USING HASH
+  UNIQUE KEY `md5sum` (`md5sum`) 
 ) ENGINE=InnoDB ROW_FORMAT=DYNAMIC COMMENT='Hold Trusted Package Public Keys';
 
 --
