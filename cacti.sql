@@ -2215,6 +2215,14 @@ CREATE TABLE `package_repositories` (
 ) ENGINE=InnoDB ROW_FORMAT=DYNAMIC COMMENT='Holds Repository Locations that hold Packages';
 
 --
+-- Dumping data for table `package_repositories`
+--
+
+INSERT INTO `package_repositories` VALUES
+(1,'Local Packages','on','on',1,'/var/www/html/cacti/install/templates','',''),
+(2,'TheWitness Percona','on','',0,'https://github.com/TheWitness/percona_packages','main','');
+
+--
 -- Table structure for table `plugin_archive`
 --
 

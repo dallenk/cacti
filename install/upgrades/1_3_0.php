@@ -387,7 +387,20 @@ function upgrade_to_1_3_0() {
 	$data['row_format'] = 'Dynamic';
 	db_update_table('package_public_keys', $data);
 
-	/* setup install keypair */
+	$repos[] = array(1,'Local Packages','on','on',1,'/var/www/html/cacti/install/templates','','');
+	$repos[] = array(2,'TheWitness Percona','on','',0,'https://github.com/TheWitness/percona_packages','main','');
+
+	$repos = db_fetch_cell('SELECT COUNT(*) FROM package_repositories');
+
+	/* example repositories */
+	if ($repos == 0) {
+		foreach($repos as $r) {
+			db_execute_prepared('INSERT INTO package_repositories
+				(id, name, enabled, `default`, repo_type, repo_location, repo_branch, repo_api_key)
+				VALUES (?, ?, ?, ?, ?, ?, ?, ?)', $r);
+			);
+		}
+	}
 
 	/* add package meta information to the host_template table */
 	$data = array();

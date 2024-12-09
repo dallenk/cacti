@@ -1621,15 +1621,6 @@ function package_import() {
 		var graph_width         = $('#graph_width').val();
 		var graph_height        = $('#graph_height').val();
 
-		formArray['import']['package_location']    = package_location;
-		formArray['import']['remove_orphans']      = remove_orphans ? 'on':'';
-		formArray['import']['replace_svalues']     = replace_svalues ? 'on':'';
-		formArray['import']['data_source_profile'] = data_source_profile;
-		formArray['import']['package_class']       = package_class;
-		formArray['import']['image_format']        = image_format;
-		formArray['import']['graph_width']         = graph_width;
-		formArray['import']['graph_height']        = graph_height;
-
 		var strURL = urlPath + 'package_import.php' +
 			'?header=false'                                         +
 			'&package_location='  + package_location                +
@@ -1641,7 +1632,7 @@ function package_import() {
 			'&graph_width='       + graph_width                     +
 			'&package_class='     + package_class;
 
-		loadPageNoHeader(strURL);
+		loadUrl({ url: strURL });
 	}
 
 	function packagesChanged() {
@@ -1746,6 +1737,8 @@ function package_import() {
 	}
 
 	$(function() {
+		refreshMSeconds = 9999999;
+
 		$('#package_location, #package_class').change(function() {
 			switchRepo();
 		});
