@@ -691,7 +691,7 @@ function boost_get_arch_table_names($latest_table = '') {
  * @return int
  */
 function boost_process_poller_output($local_data_id, $rrdtool_pipe = null) {
-	global $config, $database_default, $boost_sock, $boost_timeout, $debug, $get_memory, $memory_used;
+	global $config, $database_default, $boost_sock, $boost_timeout, $get_memory, $memory_used;
 
 	static $archive_table = false;
 	static $warning_issued;
@@ -1476,8 +1476,6 @@ function boost_rrdtool_function_create($local_data_id, $show_source, $rrdtool_pi
  * @param $rrdtool_pipe         - the proess structure from rrd_init
  */
 function boost_rrdtool_function_update($local_data_id, $rrd_path, $rrd_update_template, &$rrd_update_values, $rrdtool_pipe = null) {
-	global $debug;
-	
 	/* lets count the number of rrd files processed */
 	$rrds_processed = 0;
 
@@ -1518,11 +1516,11 @@ function boost_rrdtool_function_update($local_data_id, $rrd_path, $rrd_update_te
 
 	if ($valid_entry) {
 		if ($rrd_update_template != '') {
-			cacti_log("update $rrd_path $update_options --template $rrd_update_template $rrd_update_values", true, 'BOOST', ($debug ? POLLER_VERBOSITY_NONE:POLLER_VERBOSITY_HIGH));
+			boost_debug("update $rrd_path $update_options --template $rrd_update_template $rrd_update_values");
 
 			rrdtool_execute("update $rrd_path $update_options --template $rrd_update_template $rrd_update_values", false, RRDTOOL_OUTPUT_STDOUT, $rrdtool_pipe, 'BOOST');
 		} else {
-			cacti_log("update $rrd_path $update_options $rrd_update_values", true, 'BOOST', ($debug ? POLLER_VERBOSITY_NONE:POLLER_VERBOSITY_HIGH));
+			boost_debug("update $rrd_path $update_options $rrd_update_values");
 
 			rrdtool_execute("update $rrd_path $update_options $rrd_update_values", false, RRDTOOL_OUTPUT_STDOUT, $rrdtool_pipe, 'BOOST');
 		}
@@ -1648,14 +1646,14 @@ function boost_update_snmp_statistics() {
 }
 
 function boost_debug($string) {
-	global $debug, $child;
+	global $debug, $boost_log, $boost_debug, $child;
 
 	$string = 'DEBUG: ' . trim($string, " \n");
 
-	if ($debug) {
+	if ($debug || ($boost_log != '' && $boost_debug)) {
 		print $string . PHP_EOL;
 
-		if ($child) {
+		if ($child && $debug) {
 			cacti_log($string, false, 'BOOST CHILD');
 		}
 	}
