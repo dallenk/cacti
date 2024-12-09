@@ -688,7 +688,7 @@ function boost_get_arch_table_names($latest_table = '') {
  * @param  int      local_data_id - the local data id to update
  * @param  res|null rrdtool_pipe - a pointer to the rrdtool process
  *
- * @return void
+ * @return int
  */
 function boost_process_poller_output($local_data_id, $rrdtool_pipe = null) {
 	global $config, $database_default, $boost_sock, $boost_timeout, $debug, $get_memory, $memory_used;
