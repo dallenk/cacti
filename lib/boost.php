@@ -1476,6 +1476,8 @@ function boost_rrdtool_function_create($local_data_id, $show_source, $rrdtool_pi
  * @param $rrdtool_pipe         - the proess structure from rrd_init
  */
 function boost_rrdtool_function_update($local_data_id, $rrd_path, $rrd_update_template, &$rrd_update_values, $rrdtool_pipe = null) {
+	global $debug;
+	
 	/* lets count the number of rrd files processed */
 	$rrds_processed = 0;
 
