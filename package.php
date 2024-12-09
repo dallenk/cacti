@@ -536,7 +536,7 @@ function get_item_name($export_type, $export_id) {
 }
 
 function export() {
-	global $export_types, $config, $device_classes, $copyrights;
+	global $export_types, $config, $device_classes, $graph_template_classes, $copyrights;
 
 	/* 'graph_template' should be the default */
 	if (!isset_request_var('export_type')) {
@@ -548,6 +548,8 @@ function export() {
 	}
 
 	unset($export_types['data_template']);
+	unset($export_types['graph_template']);
+	unset($export_types['data_query']);
 
 	switch (get_nfilter_request_var('export_type')) {
 		case 'host_template':
@@ -611,6 +613,8 @@ function export() {
 	// If this template has not been saved before, initialize values
 	switch(get_nfilter_request_var('export_type')) {
 		case 'host_template':
+			$classes = $device_classes;
+
 			if (!isset_request_var('export_item_id')) {
 				$detail = db_fetch_row('SELECT *
 					FROM host_template
@@ -625,6 +629,8 @@ function export() {
 
 			break;
 		case 'graph_template':
+			$classes = $graph_template_classes;
+
 			if (!isset_request_var('export_item_id')) {
 				$detail = db_fetch_row('SELECT *
 					FROM graph_templates
@@ -639,6 +645,8 @@ function export() {
 
 			break;
 		case 'data_query':
+			$classes = $graph_template_classes;
+
 			if (!isset_request_var('export_item_id')) {
 				$detail = db_fetch_row('SELECT id, name
 					FROM snmp_query
@@ -752,8 +760,8 @@ function export() {
 			'friendly_name' => __('Class'),
 			'description' => __('The Classification of the Package.'),
 			'value' => (isset($info['class']) ? $info['class']:read_config_option('package_class', true)),
-			'array' => $device_classes,
-			'default' => 'linux'
+			'array' => $classes,
+			'default' => 'unassigned'
 		),
 		'tags' => array(
 			'method' => 'textarea',
