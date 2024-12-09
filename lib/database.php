@@ -1669,7 +1669,7 @@ function db_update_table($table, $data, $removecolumns = false, $log = true, $db
 
 					if (!empty($add) || !empty($del)) {
 						if (!db_execute("ALTER TABLE `$table` DROP INDEX `$n`", $log, $db_conn) ||
-							!db_execute("ALTER TABLE `$table` ADD INDEX `$n` (" . $k['name'] . '` (' . db_format_index_create($k['columns']) . ')', $log, $db_conn)) {
+							!db_execute("ALTER TABLE `$table` ADD" . (isset($k['unique']) ? ' UNIQUE':'') . " INDEX `$n` (" . $k['name'] . '` (' . db_format_index_create($k['columns']) . ')', $log, $db_conn)) {
 							return false;
 						}
 					}
@@ -1690,7 +1690,7 @@ function db_update_table($table, $data, $removecolumns = false, $log = true, $db
 	if (isset($data['keys'])) {
 		foreach ($data['keys'] as $k) {
 			if (!isset($allindexes[$k['name']])) {
-				if (!db_execute("ALTER TABLE `$table` ADD INDEX `" . $k['name'] . '` (' . db_format_index_create($k['columns']) . ')', $log, $db_conn)) {
+				if (!db_execute("ALTER TABLE `$table` ADD" . (isset($k['unique']) ? ' UNIQUE':'') . " INDEX `" . $k['name'] . '` (' . db_format_index_create($k['columns']) . ')', $log, $db_conn)) {
 					return false;
 				}
 			}
@@ -1859,9 +1859,9 @@ function db_table_create($table, $data, $log = true, $db_conn = false) {
 			foreach ($data['keys'] as $key) {
 				if (isset($key['name'])) {
 					if (is_array($key['columns'])) {
-						$sql .= ",\n KEY `" . $key['name'] . '` (`' . implode('`,`', $key['columns']) . '`)';
+						$sql .= ",\n " . (isset($key['unique']) ? ' UNIQUE':'') . " INDEX `" . $key['name'] . '` (`' . implode('`,`', $key['columns']) . '`)';
 					} else {
-						$sql .= ",\n KEY `" . $key['name'] . '` (`' . $key['columns'] . '`)';
+						$sql .= ",\n " (isset($key['unique']) ? ' UNIQUE':'') . " INDEX `" . $key['name'] . '` (`' . $key['columns'] . '`)';
 					}
 				}
 			}
