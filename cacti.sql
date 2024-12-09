@@ -2177,6 +2177,37 @@ CREATE TABLE host_template_snmp_query (
 --
 
 --
+-- Table structure for table `pacakge_public_keys`
+--
+
+CREATE TABLE `package_public_keys` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `author` varchar(40) NOT NULL DEFAULT '',
+  `homepage` varchar(128) NOT NULL DEFAULT '',
+  `email_address` varchar(60) NOT NULL DEFAULT '',
+  `public_key` varchar(1024) DEFAULT '',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `public_key` (`public_key`) USING HASH
+) ENGINE=InnoDB ROW_FORMAT=DYNAMIC COMMENT='Hold Trusted Package Public Keys';
+
+--
+-- Table structure for table `package_repositories`
+--
+
+CREATE TABLE `package_repositories` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) NOT NULL DEFAULT '',
+  `enabled` char(2) NOT NULL DEFAULT 'on',
+  `default` char(2) NOT NULL DEFAULT '',
+  `repo_type` tinyint(3) unsigned NOT NULL DEFAULT 0,
+  `repo_location` varchar(128) NOT NULL DEFAULT '',
+  `repo_branch` varchar(20) NOT NULL DEFAULT '',
+  `repo_api_key` varchar(100) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `location_branch` (`repo_location`,`repo_branch`)
+) ENGINE=InnoDB ROW_FORMAT=DYNAMIC COMMENT='Holds Repository Locations that hold Packages';
+
+--
 -- Table structure for table `plugin_archive`
 --
 

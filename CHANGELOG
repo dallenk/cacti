@@ -153,6 +153,7 @@ Cacti CHANGELOG
 -feature#5954: Add Check boxes to Graph Templates Change Page
 -feature#5955: When Changing a Profile Update Other Data
 -feature#5959: Debounce the Poller Output Not Empty Warning
+-feature#5965: Merge packaging plugin with Cacti and add archiving and restore capabilities
 -feature#5966: Add snmp retries at the device level
 -feature: Allow messages to be popup notifications
 -feature: Upgrade billboard.js to version 3.14.1
