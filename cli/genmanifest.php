@@ -23,8 +23,7 @@
  +-------------------------------------------------------------------------+
 */
 
-chdir('..');
-include('./include/cli_check.php');
+include('../include/cli_check.php');
 include_once('./lib/xml.php');
 include_once('./lib/import.php');
 

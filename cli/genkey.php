@@ -23,8 +23,7 @@
  +-------------------------------------------------------------------------+
 */
 
-chdir('..');
-include('./include/cli_check.php');
+include('../include/cli_check.php');
 
 /* process calling arguments */
 $parms = $_SERVER['argv'];
