@@ -374,12 +374,13 @@ function upgrade_to_1_3_0() {
 
 	$data = array();
 	$data['columns'][] = array('name' => 'id', 'unsigned' => true, 'type' => 'int(10)', 'NULL' => false, 'auto_increment' => true);
+	$data['columns'][] = array('name' => 'md5sum', 'type' => 'varchar(32)', 'NULL' => false, 'default' => '');
 	$data['columns'][] = array('name' => 'author', 'type' => 'varchar(40)', 'NULL' => false, 'default' => '');
 	$data['columns'][] = array('name' => 'homepage', 'type' => 'varchar(128)', 'NULL' => false, 'default' => '');
 	$data['columns'][] = array('name' => 'email_address', 'type' => 'varchar(60)', 'NULL' => false, 'default' => '');
 	$data['columns'][] = array('name' => 'public_key', 'type' => 'varchar(1024)', 'NULL' => true, 'default' => '');
 	$data['primary'] = 'id';
-	$data['keys'][] = array('name' => 'public_key', 'columns' => array('public_key'));
+	$data['keys'][] = array('name' => 'md5sum', 'columns' => array('md5sum'), 'unique' => true);
 	$data['type'] = 'InnoDB';
 	$data['charset'] = 'utf8mb4';
 	$data['comment'] = 'Hold Trusted Package Public Keys';
