@@ -71,6 +71,10 @@ if (cacti_sizeof($parms)) {
 	$snmp_retries         = read_config_option('snmp_retries');
 	$snmp_options         = read_config_option('snmp_options');
 
+	if (empty($snmp_options)) {
+		$snmp_options = 0;
+	}
+
 	$avail          = 1;
 	$ping_method    = read_config_option('ping_method');
 	$ping_port      = read_config_option('ping_port');

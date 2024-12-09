@@ -969,7 +969,7 @@ $settings['snmp'] = array(
 		'friendly_name' => __('Downed Device SNMP Recovery Options Set'),
 		'description'   => __('If a Device goes down, use this SNMP Option Set to attempt to re-establish communication with the device and update the devices settings based upon the first matching SNMP Options Set.'),
 		'method'        => 'drop_sql',
-		'default'       => '',
+		'default'       => '0',
 		'sql'           => 'SELECT id, name FROM automation_snmp ORDER BY name',
 		'none_value'    => __('Disabled')
 	),

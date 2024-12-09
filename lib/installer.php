@@ -3652,7 +3652,7 @@ class Installer implements JsonSerializable {
 			$this->setProgress(Installer::PROGRESS_DEVICE_TEMPLATE);
 			log_install_always('', __('Device Template for First Cacti Device is %s', $host_template_id));
 
-			$results = shell_exec(cacti_escapeshellcmd(read_config_option('path_php_binary')) . ' -q ' .
+			$command = cacti_escapeshellcmd(read_config_option('path_php_binary')) . ' -q ' .
 				cacti_escapeshellarg(CACTI_PATH_CLI . '/add_device.php') .
 				' --description=' . cacti_escapeshellarg($description) .
 				' --ip=' . cacti_escapeshellarg($ip) .
@@ -3660,7 +3660,26 @@ class Installer implements JsonSerializable {
 				' --notes=' . cacti_escapeshellarg('Initial Cacti Device') .
 				' --poller=1 --site=0 --avail=' . cacti_escapeshellarg($avail) .
 				' --version=' . $version .
-				' --community=' . cacti_escapeshellarg($community));
+				' --community=' . cacti_escapeshellarg($community);
+
+			log_install_always('', __('The Add Default Device Command is: \'%s\'', $command));
+
+			$return = 0;
+			$output = array();
+
+			$last_line = exec($command, $output, $return);
+
+			if ($return != 0) {
+				log_install_always('', __('WARNING: Default Device Failed to be Added error to follow.'));
+			} else {
+				log_install_always('', __('Default Device Added to Cacti.'));
+			}
+
+			if (cacti_sizeof($output)) {
+				foreach($output as $l) {
+					log_install_always('', __('Output: %s.', $l));
+				}
+			}
 
 			$host_id = db_fetch_cell_prepared('SELECT id
 				FROM host
