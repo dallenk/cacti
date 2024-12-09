@@ -880,9 +880,9 @@ function import_validate_public_key($xmlfile, $accept = false) {
 
 				if ($insert) {
 					db_execute_prepared('INSERT IGNORE INTO package_public_keys
-						(author, homepage, email_address, public_key)
-						VALUES(?, ?, ?, ?)',
-						array($author, $homepage, $email, $package_publickey));
+						(md5sum, author, homepage, email_address, public_key)
+						VALUES(?, ?, ?, ?, ?)',
+						array(md5($package_publickey), $author, $homepage, $email, $package_publickey));
 
 					return $package_publickey;
 				}
