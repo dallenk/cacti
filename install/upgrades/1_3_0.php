@@ -398,7 +398,6 @@ function upgrade_to_1_3_0() {
 			db_execute_prepared('INSERT INTO package_repositories
 				(id, name, enabled, `default`, repo_type, repo_location, repo_branch, repo_api_key)
 				VALUES (?, ?, ?, ?, ?, ?, ?, ?)', $r);
-			);
 		}
 	}
 
