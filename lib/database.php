@@ -1058,6 +1058,8 @@ function db_add_column($table, $column, $log = true, $db_conn = false) {
 
 			if (isset($column['after'])) {
 				$sql .= ' AFTER ' . $column['after'];
+			} elseif (isset($column['first'])) {
+				$sql .= ' FIRST';
 			}
 
 			return db_execute($sql, $log, $db_conn);
@@ -1552,12 +1554,19 @@ function db_update_table($table, $data, $removecolumns = false, $log = true, $db
 		db_execute("ALTER TABLE `$table` ROW_FORMAT = " . $data['row_format'], $log, $db_conn);
 	}
 
-	$allcolumns = array();
+	$allcolumns  = array();
+	$prev_column = false;
 
 	foreach ($data['columns'] as $column) {
 		$allcolumns[] = $column['name'];
 
 		if (!db_column_exists($table, $column['name'], $log, $db_conn)) {
+			if ($prev_column !== false) {
+				$column['after'] = $prev_column;
+			} else {
+				$column['first'] = true;
+			}
+
 			if (!db_add_column($table, $column, $log, $db_conn)) {
 				return false;
 			}
@@ -1618,6 +1627,8 @@ function db_update_table($table, $data, $removecolumns = false, $log = true, $db
 				}
 			}
 		}
+
+		$prev_column = $column['name'];
 	}
 
 	if ($removecolumns) {
@@ -1703,6 +1714,10 @@ function db_update_table($table, $data, $removecolumns = false, $log = true, $db
 				return false;
 			}
 		} else {
+			if (!is_array($data['primary'])) {
+				$data['primary'] = array($data['primary']);
+			}
+
 			$add = array_diff($data['primary'], $allindexes['PRIMARY']);
 			$del = array_diff($allindexes['PRIMARY'], $data['primary']);
 
