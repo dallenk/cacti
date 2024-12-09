@@ -1061,6 +1061,14 @@ $custom_data_source_types = array(
 	'COUNT_SIMILAR_DS_DUPS'	         => __('Count of All Similar Data Sources (Include Duplicates)')
 );
 
+$copyrights = array(
+	'Apache License 2.0'                 => __('Apache License 2.0'),
+	'Creative Commons'                   => __('Creative Commons'),
+	'GNU General Public License'         => __('GNU General Public License'),
+	'MIT License'                        => __('MIT License'),
+	'Eclipse Public License version 2.0' => __('Eclipse Public License version 2.0'),
+);
+
 if ($config['poller_id'] == 1 || $config['connection'] == 'online') {
 	$menu = array(
 		__('Main Console') => array(

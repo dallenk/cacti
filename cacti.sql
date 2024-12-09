@@ -2138,7 +2138,13 @@ CREATE TABLE host_template (
   `id` mediumint(8) unsigned NOT NULL auto_increment,
   `hash` varchar(32) NOT NULL default '',
   `name` varchar(100) NOT NULL default '',
+  `version` varchar(20) NOT NULL default '',
   `class` varchar(40) NOT NULL default '',
+  `tags` varchar(128) NOT NULL default '',
+  `author` varchar(40) NOT NULL default '',
+  `email` varchar(60) NOT NULL default '',
+  `copyright` varchar(40) NOT NULL default '',
+  `installation` varchar(1024) NOT NULL default '',
   `devices` int(10) unsigned NOT NULL default '0',
   PRIMARY KEY (id),
   KEY `name` (`name`)
