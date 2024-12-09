@@ -565,6 +565,49 @@ function form_save() {
 			$user_id = sql_save($save, 'user_auth');
 
 			if ($user_id) {
+
+				if (($save['id'] == 0 && read_config_option('secnotify_newuser') == 'on') ||
+				    ($save['id'] > 0 && read_config_option('secnotify_chpass') == 'on')) {
+
+					$hash = generate_hash();
+
+					$replacement = array(
+						read_config_option('base_url') . CACTI_PATH_URL, 
+						$save['username'],
+						read_config_option('base_url') . CACTI_PATH_URL . 'auth_resetpassword.php?action=formreset&hash=' . $hash
+					);
+					$search = array('<CACTIURL>', '<USERNAME>', '<PWDRESETLINK>');
+
+					db_execute_prepared('INSERT INTO user_auth_reset_hashes
+						(user_id, hash, expiry)
+						VALUES (?, ?, date_add(now(), interval ? minute))',
+						array ($user_id, $hash, read_config_option('secnotify_resetlink_timeout')));
+				}
+
+				if ($save['id'] == 0) {
+
+					if ($save['email_address'] && read_config_option('secnotify_newuser') == 'on') {
+
+						$body = str_replace($search, $replacement, read_config_option('secnotify_newuser_message'));
+
+						send_mail($save['email_address'], null, read_config_option('secnotify_newuser_subject'), $body, array(), array(),  true);
+					}
+
+					cacti_log(sprintf('NOTE: New user created, username %s, created by %s', $save['email_address'], get_username()), false, 'SYSTEM');
+				}
+
+				if ($save['id'] > 0) {
+				
+					if ($save['email_address'] && read_config_option('secnotify_chpass') == 'on') {
+
+						$body = str_replace($search, $replacement, read_config_option('secnotify_chpass_message'));
+
+						send_mail($save['email_address'], null, read_config_option('secnotify_chpass_subject'), $body, array(), array(),  true);
+					}
+
+					cacti_log(sprintf('NOTE: Admin %s, changed password for user %s', get_username(), $save['email_address']), false, 'SYSTEM');
+				}
+
 				raise_message(1);
 			} else {
 				raise_message(2);

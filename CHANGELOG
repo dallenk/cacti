@@ -116,6 +116,7 @@ Cacti CHANGELOG
 -feature#5328: Search through Data Query fields when searching for Graphs in Tree
 -feature#5368: Allow all key searching calls to be delayed by defined amount
 -feature#5378: When reload page in browser with graphs created scroll window always return to top
+-feature#5389: Forgot password function and email notification about new user or reset user password 
 -feature#5406: Cacti connection handling should forcibly close connections to work around PDO uncertainty
 -feature#5407: Add last_updated column to the boost table to increase diagnostics in Cacti
 -feature#5416: Display device class before package import

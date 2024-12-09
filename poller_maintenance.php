@@ -113,6 +113,8 @@ if ($config['poller_id'] == 1) {
 	secpass_check_expired();
 
 	reindex_devices();
+
+	remove_aged_password_hashes();
 }
 
 // Check the realtime cache and poller
@@ -345,6 +347,11 @@ function remove_aged_row_cache() {
 				array($name, $ts));
 		}
 	}
+}
+
+function remove_aged_password_hashes() {
+	db_execute('DELETE FROM user_auth_reset_hashes
+		WHERE expiry < NOW()');
 }
 
 function logrotate_check($force) {
