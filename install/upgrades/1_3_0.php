@@ -370,7 +370,7 @@ function upgrade_to_1_3_0() {
 	$data['charset'] = 'utf8mb4';
 	$data['comment'] = 'Holds Repository Locations that hold Packages';
 	$data['row_format'] = 'Dynamic';
-	db_table_create ('package_repositories', $data);
+	db_update_table('package_repositories', $data);
 
 	$data = array();
 	$data['columns'][] = array('name' => 'id', 'unsigned' => true, 'type' => 'int(10)', 'NULL' => false, 'auto_increment' => true);
@@ -384,7 +384,7 @@ function upgrade_to_1_3_0() {
 	$data['charset'] = 'utf8mb4';
 	$data['comment'] = 'Hold Trusted Package Public Keys';
 	$data['row_format'] = 'Dynamic';
-	db_table_create ('package_public_keys', $data);
+	db_update_table('package_public_keys', $data);
 
 	/* setup install keypair */
 }
