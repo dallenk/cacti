@@ -421,6 +421,14 @@ function upgrade_to_1_3_0() {
 	$data['row_format'] = 'Dynamic';
 	db_update_table('host_template', $data);
 
+	db_execute("CREATE TABLE IF NOT EXISTS `user_auth_reset_hashes` (
+		`user_id` int(10) unsigned NOT NULL default '0',
+		`hash` varchar(100) NOT NULL default '',
+		`expiry` timestamp NOT NULL default '0000-00-00 00:00:00',
+		PRIMARY KEY (`user_id`,`expiry`))
+		ENGINE=InnoDB
+		ROW_FORMAT=Dynamic
+		COMMENT='Table that Contains User Password Reset Hashes'");
 }
 
 function ldap_convert_1_3_0() {
