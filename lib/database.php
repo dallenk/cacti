@@ -516,7 +516,7 @@ function db_execute($sql, $log = true, $db_conn = false) {
  * @param mixed $return_func
  * @param mixed $return_params
  *
- * @return (bool) '1' for success, false for failed
+ * @return mixed '1' for success, false for failed, or the return value of the return function
  */
 function db_execute_prepared($sql, $params = array(), $log = true, $db_conn = false, $execute_name = 'Exec', $default_value = true, $return_func = 'no_return_function', $return_params = array()) {
 	global $database_sessions, $error_logged, $database_default, $config, $database_hostname, $database_port, $database_total_queries, $database_last_error, $database_log, $affected_rows, $database_details;
@@ -722,7 +722,7 @@ function db_execute_prepared($sql, $params = array(), $log = true, $db_conn = fa
  * @param mixed $log
  * @param mixed $db_conn
  *
- * @return (bool)  The output of the sql query as a single variable
+ * @return bool|string  The output of the sql query as a single variable
  */
 function db_fetch_cell($sql, $col_name = '', $log = true, $db_conn = false) {
 	global $config;
@@ -749,7 +749,7 @@ function db_fetch_cell($sql, $col_name = '', $log = true, $db_conn = false) {
  * @param mixed $log
  * @param mixed $db_conn
  *
- * @return (bool) The output of the sql query as a single variable
+ * @return bool|string The output of the sql query as a single variable
  */
 function db_fetch_cell_prepared($sql, $params = array(), $col_name = '', $log = true, $db_conn = false) {
 	global $config;
@@ -763,7 +763,7 @@ function db_fetch_cell_prepared($sql, $params = array(), $col_name = '', $log = 
 
 /**
  * db_fetch_cell_return - Function to process and return data from the
- *   db_fetch_cell_prepared function
+ *   db_fetch_cell function
  *
  * @param  (string) The SQL query to run
  * @param  (string) The column to return if the query is more row or associative
