@@ -536,7 +536,7 @@ function get_item_name($export_type, $export_id) {
 }
 
 function export() {
-	global $export_types, $config, $package_classes;
+	global $export_types, $config, $device_classes, $copyrights;
 
 	/* 'graph_template' should be the default */
 	if (!isset_request_var('export_type')) {
@@ -589,6 +589,7 @@ function export() {
 	}
 
 	// Let's get any saved package details from the last time the template was packaged
+	$data = array();
 	$hash = get_export_hash(get_nfilter_request_var('export_type'), get_nfilter_request_var('export_item_id'));
 
 	// Two methods, one with SQLite and one without
@@ -608,73 +609,81 @@ function export() {
 	}
 
 	// If this template has not been saved before, initialize values
-	if (!is_array($data)) {
-		$data = array();
-
-		switch(get_nfilter_request_var('export_type')) {
-			case 'host_template':
-				if (!isset_request_var('export_item_id')) {
-					$detail = db_fetch_row('SELECT id, name
-						FROM host_template
-						ORDER BY name
-						LIMIT 1');
-				} else {
-					$detail = db_fetch_row_prepared('SELECT id, name
-						FROM host_template
-						WHERE id = ?',
-						array(get_filter_request_var('export_item_id')));
-				}
-
-				break;
-			case 'graph_template':
-				if (!isset_request_var('export_item_id')) {
-					$detail = db_fetch_row('SELECT id, name
-						FROM graph_templates
-						ORDER BY name
-						LIMIT 1');
-				} else {
-					$detail = db_fetch_row_prepared('SELECT id, name
-						FROM graph_templates
-						WHERE id = ?',
-						array(get_filter_request_var('export_item_id')));
-				}
-
-				break;
-			case 'data_query':
-				if (!isset_request_var('export_item_id')) {
-					$detail = db_fetch_row('SELECT id, name
-						FROM snmp_query
-						ORDER BY name
-						LIMIT 1');
-				} else {
-					$detail = db_fetch_row_prepared('SELECT id, name
-						FROM snmp_query
-						WHERE id = ?',
-						array(get_filter_request_var('export_item_id')));
-				}
-
-				break;
-		}
-
-		if (cacti_sizeof($detail)) {
-			switch(get_nfilter_request_var('export_type')) {
-				case 'host_template':
-					$data['description'] = __('%s Device Package', $detail['name']);
-					break;
-				case 'graph_template':
-					$data['description'] = __('%s Graph Template Package', $detail['name']);
-					break;
-				case 'data_query':
-					$data['description'] = __('%s Data Query Package', $detail['name']);
-					break;
+	switch(get_nfilter_request_var('export_type')) {
+		case 'host_template':
+			if (!isset_request_var('export_item_id')) {
+				$detail = db_fetch_row('SELECT *
+					FROM host_template
+					ORDER BY name
+					LIMIT 1');
+			} else {
+				$detail = db_fetch_row_prepared('SELECT *
+					FROM host_template
+					WHERE id = ?',
+					array(get_filter_request_var('export_item_id')));
 			}
 
-			$data['tags']         = '';
-			$data['installation'] = '';
-			$data['name'] = $detail['name'];
+			break;
+		case 'graph_template':
+			if (!isset_request_var('export_item_id')) {
+				$detail = db_fetch_row('SELECT *
+					FROM graph_templates
+					ORDER BY name
+					LIMIT 1');
+			} else {
+				$detail = db_fetch_row_prepared('SELECT *
+					FROM graph_templates
+					WHERE id = ?',
+					array(get_filter_request_var('export_item_id')));
+			}
+
+			break;
+		case 'data_query':
+			if (!isset_request_var('export_item_id')) {
+				$detail = db_fetch_row('SELECT id, name
+					FROM snmp_query
+					ORDER BY name
+					LIMIT 1');
+			} else {
+				$detail = db_fetch_row_prepared('SELECT id, name
+					FROM snmp_query
+					WHERE id = ?',
+					array(get_filter_request_var('export_item_id')));
+			}
+
+			break;
+	}
+
+	if (cacti_sizeof($detail)) {
+		switch(get_nfilter_request_var('export_type')) {
+			case 'host_template':
+				$data['description'] = __('%s Device Package', $detail['name']);
+				break;
+			case 'graph_template':
+				$data['description'] = __('%s Graph Template Package', $detail['name']);
+				break;
+			case 'data_query':
+				$data['description'] = __('%s Data Query Package', $detail['name']);
+				break;
 		}
-	} else {
-		$detail = $data;
+
+		$meta_columns = array('version', 'class', 'author', 'email', 'tags', 'copyright', 'installation');
+
+		foreach($meta_columns as $m) {
+			if (isset($detail[$m]) && $detail[$m] != '') {
+				$data[$m] = $detail[$m];
+			} else {
+				$default = read_config_option("package_$m");
+
+				if (!empty($default)) {
+					$data[$m] = $default;
+				} elseif (!isset($data[$m])) {
+					$data[$m] = '';
+				}
+			}
+		}
+
+		$data['name'] = $detail['name'];
 	}
 
 	if (cacti_sizeof($data)) {
@@ -710,7 +719,7 @@ function export() {
 		),
 		'description' => array(
 			'method' => 'textbox',
-			'friendly_name' => __('Package Description'),
+			'friendly_name' => __('Description'),
 			'description' => __('The Package Description.'),
 			'value' => (isset($info['description']) ? $info['description']:read_config_option('package_description', true)),
 			'max_length' => '255',
@@ -718,7 +727,7 @@ function export() {
 		),
 		'copyright' => array(
 			'method' => 'drop_array',
-			'friendly_name' => __('Package Copyright'),
+			'friendly_name' => __('Copyright'),
 			'description' => __('The license type for this package.'),
 			'value' => (isset($info['copyright']) ? $info['copyright']:'GNU General Public License'),
 			'array' => array(
@@ -732,7 +741,7 @@ function export() {
 		),
 		'version' => array(
 			'method' => 'textbox',
-			'friendly_name' => __('Package Version'),
+			'friendly_name' => __('Version'),
 			'description' => __('The version number to publish for this Package.'),
 			'value' => (isset($info['version']) ? $info['version']:read_config_option('package_version', true)),
 			'max_length' => '10',
@@ -740,15 +749,15 @@ function export() {
 		),
 		'class' => array(
 			'method' => 'drop_array',
-			'friendly_name' => __('Package Class'),
+			'friendly_name' => __('Class'),
 			'description' => __('The Classification of the Package.'),
 			'value' => (isset($info['class']) ? $info['class']:read_config_option('package_class', true)),
-			'array' => $package_classes,
+			'array' => $device_classes,
 			'default' => 'linux'
 		),
 		'tags' => array(
 			'method' => 'textarea',
-			'friendly_name' => __('Package Tags'),
+			'friendly_name' => __('Tags'),
 			'description' => __('Assign various searchable attributes to the Package.'),
 			'value' => (isset($info['tags']) ? $info['tags']:read_config_option('package_tags', true)),
 			'textarea_rows' => '2',
@@ -895,10 +904,11 @@ function check_get_author_info() {
 	} else {
 		?>
 		<script type='text/javascript'>
-		var mixedReasonTitle = '<?php print __('Key Generation Required to Use Plugin');?>';
-		var mixedOnPage      = '<?php print __esc('Package Key Information Not Found');?>';
+		var mixedReasonTitle = '<?php print __('Key Generation Required to Use Tool');?>';
+		var mixedOnPage      = '<?php print __esc('Packaging Key Information Not Found');?>';
+
 		sessionMessage = {
-			message: '<?php print __('In order to use this Plugin, you must first run the <b><i class="deviceUp">genkey.php</i></b> script in the plugin directory.  Once that is complete, you will have a public and private key used to sign your packages.');?>',
+			message: '<?php print __('In order to use this Packaging Tool, you must first run the <b><i class="deviceUp">genkey.php</i></b> script in the cli directory.  Once that is complete, you will have a public and private key used to sign your packages.');?>',
 			level: MESSAGE_LEVEL_MIXED
 		};
 

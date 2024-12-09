@@ -79,11 +79,11 @@ function check_tmp_dir() {
 	} else {
 		?>
 		<script type='text/javascript'>
-		var mixedReasonTitle = '<?php print __('Key Generation Required to Use Plugin');?>';
-		var mixedOnPage      = '<?php print __esc('Package Key Information Not Found');?>';
+		var mixedReasonTitle = '<?php print __('Key Generation Required to Use Tool');?>';
+		var mixedOnPage      = '<?php print __esc('Packaging Key Information Not Found');?>';
 
 		sessionMessage = {
-			message: '<?php print __('In order to use this Plugin, you must first run the <b><i class="deviceUp">genkey.php</i></b> script in the plugin directory.  Once that is complete, you will have a public and private key used to sign your packages.');?>',
+			message: '<?php print __('In order to use this Packaging Tool, you must first run the <b><i class="deviceUp">genkey.php</i></b> script in the cli directory.  Once that is complete, you will have a public and private key used to sign your packages.');?>',
 			level: MESSAGE_LEVEL_MIXED
 		};
 
@@ -1319,7 +1319,7 @@ function get_import_form($repo_id, $default_profile) {
 			'method'        => 'file'
 		),
 		'trust_header' => array(
-			'friendly_name' => __('Package Author'),
+			'friendly_name' => __('Package Signature'),
 			'collapsible'   => 'true',
 			'method'        => 'spacer',
 		),
