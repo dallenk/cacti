@@ -685,8 +685,6 @@ function export() {
 
 				if (!empty($default)) {
 					$data[$m] = $default;
-				} elseif (!isset($data[$m])) {
-					$data[$m] = '';
 				}
 			}
 		}
@@ -964,7 +962,7 @@ function open_packager_metadata_table() {
 
 		return $cnn;
 	} else {
-		raise_message('package_nowrite', __('The Web Server must have write access to the \'package\' plugin directory'), MESSAGE_LEVEL_ERROR);
+		raise_message('package_nowrite', __('The Web Server must have write access to the \'%s\' directory', CACTI_PATH_PKI), MESSAGE_LEVEL_ERROR);
 	}
 
 	return false;
