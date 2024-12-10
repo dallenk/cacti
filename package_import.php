@@ -957,7 +957,7 @@ function import_validate_public_key($xmlfile, $accept = false) {
 			$accepted = db_fetch_cell_prepared('SELECT COUNT(*)
 				FROM package_public_keys
 				WHERE public_key = ?',
-				array($package_publickey));
+				array($info['pubkey']));
 
 			if ($accepted) {
 				return $info['pubkey'];
