@@ -190,11 +190,11 @@ function find_dependent_files($xml_data, $raise_message = false) {
 			$line = str_replace('</xml_path>', '', $line);
 
 			$files = process_paths($line, $files, $raise_message);
-		} elseif (strpos($line, '<script_path>')) {
+		} elseif (strpos($line, '<script_path>') !== false) {
 			$line = str_replace('<script_path>', '', $line);
 			$line = str_replace('</script_path>', '', $line);
 			$files = process_paths($line, $files, $raise_message);
-		} elseif (strpos($line, '<input_string>')) {
+		} elseif (strpos($line, '<input_string>') !== false) {
 			$line  = str_replace('<input_string>', '', $line);
 			$line  = str_replace('</input_string>', '', $line);
 			$line  = base64_decode($line);
@@ -548,7 +548,6 @@ function export() {
 	}
 
 	unset($export_types['data_template']);
-	unset($export_types['graph_template']);
 	unset($export_types['data_query']);
 
 	switch (get_nfilter_request_var('export_type')) {
@@ -1031,26 +1030,6 @@ function get_package_contents($export_type, $export_item_id, $include_deps = tru
 		'data_query'
 	);
 
-	// Determine what files are included
-	$export_errors = 0;
-	$xml_data      = get_item_xml($export_type, $export_item_id, $include_deps);
-	$file          = array();
-
-	if (!$export_errors) {
-		$files = find_dependent_files($xml_data, true);
-
-		/* search xml files for scripts */
-		if (cacti_sizeof($files)) {
-			foreach($files as $file) {
-				if (strpos($file['file'], '.xml') !== false) {
-					$files = array_merge($files, find_dependent_files(file_get_contents($file['file']), $file));
-				}
-			}
-		}
-	} else {
-		return __('Cacti Template has Errors.  Unable to parse entire template.');
-	}
-
 	$graph_templates = array();
 	$queries = array();
 	$query_graph_templates = array();
@@ -1094,7 +1073,63 @@ function get_package_contents($export_type, $export_item_id, $include_deps = tru
 				WHERE id = ?',
 				array($export_item_id));
 
+			if (cacti_sizeof($graph_templates)) {
+				$in = '';
+				foreach($graph_templates as $gt) {
+					$in .= ($in != '' ? ',':'') . $gt['id'];
+				}
+
+				$queries = db_fetch_assoc("SELECT sq.*
+					FROM graph_templates AS gt
+					INNER JOIN snmp_query_graph AS sqg
+					ON gt.id = sqg.graph_template_id
+					INNER JOIN snmp_query AS sq
+					ON sq.id = sqg.snmp_query_id
+					WHERE gt.id IN ($in)");
+			}
+
 			break;
+	}
+
+	// Determine what files are included
+	$export_errors = 0;
+	$xml_data      = get_item_xml($export_type, $export_item_id, $include_deps);
+	$files         = array();
+
+	if (!$export_errors) {
+		$files = find_dependent_files($xml_data, true);
+
+		/* search xml files for scripts */
+		if (cacti_sizeof($files)) {
+			foreach($files as $file) {
+				if (strpos($file['file'], '.xml') !== false) {
+					$files = array_merge($files, find_dependent_files(file_get_contents($file['file']), $file));
+				}
+			}
+		}
+	} else {
+		return __('Cacti Template has Errors.  Unable to parse entire template.');
+	}
+
+	/**
+	 * When exporting Graph Templates, you have to check for data queries
+	 * and process their XML files for additional scripts
+	 */
+	if ($export_type == 'graph_template' && cacti_sizeof($queries)) {
+		foreach($queries as $dq) {
+			$xml_data = get_item_xml('data_query', $dq['id'], $include_deps);
+
+			$nfiles = find_dependent_files($xml_data, true);
+
+			/* search xml files for scripts */
+			if (cacti_sizeof($nfiles)) {
+				foreach($nfiles as $file) {
+					if (strpos($file['file'], '.xml') !== false) {
+						$files = array_merge($files, find_dependent_files(file_get_contents($file['file']), $file));
+					}
+				}
+			}
+		}
 	}
 
 	$output = '<div class="flexContainer cactiTable" style="justify-content:space-around;">';
