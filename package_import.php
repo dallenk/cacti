@@ -473,7 +473,7 @@ function form_save() {
 
 			unset($_SESSION['sess_import_package']);
 
-			header('Location: package_import.php?package_locaion=0');
+			header('Location: package_import.php?package_location=0');
 			exit;
 		}
 	}
