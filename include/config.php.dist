@@ -106,10 +106,10 @@ $disable_log_rotation = false;
  * variables become important when using remote poller installs when the
  * scripts and resource files are not in the main Cacti web server path.
  */
-
-//$scripts_path = '/var/www/html/cacti/scripts';
-//$resource_path = '/var/www/html/cacti/resource/';
-//$rra_path = '/var/www/html/cacti/rra/';
+//$scripts_path      = '/var/www/html/cacti/scripts';
+//$resource_path     = '/var/www/html/cacti/resource/';
+//$rra_path          = '/var/www/html/cacti/rra/';
+//$package_keys_path = '/etc/cacti/pki';
 
 /*
  * Optional parameter to define a data input whitelist command string. This

@@ -30,12 +30,14 @@ if (empty($config['cacti_server_os'])) {
 }
 
 if ($config['cacti_server_os'] == 'win32') {
-	$config['base_path']    = str_replace('\\', '/', substr(__DIR__,0,-8));
+	$config['package_keys_path'] = $package_keys_path ?? getenv('ALLUSERSPROFILE') . '/cacti/pki';
+	$config['base_path']         = str_replace('\\', '/', substr(__DIR__,0,-8));
 } else {
-	$config['base_path']    = preg_replace("/(.*)[\/]include/", '\\1', __DIR__);
+	$config['package_keys_path'] = $package_keys_path ?? '/etc/cacti/pki';
+	$config['base_path']         = preg_replace("/(.*)[\/]include/", '\\1', __DIR__);
 }
 
-define('CACTI_PATH_BASE',     $config['base_path']);
+define('CACTI_PATH_BASE', $config['base_path']);
 
 /* Use specified paths or default to folder under base_path */
 $config['cache_path']    = $cache_path ?? CACTI_PATH_BASE . '/cache';
@@ -73,3 +75,4 @@ define('CACTI_PATH_SCRIPTS',  $config['scripts_path']);
 define('CACTI_PATH_PHP',      $config['php_path']);
 define('CACTI_PATH_URL',      $config['url_path']);
 define('URL_PATH',            $config['url_path']);
+define('CACTI_PATH_PKI',      $config['package_keys_path']);

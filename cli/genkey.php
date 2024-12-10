@@ -31,7 +31,7 @@ array_shift($parms);
 
 if (cacti_sizeof($parms)) {
 	// Defaults
-	$keypair_path = $config['base_path'] . '/cache/package/';
+	$keypair_path = CACTI_PATH_PKI;
 	$generate     = false;
 	$replace      = false;
 
@@ -51,6 +51,8 @@ if (cacti_sizeof($parms)) {
 	$shortopts = 'VvHh';
 
 	$longopts = array(
+		'privkey::',
+		'pubkey::',
 		'author::',
 		'homepage::',
 		'email::',
@@ -59,8 +61,6 @@ if (cacti_sizeof($parms)) {
 		'org:',
 		'unit:',
 		'days:',
-		'privkey:',
-		'pubkey:',
 		'replace',
 		'generate',
 		'version',
@@ -91,6 +91,22 @@ if (cacti_sizeof($parms)) {
 			$email = $value;
 
 			break;
+		case 'country':
+			$country = $value;
+
+			break;
+		case 'state':
+			$state = $value;
+
+			break;
+		case 'org':
+			$org = $value;
+
+			break;
+		case 'unit':
+			$unit = $value;
+
+			break;
 		case 'privkey':
 			$privkey = $value;
 
@@ -114,7 +130,7 @@ if (cacti_sizeof($parms)) {
 			display_help();
 			exit(0);
 		default:
-			print "ERROR: Invalid Argument: ($arg)\n\n";
+			print "FATAL: Invalid Argument: ($arg)\n\n";
 			display_help();
 			exit(1);
 		}
@@ -127,48 +143,49 @@ if (!$replace && !$generate) {
 }
 
 if ($author == -1) {
-	print "ERROR: The parameter --author is required." . PHP_EOL;
+	print "FATAL: The parameter --author is required." . PHP_EOL;
 	exit(1);
 }
 
 if ($homepage == -1) {
-	print "ERROR: The parameter --homepage is required." . PHP_EOL;
+	print "FATAL: The parameter --homepage is required." . PHP_EOL;
 	exit(1);
 }
 
 if ($email == -1) {
-	print "ERROR: The parameter --email is required." . PHP_EOL;
+	print "FATAL: The parameter --email is required." . PHP_EOL;
 	exit(1);
 }
 
 if (is_array($privkey)) {
-	print "ERROR: The private key can only be specified once" . PHP_EOL;
+	print "FATAL: The private key can only be specified once." . PHP_EOL;
 	exit(1);
 } elseif ($privkey != '' && !file_exists($privkey)) {
-	print "ERROR: Private key '$privkey' does not exist" . PHP_EOL;
+	print "FATAL: Private key '$privkey' does not exist" . PHP_EOL;
 	exit(1);
 }
 
 if (is_array($pubkey)) {
-	print "ERROR: The public key can only be specified once" . PHP_EOL;
+	print "FATAL: The public key can only be specified once" . PHP_EOL;
 	exit(1);
 } elseif ($pubkey != '' && !file_exists($pubkey)) {
-	print "ERROR: Public key '$pubkey' does not exist" . PHP_EOL;
+	print "FATAL: Public key '$pubkey' does not exist" . PHP_EOL;
 	exit(1);
 }
 
 if (($pubkey != '' && $privkey == '') || ($privkey != '' && $pubkey == '')) {
-	print "ERROR: You must specify both public and private keys if you wish to use them" . PHP_EOL;
+	print "FATAL: You must specify both public and private keys if you wish to use them" . PHP_EOL;
 	exit(1);
 }
 
 if ((file_exists($keypair_path . '/package.pem') || file_exists($keypair_path . '/package.info')) && !$replace) {
-	print "ERROR: Package private key or info file exists.  You must use the --replace option to replace it" . PHP_EOL;
+	print "FATAL: Package private key or info file exists.  You must use the --replace option to replace it" . PHP_EOL;
 } else {
-	$package_info = "[info]" . PHP_EOL;
-	$package_info .= "author = $author" . PHP_EOL;
+	$package_info  = "[info]"               . PHP_EOL;
+	$package_info .= "author = $author"     . PHP_EOL;
 	$package_info .= "homepage = $homepage" . PHP_EOL;
-	$package_info .= "email = $email" . PHP_EOL;
+	$package_info .= "email = $email"       . PHP_EOL;
+
 	file_put_contents("$keypair_path/package.info", $package_info);
 
 	$config = array(
@@ -188,11 +205,23 @@ if ((file_exists($keypair_path . '/package.pem') || file_exists($keypair_path . 
 
 	if ($privkey != '') {
 		print 'NOTE: Using user provided public/private key pair.' . PHP_EOL;
+
 		$provided = true;
-		$privKey  = file_get_contents($privkey);
-		$pubKey   = file_get_contents($pubkey);
+		$privKey  = openssl_pkey_get_private("file://$privkey");
+		$pubKey   = openssl_pkey_get_public("file://$pubkey");
+
+		if ($privKey === false) {
+			print "FATAL: Unable to open your private key $privkey" . PHP_EOL;
+			exit(0);
+		}
+
+		if ($pubKey === false) {
+			print "FATAL: Unable to open your public key $pubkey" . PHP_EOL;
+			exit(0);
+		}
 	} else {
 		print 'NOTE: Generating custom public/private key pair.' . PHP_EOL;
+
 		$provided = false;
 		$res      = openssl_pkey_new($config);
 
@@ -205,24 +234,26 @@ if ((file_exists($keypair_path . '/package.pem') || file_exists($keypair_path . 
 					print 'NOTE: Gathered key details from private key' . PHP_EOL;
 					$pubKey   = $details['key'];
 				} else {
-					print 'ERROR: Unable to get key details.' . PHP_EOL;
+					print 'FATAL: Unable to get key details.' . PHP_EOL;
 					exit(1);
 				}
 			} else {
-				print 'ERROR: Unable to export private key.' . PHP_EOL;
+				print 'FATAL: Unable to export private key.' . PHP_EOL;
 				exit(1);
 			}
 		} else {
-			print 'ERROR: Unable to generate private key.' . PHP_EOL;
+			print 'FATAL: Unable to generate private key.' . PHP_EOL;
 			exit(1);
 		}
 	}
 
 	// Generate a certificate
-	$csr = openssl_csr_new($subject, $privKey, array('digest_alg' => 'sha256'));
+	//$csr = openssl_csr_new($subject, $privKey, array('digest_alg' => 'sha256'));
+	$csr = openssl_csr_new($subject, $privKey, $config);
 
 	if ($csr !== false) {
 		print 'NOTE: Gathered CSR records for certificate.' . PHP_EOL;
+
 		$x509 = openssl_csr_sign($csr, null, $privKey, $days, array('digest_alg' => 'sha256'));
 
 		if ($x509 !== false) {
@@ -230,15 +261,15 @@ if ((file_exists($keypair_path . '/package.pem') || file_exists($keypair_path . 
 			if (openssl_x509_export_to_file($x509, "$keypair_path/package.pem")) {
 				print 'NOTE: Generated certificate file package.pem.' . PHP_EOL;
 			} else {
-				print 'ERROR: Unable to generate certificate file package.pem.' . PHP_EOL;
+				print 'FATAL: Unable to generate certificate file package.pem.' . PHP_EOL;
 				exit(1);
 			}
 		} else {
-			print 'ERROR: Unable to Sign CSR record.' . PHP_EOL;
+			print 'FATAL: Unable to Sign CSR record.' . PHP_EOL;
 			exit(1);
 		}
 	} else {
-		print 'ERROR: Unable to create CSR record.' . PHP_EOL;
+		print 'FATAL: Unable to create CSR record.' . PHP_EOL;
 		exit(1);
 	}
 
@@ -247,24 +278,30 @@ if ((file_exists($keypair_path . '/package.pem') || file_exists($keypair_path . 
 		if (openssl_pkey_export_to_file($privKey, "$keypair_path/package.key")) {
 			print 'NOTE: Generated private key file package.key.' . PHP_EOL;
 		} else {
-			print 'ERROR: Unable to generate private key file package.key.' . PHP_EOL;
+			print 'FATAL: Unable to generate private key file package.key.' . PHP_EOL;
 			exit(1);
 		}
 	} else {
-		if (file_put_contents("$keypair_path/package.key", $privKey)) {
-			print 'NOTE: Generated private key file package.key.' . PHP_EOL;
+		if ($privkey != "$keypair_path/package.key") {
+			if (file_put_contents("$keypair_path/package.key", $privKey)) {
+				print 'NOTE: Generated private key file package.key.' . PHP_EOL;
+			} else {
+				print 'FATAL: Unable to generate private key file package.key.' . PHP_EOL;
+				exit(1);
+			}
 		} else {
-			print 'ERROR: Unable to generate private key file package.key.' . PHP_EOL;
-			exit(1);
+			print 'NOTE: Provided private key is the existing packaging private key package.key.'. PHP_EOL;
 		}
 	}
 
 	// Output the public key to the package directory
-	if (file_put_contents("$keypair_path/package.pub", $pubKey)) {
-		print 'NOTE: Generated public key file package.pub.' . PHP_EOL;
-	} else {
-		print 'ERROR: Unable to generate public key file package.pub.' . PHP_EOL;
-		exit(1);
+	if (!$provided) {
+		if (file_put_contents("$keypair_path/package.pub", $pubKey)) {
+			print 'NOTE: Generated public key file package.pub.' . PHP_EOL;
+		} else {
+			print 'FATAL: Unable to generate public key file package.pub.' . PHP_EOL;
+			exit(1);
+		}
 	}
 
 	print 'SUCCESS!!' . PHP_EOL;
@@ -287,13 +324,11 @@ function display_help() {
 	print "\nusage: genkey.php [options]\n\n";
 	print "This script generates a Package Authors Certificate information based upon a valid ssh key pair.\n";
 	print "If you do not have an existing ssh key pair, use the ssh-keygen command to create one before\n";
-	print "running this script.\n\n";
+	print "running this script.  Otherwise, the script will create one for you.\n\n";
 	print "Options:\n";
 	print "    --generate        Generate a new key pair.\n";
 	print "    --replace         Replace the existing key pair.\n\n";
 	print "Required:\n";
-	print "    --privkey=path    Path to existing private key.\n";
-	print "    --pubkey=path     Path to existing public key.\n";
 	print "    --author          Registered Author Name.\n";
 	print "    --homepage        Registered Authors Homepage.\n";
 	print "    --email           Registered Authors Email.\n\n";
@@ -303,4 +338,7 @@ function display_help() {
 	print "    --org             Registered Authors Organization.\n";
 	print "    --unit            Registered Authors Organizational Unit.\n";
 	print "    --days            The number of days for the certificate to remain valid.\n\n";
+	print "Optional:\n";
+	print "    --privkey=path    Path to an existing private key.\n";
+	print "    --pubkey=path     Path to an existing public key.\n";
 }

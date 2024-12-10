@@ -904,8 +904,8 @@ function check_template_dependencies($export_type, $template_id) {
 function check_get_author_info() {
 	global $config;
 
-	if (file_exists(CACTI_PATH_BASE . '/cache/package/package.info')) {
-		$info = parse_ini_file(CACTI_PATH_BASE . '/cache/package/package.info', true);
+	if (file_exists(CACTI_PATH_PKI . '/package.info')) {
+		$info = parse_ini_file(CACTI_PATH_PKI . '/package.info', true);
 		$info = $info['info'];
 
 		return $info;
@@ -933,7 +933,7 @@ function check_get_author_info() {
 function open_packager_metadata_table() {
 	global $config;
 
-	$db_file   = CACTI_PATH_BASE . '/cache/package/package.db';
+	$db_file   = CACTI_PATH_PKI . '/package.db';
 	$db_struct = 'CREATE TABLE package (
 		hash char(32) NOT NULL,
 		name char(40) NOT NULL,
@@ -1176,8 +1176,8 @@ function get_package_contents($export_type, $export_item_id, $include_deps = tru
 function get_package_private_key() {
 	global $config;
 
-	if (file_exists(CACTI_PATH_BASE . '/cache/package/package.key')) {
-		return 'file://' . CACTI_PATH_BASE . '/cache/package/package.key';
+	if (file_exists(CACTI_PATH_PKI . '/package.key')) {
+		return 'file://' . CACTI_PATH_PKI . '/package.key';
 	} else {
 		print 'FATAL: You must run genkey.php to generate your key first' . PHP_EOL;
 		return false;
@@ -1187,8 +1187,8 @@ function get_package_private_key() {
 function get_package_public_key() {
 	global $config;
 
-	if (file_exists(CACTI_PATH_BASE . '/cache/package/package.pem')) {
-		$key = openssl_pkey_get_public('file://' . CACTI_PATH_BASE . '/cache/package/package.pem');
+	if (file_exists(CACTI_PATH_PKI . '/package.pem')) {
+		$key = openssl_pkey_get_public('file://' . CACTI_PATH_PKI . '/package.pem');
 		if ($key === false) {
 			cacti_log('FATAL: Unable to extract Public Key from Pem File.');
 			return false;
