@@ -415,10 +415,20 @@ function form_save() {
 
 		if (isset_request_var('trust_signer') && get_nfilter_request_var('trust_signer') == 'on') {
 			import_validate_public_key($xmlfile, true);
-		} elseif (!package_validate_signature($xmlfile)) {
-			raise_message('verify_warning', __('You have not Trusted this Package Author.  If you wish to import, check the Automatically Trust Author checkbox'), MESSAGE_LEVEL_ERROR);
-			header('Location: package_import?package_location=0');
-			exit;
+		} else {
+			$info = package_validate_signature($xmlfile);
+
+			if ($info == false) {
+				raise_message('verify_warning', __('Unable to obtain the public key for this pacakge.  Contact the package author to receive a new package.'), MESSAGE_LEVEL_ERROR);
+
+				header('Location: package_import?package_location=0');
+				exit;
+			} elseif ($info['valid'] === false) {
+				raise_message('verify_warning', __('You have not Trusted this Package Author \'%s\'.  If you wish to import, check the Automatically Trust Author checkbox.  Otherwise, feel free to reach the author at the following Email address \'%s\'.', $info['author'], $info['email']), MESSAGE_LEVEL_ERROR);
+
+				header('Location: package_import?package_location=0');
+				exit;
+			}
 		}
 
 		if (get_filter_request_var('data_source_profile') == '0') {
@@ -715,8 +725,10 @@ function package_verify_key() {
 
 				file_put_contents($xmlfile, $data);
 
-				if (!package_validate_signature($xmlfile)) {
-					$failed[$package_name] = $package_name;
+				$info = package_validate_signature($xmlfile);
+
+				if ($info === false || $info['valid'] === false) {
+					$failed[$package_name] = $info;
 				}
 
 				unlink($xmlfile);
@@ -736,13 +748,25 @@ function package_verify_key() {
 	}
 
 	if (cacti_sizeof($failed)) {
-		$message = '';
+		$message = __('The Signature for one or more packages is not Trusted.<br>');
+		$authors  = array();
+		$packages = array();
 
 		foreach($failed as $package) {
-			$message .= ($message != '' ? '<br>':'') . __('The Signature for Package \'%s\' is not Trusted.', $package);
+			$packages[] = $package['name'];
+
+			$authors[$package['author']] = $package['email'];
 		}
 
-		$message .= '<br><br>' . __('Press \'Ok\' to start Trusting the Signer, or press escape to continue');
+		foreach($authors as $author => $email) {
+			$message .= ($message != '' ? '<br>':'') . __('<b>Author:</b> &lt;%s&gt; %s.<br>', $package['author'], $package['email']);
+		}
+
+		foreach($packages as $package) {
+			$message .= ($message != '' ? '<br>':'') . __('<b>Package</b> %s', $package);
+		}
+
+		$message .= '<br><br>' . __('Press \'Ok\' to start Trusting the Signer, or escape to cancel.');
 
 		print json_encode(
 			array(
@@ -863,9 +887,7 @@ function package_get_details() {
 	}
 }
 
-function import_validate_public_key($xmlfile, $accept = false) {
-	$public_key = get_public_key();
-
+function get_package_info($xmlfile) {
 	if (!file_exists($xmlfile)) {
 		return false;
 	}
@@ -909,36 +931,54 @@ function import_validate_public_key($xmlfile, $accept = false) {
 				$package_publickey = base64_decode($xml['publickey'], true);
 			}
 
-			if ($package_publickey != '') {
-				$insert = false;
+			return array(
+				'name'     => $name,
+				'author'   => $author,
+				'homepage' => $homepage,
+				'email'    => $email,
+				'pubkey'   => $package_publickey
+			);
+		}
+	}
 
-				$accepted = db_fetch_cell_prepared('SELECT COUNT(*)
-					FROM package_public_keys
-					WHERE public_key = ?',
-					array($package_publickey));
+	return false;
+}
 
-				//cacti_log('General Public Key:' . $public_key);
-				//cacti_log('Package Public Key:' . $package_publickey);
+function import_validate_public_key($xmlfile, $accept = false) {
+	$public_key1 = get_public_key_sha1();
+	$public_key2 = get_public_key_sha256();
 
-				if ($accepted) {
-					return $package_publickey;
-				} elseif ($public_key == $package_publickey) {
-					$insert = true;
-				} elseif ($accept) {
-					$insert = true;
-				}
+	$info = get_package_info($xmlfile);
 
-				if ($insert) {
-					db_execute_prepared('INSERT IGNORE INTO package_public_keys
-						(md5sum, author, homepage, email_address, public_key)
-						VALUES(?, ?, ?, ?, ?)',
-						array(md5($package_publickey), $author, $homepage, $email, $package_publickey));
+	if ($info !== false) {
+		if ($info['pubkey'] != '') {
+			$insert = false;
 
-					return $package_publickey;
-				}
+			$accepted = db_fetch_cell_prepared('SELECT COUNT(*)
+				FROM package_public_keys
+				WHERE public_key = ?',
+				array($package_publickey));
+
+			if ($accepted) {
+				return $info['pubkey'];
+			} elseif ($public_key1 == $info['pubkey']) {
+				$insert = true;
+			} elseif ($public_key2 == $info['pubkey']) {
+				$insert = true;
+			} elseif ($accept) {
+				$insert = true;
+			}
+
+			if ($insert) {
+				db_execute_prepared('INSERT IGNORE INTO package_public_keys
+					(md5sum, author, homepage, email_address, public_key)
+					VALUES(?, ?, ?, ?, ?)',
+					array(md5($info['pubkey']), $info['author'], $info['homepage'], $info['email'], $info['pubkey']));
+
+				return $info['pubkey'];
 			}
 		} else {
-			raise_message_javascript(__('Error in Package'), __('Package XML File Damaged.'), __('The XML files appears to be invalid.  Please contact the package author'));
+			raise_message_javascript(__('Error in Package'), __('Package XML File Damaged.'), __('The XML files appears to be invalid and does not contain a public key.  Please contact the package author to obtain a revised package.'));
 		}
 	} else {
 		raise_message_javascript(__('Error in Package'), __('The XML files for the package does not exist'), __('Check the package repository file for files that should exist and find the one that is missing'));
@@ -951,22 +991,36 @@ function package_validate_signature($xmlfile) {
 	global $config;
 
 	// Cacti public key first
-	$cacti_key = get_public_key();
+	$cacti_key1   = get_public_key_sha1();
+	$cacti_key2   = get_public_key_sha256();
 
 	$package_key = import_package_get_public_key($xmlfile);
 
-	// Other trusted keys next
-	$keys = array_rekey(
-		db_fetch_assoc('SELECT public_key FROM package_public_keys'),
-		'public_key', 'public_key'
-	);
+	$info = get_package_info($xmlfile);
 
-	$keys[$cacti_key] = $cacti_key;
-
-	if (in_array($package_key, $keys, true)) {
-		return true;
-	} else {
+	if ($info === false) {
 		return false;
+	} else {
+		if (!isset($info['pubkey'])) {
+			return false;
+		}
+
+		// Other trusted keys next
+		$keys = array_rekey(
+			db_fetch_assoc('SELECT public_key FROM package_public_keys'),
+			'public_key', 'public_key'
+		);
+
+		$keys[$cacti_key1] = $cacti_key1;
+		$keys[$cacti_key2] = $cacti_key2;
+
+		if (in_array($package_key, $keys, true)) {
+			$info['valid'] = true;
+		} else {
+			$info['valid'] = false;
+		}
+
+		return $info;
 	}
 }
 
@@ -1733,8 +1787,8 @@ function package_import() {
 
 					$('#import_dialog').dialog({
 						autoOpen: true,
-						height: 200,
-						width: 350,
+						width: '400px',
+						maxHeight: '400px',
 						modal: true,
 						buttons: {
 							Ok: function() {
