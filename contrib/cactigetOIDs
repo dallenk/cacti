@@ -101,14 +101,14 @@ while true; do
     # Display the template list and prompt for a selection
     echo "Available Template IDs matching the filter: $TEMPLATE_MATCH"
     echo "-----------------------------"
-    echo "Index	ID	Template Name"
+    echo "Choice	(ID)	Template Name"
     echo "-----------------------------"
 
     INDEX=1
     while IFS=$'\t' read -r TEMPLATE_ID TEMPLATE_NAME; do
         TEMPLATE_IDS+=("$TEMPLATE_ID")
         TEMPLATE_NAMES+=("$TEMPLATE_NAME")
-        echo "$INDEX	$TEMPLATE_ID	$TEMPLATE_NAME"
+        echo "$INDEX	($TEMPLATE_ID)	$TEMPLATE_NAME"
         ((INDEX++))
     done <<< "$TEMPLATE_LIST"
 
@@ -116,8 +116,8 @@ while true; do
     echo "0. Exit"
     echo "-------------------------------------------------------------"
 
-    # Prompt user to choose a template_id
-    echo -n "Please choose a template_id (0 to exit, 1-${#TEMPLATE_IDS[@]}): "
+    # Prompt user to choose a template_index
+    echo -n "Please choose an ID from \"Choice\" (0 to exit, 1-${#TEMPLATE_IDS[@]}): "
     read choice
 
     # Check for exit choice
